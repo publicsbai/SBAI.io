@@ -1,0 +1,589 @@
+<!-- BUILD v2: SBAI sidebar layout (centered, fixed palette) -->
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Systems Biology of Aging and Immunity | SBAI</title>
+  <meta name="description" content="SBAI — Research, Members, Publications" />
+  <link rel="icon" href="favicon.ico" />
+  <style>
+    :root{
+      /* === SBAI 색상 팔레트 (절대 고정) === */
+      --bg: #FEFEFD;         /* 배경 */
+      --ink: #0E1A12;        /* 본문 텍스트 */
+      --muted: #5C635D;      /* 보조 텍스트 */
+      --border: #E6E4DD;     /* 섹션 구분선 */
+      --accent: #234F3E;     /* 포인트 컬러 */
+      --accent-soft: #E9EEE8;/* hover/포커스용 */
+      --light: #FEFEFD;      /* 카드/푸터 */
+      --navy: #1C3B33;       /* 상단 배너 */
+
+      --sidebar-w: 240px;
+      --radius: 10px;
+      --container: min(1160px, calc(100vw - var(--sidebar-w) - 40px));
+    }
+
+    *{ box-sizing: border-box; }
+
+    html{
+      margin:0; padding:0;
+      background:var(--bg); color:var(--ink);
+      font-family: ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,"Noto Sans KR",Arial;
+    }
+    body{
+      margin:0;
+      /* 사이드바 폭만큼 왼쪽 여백 확보 */
+      padding: 0 0 0 var(--sidebar-w);
+    }
+
+    a{ color:var(--accent); text-decoration:none; }
+    a:hover{ text-decoration:underline; }
+
+    /* Sidebar */
+    .sidebar{
+      position:fixed; top:0; left:0; height:100dvh; width:var(--sidebar-w);
+      background:var(--light); border-right:1px solid var(--border);
+      padding:18px 14px; overflow:auto;
+    }
+    .brand{ font-weight:800; font-size:22px; letter-spacing:.5px; margin:6px 6px 18px; }
+
+    .nav .item{ display:block; padding:8px 10px; border-radius:var(--radius); margin:2px 4px; color:var(--ink); }
+    .nav .item:hover{ background:var(--accent-soft); }
+    .nav .item.active{ background:var(--accent-soft); font-weight:700; }
+
+    details{ margin:2px 4px; }
+    summary{
+      cursor:pointer; list-style:none; padding:8px 10px; border-radius:var(--radius);
+      font-weight:400;
+    }
+    .nav summary:hover{
+      background:var(--accent-soft);
+      text-decoration: underline;
+      text-decoration-thickness: from-font;
+    }
+
+    /* ✅ 클릭해서 활성화된 summary만 강조 (기본 open 배경 제거) */
+    .nav summary.active{ background:var(--accent-soft); font-weight:700; }
+    .sub{ padding-left:10px; }
+
+    /* Top banner */
+    .banner{
+      background:var(--navy); color:white; padding:28px 24px;
+      border-bottom:1px solid #132A23; display:grid;
+    }
+    .banner > *{ width:var(--container); margin:0 auto; padding:0 20px; }
+    .banner h1{ margin:0 0 4px; font-size:34px; font-weight:800; }
+    .banner h2{ margin:0; font-size:18px; font-weight:600; opacity:.9; }
+
+    /* Main */
+    .wrap{
+      padding:28px 20px; display:grid; grid-auto-rows:max-content; justify-items:center;
+    }
+    .wrap > *{ width:var(--container); margin:0 auto; padding:0 20px; }
+    .hero{ display:grid; grid-template-columns:1fr 1fr; gap:24px; align-items:start; }
+    .hero img{ width:100%; height:auto; border-radius:8px; border:1px solid var(--border); background:#fff; }
+    .centered{ text-align:center; }
+    .lead{ font-size:18px; margin:28px 0; }
+    .muted{ color:var(--muted); }
+    hr{ border:0; border-top:1px solid var(--border); margin:26px 0; }
+
+    /* Buttons */
+    .btn{ display:inline-block; padding:10px 14px; border:1px solid var(--accent); color:#fff; background:var(--accent); border-radius:12px; font-weight:600; }
+    .btn.ghost{ color:var(--accent); background:transparent; }
+
+    /* Footer */
+    footer{ padding:24px 20px; color:var(--muted); border-top:1px solid var(--border); background:var(--light); display:grid; }
+    footer > *{ width:var(--container); margin:0 auto; padding:0 20px; }
+
+    /* Tabs */
+    .tabcontent { display:none; animation: fadeIn 0.3s ease; padding:20px 0; width:100%; }
+    .tabcontent.active { display:block; }
+    @keyframes fadeIn { from{opacity:0;} to{opacity:1;} }
+
+    /* Mobile */
+    .mobilebar{ display:none; }
+    @media (max-width:900px){
+      :root{ --sidebar-w:0px; }
+      body{ padding-left:0; }
+      .sidebar{ transform:translateX(-100%); transition:transform .25s ease; z-index:50; }
+      .sidebar.open{ transform:translateX(0); }
+      .mobilebar{
+        display:flex; gap:10px; align-items:center; position:sticky; top:0; z-index:60;
+        background:var(--navy); color:#fff; padding:12px 14px;
+      }
+      .mobilebar button{ background:transparent; border:1px solid rgba(255,255,255,.5); color:#fff; padding:6px 10px; border-radius:8px; }
+      .hero{ grid-template-columns:1fr; }
+    }
+    /* ===== Contact Tab ===== */
+    #Contact .contact-wrap{
+      background:#F3F5F7;
+      border:1px solid var(--border);
+      border-radius:12px;
+      padding:24px;
+    }
+    #Contact .grid{
+      display:grid;
+      grid-template-columns:1fr 1fr; /* EMAIL | ADDRESS */
+      gap:24px;
+    }
+    #Contact .section-title{
+      color:#F59E0B; /* 오렌지 헤더 */
+      font-weight:800;
+      letter-spacing:.3px;
+      margin:0 0 12px;
+      font-size:22px;       /* 제목 크게 */
+    }
+    #Contact .item{
+      line-height:1.7;
+      font-size:17px;       /* 본문 크게 */
+    }
+    @media(max-width:900px){
+      #Contact .grid{ grid-template-columns:1fr; }
+    }
+
+    /* ===== PI Tab ===== */
+    #PI .pi-wrap{ width:100%; }
+    #PI .pi-hero{
+      display:grid;
+      grid-template-columns:360px 1fr;
+      gap:28px;
+      align-items:start;
+      margin-bottom:18px;
+    }
+    #PI .pi-photo{
+      width:100%;
+      border-radius:8px;
+      border:1px solid var(--border);
+      background:#fff;
+      object-fit:cover;
+    }
+    #PI .pi-name-kr{ font-size:32px; font-weight:800; margin:0 0 8px; }
+    #PI .pi-name-en{ font-size:28px; font-weight:700; margin:0 0 6px; }
+    #PI .pi-title{   font-size:22px; font-weight:700; margin:0 0 12px; }
+    #PI .pi-contact a{ color:var(--ink); }
+    #PI .pi-contact a:hover{ text-decoration:underline; }
+    #PI .pi-divider{ height:2px; background:var(--border); margin:16px 0 6px; border-radius:2px; }
+    #PI .pi-timeline{
+      display:grid;
+      grid-template-columns:140px 1fr;
+      row-gap:12px; column-gap:18px;
+      margin-top:14px; font-size:16px;
+    }
+    #PI .pi-year{ font-weight:800; letter-spacing:.2px; }
+    #PI .pi-desc{ line-height:1.6; }
+    @media(max-width:900px){
+      #PI .pi-hero{ grid-template-columns:1fr; }
+      #PI .pi-name-kr{ font-size:28px; }
+      #PI .pi-name-en{ font-size:24px; }
+      #PI .pi-title{ font-size:20px; }
+      #PI .pi-timeline{ grid-template-columns:120px 1fr; }
+    }
+    /* ===== Lab Members (Postdocs + Students) ===== */
+    #Lab\ Members .people-grid{
+      display:grid;
+      grid-template-columns: repeat(2, minmax(280px, 1fr));
+      gap:56px 72px;
+      align-items:start;
+      width:100%;
+      margin-bottom:40px;
+    }
+
+    #Lab\ Members .person-card .photo{
+      width:100%;
+      border-radius:8px;
+      border:1px solid var(--border);
+      background:#fff;
+      object-fit:cover;
+      aspect-ratio:4/3;
+    }
+
+    #Lab\ Members .person-card .name-kr{
+      margin:16px 0 6px;
+      text-align:center;
+      font-size:28px;
+      font-weight:700;
+    }
+    #Lab\ Members .person-card .name-en{
+      text-align:center;
+      font-size:24px;
+      font-weight:700;
+      letter-spacing:.4px;
+    }
+    #Lab\ Members .person-card .email{
+      text-align:center;
+      margin-top:8px;
+      font-size:16px;
+    }
+    @media(max-width:900px){
+      #Lab\ Members .people-grid{ grid-template-columns:1fr; gap:36px; }
+      #Lab\ Members .person-card .name-kr{ font-size:24px; }
+      #Lab\ Members .person-card .name-en{ font-size:20px; }
+    }
+    /* ===== Research Tab ===== */
+    #Research .research-wrap{
+      width:100%;
+      max-width:1000px;
+      margin:0 auto;
+      text-align:left;
+    }
+
+    #Research h2{
+      font-size:26px;
+      font-weight:800;
+      text-align:center;
+      margin-bottom:24px;
+      line-height:1.4;
+    }
+
+    #Research .figure{
+      text-align:center;
+      margin:0 auto 30px;
+    }
+    #Research .figure img{
+      width:100%;
+      max-width:600px;
+      border-radius:8px;
+      border:1px solid var(--border);
+      background:#fff;
+    }
+
+    #Research p{
+      font-size:17px;
+      line-height:1.8;
+      color:var(--ink);
+      margin-bottom:20px;
+      text-align:justify;
+    }
+
+    #Research .subfigures{
+      display:grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px,1fr));
+      gap:16px;
+      margin-top:24px;
+    }
+    #Research .subfigures img{
+      width:100%;
+      border:1px solid var(--border);
+      border-radius:6px;
+      background:#fff;
+    }
+  </style>
+</head>
+<body>
+  <!-- Mobile header -->
+  <div class="mobilebar">
+    <button onclick="toggleSidebar()">menu</button>
+    <strong>SBAI</strong>
+  </div>
+
+  <!-- Sidebar -->
+  <aside class="sidebar" id="sidebar">
+    <div class="brand">SBAI</div>
+    <nav class="nav" aria-label="Sidebar">
+      <a class="item active" href="#home">Home</a>
+
+      <!-- 기본 오픈 해제: 클릭 시에만 강조/전환 -->
+      <details>
+        <summary>Research</summary>
+        <div class="sub">
+          <!-- 필요 시 하위 항목 추가
+          <a class="item" href="#theme1">Transcriptomics</a>
+          <a class="item" href="#theme2">Single-cell & Spatial</a>
+          <a class="item" href="#theme3">Proteomics</a>
+          -->
+        </div>
+      </details>
+
+      <details>
+        <summary>Members</summary>
+        <div class="sub">
+          <a class="item" href="#PI">Principal Investigator</a>
+          <a class="item" href="#Lab Members">Lab Members</a>
+        </div>
+      </details>
+
+      <a class="item" href="#pubs">Publications</a>
+      <a class="item" href="#address">Contact</a>
+    </nav>
+  </aside>
+
+  <!-- Top banner -->
+  <header class="banner">
+    <h1>SBAI</h1>
+    <h2>Systems Biology of Aging and Immunity.</h2>
+  </header>
+
+  <!-- Main content -->
+  <main class="wrap" id="home">
+    <div id="Home" class="tabcontent active">
+      <section class="hero" aria-label="Top images">
+        <img src="images/lab_logo.jpg" alt="Lab logo" />
+        <img src="images/lab_description.jpg" alt="Lab description" />
+      </section>
+
+      <section class="centered">
+        <section id="theme1"><h1>Welcome to SBAI!</h1><p class="muted">소개소개소개소개소개소개소개소개소개</p></section>
+        <hr/>
+        <section id="join"><h3>Join us</h3></section>
+        <p class="lead">We are seeking prospective students who are highly motivated.</p>
+        <div style="display:flex;gap:10px;justify-content:center;margin:10px 0 20px">
+          <a class="btn" href="#" id="goContact">Contact us</a>
+          <a class="btn ghost" href="#" id="goPublications">Publications</a>
+        </div>
+        <hr/>
+        <address class="muted" id="address">
+          Department of Biological Sciences, Ajou University,<br/>
+          206 Worldcup-ro, Yeongtong-gu, Suwon-si, Gyeonggi-do 16499, Republic of Korea · Tel: +82-31-219-2626
+        </address>
+      </section>
+    </div>
+    
+    <!-- Tab Contents -->
+    <div id="Research" class="tabcontent">
+      <div class="research-wrap">
+        <h2>Research Title</Title></h2>
+
+        <div class="figure">
+          <img src="images/research/main_diagram.jpg" alt="Research overview image" />
+        </div>
+
+        <p>
+          Research description
+        </p>
+
+      </div>
+    </div>
+    <div id="Members" class="tabcontent"></div>
+    <!-- 추가: PI 탭 -->
+    <div id="PI" class="tabcontent">
+      <div class="pi-wrap">
+        <h2 style="text-align:left; font-size:30px; font-weight:800; letter-spacing:.5px; margin:0 0 14px;">
+          PRINCIPAL INVESTIGATOR
+        </h2>
+
+        <div class="pi-hero">
+          <img class="pi-photo" src="images/pi.jpg" alt="Principal Investigator photo" />
+          <div>
+            <div class="pi-name-kr">박지환</div>
+            <div class="pi-name-en">Ji Hwan Park</div>
+            <div class="pi-title">PROFESSOR</div>
+            <div class="pi-contact">
+              <a href="mailto:seungjaevlee@kaist.ac.kr">parkjihwan@ajou.ac.kr</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="pi-divider"></div>
+
+        <div class="pi-timeline">
+
+          <div class="pi-year">2017.8 ~ 2019.2</div>
+          <div class="pi-desc"><b>Postdoctoral Fellow</b>,<br/>
+            Center for Plant Aging Research (Advisor : Daehee Hwang), DGIST</div>
+
+          <div class="pi-year">2019.3 ~ 2024.8</div>
+          <div class="pi-desc"><b>Senior Researcher</b>,<br/>
+            Korea Bioinformation Center (KOBIC),<br/>
+            Korea Research Institute of Bioscience and Biotechnolog (KRIBB)
+          </div>
+
+          <div class="pi-year">2022.9 ~ 2024.8</div>
+          <div class="pi-desc"><b>Associate Professor</b>,<br/>
+            University os Science & Technology (UST)</div>
+
+          <div class="pi-year">2024.9 ~</div>
+          <div class="pi-desc"><b>Assistant Professor</b>,<br/>
+            Department of Biological Science, Ajou University</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== Lab Members 탭 ===== -->
+    <div id="Lab Members" class="tabcontent">
+
+      <!-- Postdoctoral Fellows -->
+      <h2 style="text-align:left; font-size:30px; font-weight:800; letter-spacing:.5px; margin:0 0 18px;">
+        POSTDOCTORAL FELLOWS
+      </h2>
+
+      <div class="people-grid">
+        <div class="person-card">
+          <img class="photo" src="images/postdocs/sample1.jpg" />
+          <div class="name-kr">장동민</div>
+          <div class="name-en">Dongmin Jang</div>
+          <div class="email"><a href="mailto:sheffield@ajou.ac.kr">sheffield@ajou.ac.kr</a></div>
+        </div>
+      </div>
+
+      <hr style="margin:50px 0; border:0; border-top:2px solid var(--border);"/>
+
+      <!-- Graduate Students -->
+      <h2 style="text-align:left; font-size:30px; font-weight:800; letter-spacing:.5px; margin:0 0 18px;">
+        GRADUATE STUDENTS
+      </h2>
+
+      <div class="people-grid">
+        <div class="person-card">
+          <img class="photo" src="images/students/jooyeon.jpg" />
+          <div class="name-kr">박건우</div>
+          <div class="name-en">Gunwoo Park</div>
+          <div class="email"><a href="mailto:peterpgw@ajou.ac.kr">peterpgw@ajou.ac.kr</a></div>
+        </div>
+
+        <div class="person-card">
+          <img class="photo" src="images/students/hanseul.jpg" />
+          <div class="name-kr">김정윤</div>
+          <div class="name-en">Jeong-Yun Kim</div>
+          <div class="email"><a href="mailto:yuneedjy@ajou.ac.kr">yuneedjy@ajou.ac.kr</a></div>
+        </div>
+      </div>
+
+    </div>
+
+    <div id="Publications" class="tabcontent">
+    <section class="centered">
+      <h3 style="text-align:left; font-size:26px; font-weight:800;">2025</h3>
+      <ol style="text-align:left; line-height:1.6; font-size:15px; padding-left:20px; max-width:900px; margin:0 auto;">
+        <li><b>Lee, J.</b>#, Lee, B.#, Lee, H.#, <b><u>Kim, E.J.E.</u></b>#, Kim, S.S., <b>Kwon, H.C.</b>, Lee, H., Lee, G.Y., Hong, W., Ham, S., Yang, J.W., Park, H., Moreno, T.M., Brown, M.E., Park, H.E.H., Kim, E., Jung, Y., Kang, E., Park, S., Shin, Y.J., Ha, S.G., Kwon, S., Hwang, S., Min, H., Kumsta, C., Lim, C., Kang, C., Seo, J.*, Lee, K.P.*, and <b><u>Lee, S.J.V.*</u></b> (2025) Pelota-mediated ribosome-associated quality control counteracts aging and age-associated pathologies across species. <i>Proc. Natl. Acad. Sci. USA</i> 122 (32) doi:10.1073/pnas.2505217122</li>
+      </ol>
+    </section>
+  </div>
+    <div id="Contact" class="tabcontent">
+      <div class="contact-wrap">
+        <div class="grid">
+
+          <!-- EMAIL -->
+          <div>
+            <h1 class="section-title">EMAIL</h1>
+            <div class="item">
+              SBAI Lab (Systems Biology of Aging & Immunity)<br/>
+              <a href="mailto:parkjihwan@ajou.ac.kr">parkjihwan@ajou.ac.kr</a>
+            </div>
+          </div>
+
+          <!-- ADDRESS -->
+          <div>
+            <h2 class="section-title">ADDRESS</h2>
+            <div class="item">
+              Department of Biological Sciences, Ajou University<br/>
+              206 Worldcup-ro, Yeongtong-gu, Suwon-si,<br/>
+              Gyeonggi-do 16499, Republic of Korea
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+  </main>
+
+  <footer>
+    <div>© <span id="year"></span> SBAI Lab. All rights reserved.</div>
+  </footer>
+
+  <script>
+    const y = document.getElementById('year'); y.textContent = new Date().getFullYear();
+    function toggleSidebar(){ document.getElementById('sidebar').classList.toggle('open'); }
+
+    /* ===== Tab control (top-level links + summaries) ===== */
+    // 상위 링크만 선택: 서브 링크(PI/Researchers)는 제외
+    const sidebarLinks = document.querySelectorAll('.nav > .item');          // Home / Publications / Contact
+    const summaries    = document.querySelectorAll('.nav summary');          // Research / Members
+    const subLinks     = document.querySelectorAll('.nav details .sub .item'); // PI / Lab Members
+    const tabs         = document.querySelectorAll('.tabcontent');
+    const detailsAll   = document.querySelectorAll('.nav details');
+
+    function activateTabByName(name){
+      // 왼쪽 강조 초기화
+      sidebarLinks.forEach(l => l.classList.remove('active'));
+      summaries.forEach(s => s.classList.remove('active'));
+      // 탭 숨김
+      tabs.forEach(t => t.classList.remove('active'));
+      // 대상 탭 표시
+      const tab = document.getElementById(name);
+      if (tab) tab.classList.add('active');
+    }
+
+    sidebarLinks.forEach(link => {
+      link.addEventListener('click', e => {
+        e.preventDefault();
+        const target = link.textContent.trim(); // "Home" / "Publications" / "Contact"
+        // 모든 details 접기
+        detailsAll.forEach(d => d.open = false);
+        // 탭 전환 + 링크 강조
+        activateTabByName(target);
+        link.classList.add('active');
+      });
+    });
+
+    // summary(Research / Members) 클릭 핸들러
+    summaries.forEach(sum => {
+      sum.addEventListener('click', e => {
+        e.preventDefault(); // 브라우저 기본 토글 막고 우리가 제어
+
+        // 다른 details는 접고 현재 summary만 펼치기
+        detailsAll.forEach(d => { if (d !== sum.parentElement) d.open = false; });
+        sum.parentElement.open = true;
+
+        // summary 강조 토글
+        summaries.forEach(s => s.classList.remove('active'));
+        sum.classList.add('active');
+
+        const name = sum.textContent.trim();
+
+        if (name === 'Research') {
+          // Research는 탭 전환 O
+          activateTabByName('Research');
+        } else if (name === 'Members') {
+          // Members는 탭 전환 X (지금 보이는 탭 그대로 유지)
+          // 아무 것도 하지 않음
+        }
+      });
+    });
+    subLinks.forEach(link => {
+      link.addEventListener('click', e => {
+        e.preventDefault();
+        const targetId = link.getAttribute('href').replace('#',''); // 'PI' or 'Lab Members'
+
+        // 상위 링크/summary 강조 초기화
+        document.querySelectorAll('.nav > .item').forEach(l => l.classList.remove('active'));
+        document.querySelectorAll('.nav summary').forEach(s => s.classList.remove('active'));
+
+        // Members 패널만 펼치고 강조 유지
+        document.querySelectorAll('.nav details').forEach(d => d.open = false);
+        const members = Array.from(document.querySelectorAll('.nav details'))
+          .find(d => d.querySelector('summary')?.textContent.trim() === 'Members');
+        if (members){
+          members.open = true;
+          members.querySelector('summary').classList.add('active');
+        }
+
+        // 탭 전환
+        document.querySelectorAll('.tabcontent').forEach(t => t.classList.remove('active'));
+        const tab = document.getElementById(targetId);
+        if (tab) tab.classList.add('active');
+      });
+    });
+    // ===== Join us & Publications 버튼 탭 전환 =====
+    document.getElementById('goContact').addEventListener('click', e => {
+      e.preventDefault();
+      activateTabByName('Contact');
+      document.querySelectorAll('.nav > .item, .nav summary').forEach(el => el.classList.remove('active'));
+      const contactLink = Array.from(document.querySelectorAll('.nav > .item'))
+        .find(l => l.textContent.trim() === 'Contact');
+      if (contactLink) contactLink.classList.add('active');
+    });
+
+    document.getElementById('goPublications').addEventListener('click', e => {
+      e.preventDefault();
+      activateTabByName('Publications');
+      document.querySelectorAll('.nav > .item, .nav summary').forEach(el => el.classList.remove('active'));
+      const pubsLink = Array.from(document.querySelectorAll('.nav > .item'))
+        .find(l => l.textContent.trim() === 'Publications');
+      if (pubsLink) pubsLink.classList.add('active');
+    });
+
+  </script>
+</body>
+</html>
