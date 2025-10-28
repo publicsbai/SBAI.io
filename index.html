@@ -129,6 +129,12 @@
       .mobilebar button{ background:transparent; border:1px solid rgba(255,255,255,.5); color:#fff; padding:6px 10px; border-radius:8px; }
       .hero{ grid-template-columns:1fr; }
     }
+    #overlay{
+      position:fixed; inset:0; background:rgba(0,0,0,0.35);
+      opacity:0; pointer-events:none; transition:opacity .25s ease;
+      z-index:900; /* 사이드바(z-index:1000)보다 한 단계 아래 */
+    }
+    #overlay.show{ opacity:1; pointer-events:auto; }
     /* ===== Contact Tab ===== */
     #Contact .contact-wrap{
       background:#F3F5F7;
@@ -292,6 +298,7 @@
   </div>
 
   <!-- Sidebar -->
+  <div id="overlay" aria-hidden="true"></div>
   <aside class="sidebar" id="sidebar">
     <div class="brand">SBAI</div>
     <nav class="nav" aria-label="Sidebar">
@@ -500,13 +507,32 @@
     const y = document.getElementById('year'); y.textContent = new Date().getFullYear();
     function toggleSidebar(){
       const sidebar = document.getElementById('sidebar');
-      sidebar.classList.toggle('open');
+      const overlay = document.getElementById('overlay');
+      const willOpen = !sidebar.classList.contains('open');
 
-      // 사이드바가 열릴 때 배경 스크롤 방지
-      if (sidebar.classList.contains('open')){
-        document.body.style.overflow = 'hidden';
-      } else {
-        document.body.style.overflow = '';
+      sidebar.classList.toggle('open', willOpen);
+      overlay.classList.toggle('show', willOpen);
+
+      // 배경 스크롤
+      document.body.style.overflow = willOpen ? 'hidden' : '';
+
+      // 뒤로가기(히스토리) 동작: 열릴 때만 pushState, 닫힐 때는 그대로
+      if (willOpen) {
+        history.pushState({ sbaiSidebar: true }, '', location.href);
+      }
+    }
+    function closeSidebar(){
+      const sidebar = document.getElementById('sidebar');
+      const overlay = document.getElementById('overlay');
+      if (!sidebar.classList.contains('open')) return;
+
+      sidebar.classList.remove('open');
+      overlay.classList.remove('show');
+      document.body.style.overflow = '';
+
+      // 히스토리 스택에 우리가 추가한 상태가 있으면, 한 단계 되돌려 사용감을 맞춤
+      if (history.state && history.state.sbaiSidebar) {
+        history.back(); // 주소는 유지, UI만 닫히도록
       }
     }
 
@@ -608,8 +634,35 @@
         .find(l => l.textContent.trim() === 'Publications');
       if (pubsLink) pubsLink.classList.add('active');
     });
+    document.getElementById('overlay').addEventListener('click', closeSidebar);
 
+    // 브라우저 뒤로가기 시 사이드바만 닫기
+    window.addEventListener('popstate', (e) => {
+      // 사이드바 열려 있으면 우선 닫음
+      const sidebar = document.getElementById('sidebar');
+      if (sidebar.classList.contains('open')) {
+        closeSidebar();
+      }
+    });
+
+    // ====== 탭 전환 리스너들 끝에 닫기 로직 추가 ======
+
+    // 상위 링크 클릭 핸들러의 맨 끝( link.classList.add('active') 다음 줄 )에 추가:
+        closeSidebar();
+
+    // summary 클릭 핸들러의 맨 끝( sum.classList.add('active') 블록 이후 )에 추가:
+        if (name === 'Research') { /* … 기존 코드 … */ }
+        // Members는 탭 전환 없음
+        closeSidebar();
+
+    // 하위 링크(subLinks) 클릭 핸들러의 맨 끝( if (tab) tab.classList.add('active'); 다음 줄 )에 추가:
+        closeSidebar();
+
+    // 홈 화면 버튼(Join us 섹션) 2개 핸들러 맨 끝에도 추가:
+      // goContact
+      closeSidebar();
+      // goPublications
+      closeSidebar();
   </script>
 </body>
 </html>
-
