@@ -210,12 +210,15 @@
     }
 
     #Lab\ Members .person-card .photo{
-      width:100%;
+      display:block;
+      margin:0 auto;
+      width:auto;
+      max-width:350px;       /* 사진의 최대 너비 고정 (원하는 값으로 조정 가능) */
+      height:400px;          /* 세로 크기 고정 */
       border-radius:8px;
       border:1px solid var(--border);
       background:#fff;
-      object-fit:cover;
-      aspect-ratio:4/3;
+      object-fit:cover;      /* 비율 맞추며 중앙 자르기 */
     }
 
     #Lab\ Members .person-card .name-kr{
@@ -443,8 +446,14 @@
       <h2 style="text-align:left; font-size:30px; font-weight:800; letter-spacing:.5px; margin:0 0 18px;">
         GRADUATE STUDENTS
       </h2>
-
       <div class="people-grid">
+        <div class="person-card">
+          <img class="photo" src="images/students/hanseul.jpg" />
+          <div class="name-kr">엄은솔</div>
+          <div class="name-en">Eunsol Um</div>
+          <div class="email"><a href="mailto:celine.um0828@gmail.com">celine.um0828@gmail.com</a></div>
+        </div>
+
         <div class="person-card">
           <img class="photo" src="images/students/jooyeon.jpg" />
           <div class="name-kr">박건우</div>
@@ -459,7 +468,6 @@
           <div class="email"><a href="mailto:yuneedjy@ajou.ac.kr">yuneedjy@ajou.ac.kr</a></div>
         </div>
       </div>
-
     </div>
 
     <div id="Publications" class="tabcontent">
