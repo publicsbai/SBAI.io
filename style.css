@@ -172,8 +172,8 @@ summary::-webkit-details-marker { display: none; }
   grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
   gap: 48px 32px;
 }
-.people-grid.placeholder {
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+.people-grid.placeholder .person-card {
+    padding-top: 24px; /* Add some space to align better with cards that have photos */
 }
 .person-card { text-align: center; }
 .person-card .photo, .person-card .photo-placeholder {
