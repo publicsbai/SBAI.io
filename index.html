@@ -352,28 +352,28 @@
     <div id="PI" class="tabcontent">
       <div class="pi-wrap max-w-[960px] mx-auto px-6 py-12">
         <h1 class="h1 text-center mb-12">Principal Investigator</h1>
-        <div class="pi-hero">
-          <img class="pi-photo" src="images/Members/교수님_사진.jpg" alt="Principal Investigator photo" />
-          <div>
+        <div class="pi-hero flex flex-col md:flex-row items-center text-center md:text-left gap-8 md:gap-12">
+          <img class="pi-photo w-72 h-[21rem] object-cover" src="images/Members/교수님_사진.jpg" alt="Principal Investigator photo" />
+          <div class="flex-1">
             <div class="pi-name-kr">박지환</div>
-            <div class="pi-name-en">Ji Hwan Park</div>
-            <div class="pi-title text-secondary">Professor</div>
-            <div class="pi-contact">
-              <a href="mailto:parkjihwan@ajou.ac.kr" class="text-primary">parkjihwan@ajou.ac.kr</a>
+            <div class="pi-name-en mt-1">Ji Hwan Park</div>
+            <div class="pi-title text-secondary mt-2">Professor</div>
+            <div class="pi-contact mt-4">
+              <a href="mailto:parkjihwan@ajou.ac.kr" class="text-primary hover:underline">parkjihwan@ajou.ac.kr</a>
             </div>
           </div>
         </div>
 
-        <div class="pi-divider"></div>
+        <div class="pi-divider my-12 h-px bg-border"></div>
 
-        <div class="pi-timeline">
-          <div class="pi-year">2024.9 ~</div>
+        <div class="pi-timeline grid md:grid-cols-[max-content_1fr] gap-x-8 gap-y-6 items-start">
+          <div class="pi-year text-right">2024.9 ~</div>
           <div class="pi-desc"><b>Assistant Professor</b>,<br/>Department of Biological Science, Ajou University</div>
-          <div class="pi-year">2022.9 ~ 2024.8</div>
+          <div class="pi-year text-right">2022.9 ~ 2024.8</div>
           <div class="pi-desc"><b>Associate Professor</b>,<br/>University of Science & Technology (UST)</div>
-          <div class="pi-year">2019.3 ~ 2024.8</div>
+          <div class="pi-year text-right">2019.3 ~ 2024.8</div>
           <div class="pi-desc"><b>Senior Researcher</b>,<br/>Korea Bioinformation Center (KOBIC), KRIBB</div>
-          <div class="pi-year">2017.8 ~ 2019.2</div>
+          <div class="pi-year text-right">2017.8 ~ 2019.2</div>
           <div class="pi-desc"><b>Postdoctoral Fellow</b>,<br/>Center for Plant Aging Research, DGIST</div>
         </div>
       </div>
@@ -465,6 +465,10 @@
       <h2 class="h2 text-primary mt-12 mb-6">Interns</h2>
       <div class="people-grid placeholder">
         <div class="person-card">
+            <div class="name-kr text-ink">김재형</div>
+            <div class="name-en text-muted">Jaehyung Kim</div>
+        </div>
+        <div class="person-card">
             <div class="name-kr text-ink">이지유</div>
             <div class="name-en text-muted">Jiyu Lee</div>
         </div>
@@ -480,71 +484,85 @@
     <div id="Alumni" class="tabcontent">
         <div class="max-w-[960px] mx-auto px-6 py-12">
       <h1 class="h1 text-center mb-12">Alumni</h1>
-      <div class="alumni-grid">
+      
+      <h2 class="h2 text-primary mt-12 mb-6">Researchers and Administrative Staffs</h2>
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div class="alumni-card bg-background-light border border-border shadow-sm p-6">
+              <div class="name text-ink">Hyun Jung Park</div>
+              <div class="affil text-muted">Administrative staff</div>
+              <div class="period text-muted">May 2025 – Present</div>
+          </div>
+          <div class="alumni-card bg-background-light border border-border shadow-sm p-6">
+              <div class="name text-ink">Dr. Won Yong Jung</div>
+              <div class="affil text-muted">Researcher</div>
+              <div class="period text-muted">Feb 2021 – Aug 2022</div>
+          </div>
+          <div class="alumni-card bg-background-light border border-border shadow-sm p-6">
+              <div class="name text-ink">Jae Ho Lee</div>
+              <div class="affil text-muted">Researcher</div>
+              <div class="period text-muted">Oct 2019 – Aug 2024</div>
+          </div>
+          <div class="alumni-card bg-background-light border border-border shadow-sm p-6">
+              <div class="name text-ink">Young Mi Sim</div>
+              <div class="affil text-muted">Researcher</div>
+              <div class="period text-muted">Oct 2019 – Aug 2024</div>
+          </div>
+      </div>
 
-          <div class="alumni-card bg-background-light border border-border shadow-sm">
+      <h2 class="h2 text-primary mt-12 mb-6">Internship</h2>
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div class="alumni-card bg-background-light border border-border shadow-sm p-6">
               <div class="name text-ink">Jaehyung Kim</div>
-              <div class="alumni-type text-muted">Internship</div>
               <div class="affil text-muted">Ajou University</div>
               <div class="period text-muted">Mar 2026 – </div>
           </div>
-          <div class="alumni-card bg-background-light border border-border shadow-sm">
+          <div class="alumni-card bg-background-light border border-border shadow-sm p-6">
               <div class="name text-ink">Chaeyoung Seo</div>
-              <div class="alumni-type text-muted">Internship</div>
               <div class="affil text-muted">Ajou University</div>
               <div class="period text-muted">Jan 2026 – </div>
           </div>
-          <div class="alumni-card bg-background-light border border-border shadow-sm">
+          <div class="alumni-card bg-background-light border border-border shadow-sm p-6">
               <div class="name text-ink">Jiyu Lee</div>
-              <div class="alumni-type text-muted">Internship</div>
               <div class="affil text-muted">Kyunghee University</div>
               <div class="period text-muted">Dec 2025 – </div>
           </div>
-          <div class="alumni-card bg-background-light border border-border shadow-sm">
+          <div class="alumni-card bg-background-light border border-border shadow-sm p-6">
               <div class="name text-ink">Kanghun Koh</div>
-              <div class="alumni-type text-muted">Internship</div>
               <div class="affil text-muted">Ajou University</div>
               <div class="period text-muted">Nov 2024 – Jun 2025</div>
           </div>
-          <div class="alumni-card bg-background-light border border-border shadow-sm">
+          <div class="alumni-card bg-background-light border border-border shadow-sm p-6">
               <div class="name text-ink">Hanyong Ko</div>
-              <div class="alumni-type text-muted">Internship</div>
               <div class="affil text-muted">UST</div>
               <div class="period text-muted">Sep 2019 – Feb 2021</div>
           </div>
-          <div class="alumni-card bg-background-light border border-border shadow-sm">
+          <div class="alumni-card bg-background-light border border-border shadow-sm p-6">
               <div class="name text-ink">Woojin Sung</div>
-              <div class="alumni-type text-muted">Internship</div>
               <div class="affil text-muted">Seokyeong University</div>
               <div class="period text-muted">Sep – Oct 2019</div>
           </div>
-          <div class="alumni-card bg-background-light border border-border shadow-sm">
+          <div class="alumni-card bg-background-light border border-border shadow-sm p-6">
               <div class="name text-ink">Minwoo Jung</div>
-              <div class="alumni-type text-muted">Internship</div>
               <div class="affil text-muted">Chungnam National University</div>
               <div class="period text-muted">Jul – Aug 2019</div>
           </div>
-          <div class="alumni-card bg-background-light border border-border shadow-sm">
+          <div class="alumni-card bg-background-light border border-border shadow-sm p-6">
               <div class="name text-ink">Sungmin Park</div>
-              <div class="alumni-type text-muted">Internship</div>
               <div class="affil text-muted">Chungnam National University</div>
               <div class="period text-muted">Jul – Aug 2019</div>
           </div>
-          <div class="alumni-card bg-background-light border border-border shadow-sm">
+          <div class="alumni-card bg-background-light border border-border shadow-sm p-6">
               <div class="name text-ink">Jin Ok Lee</div>
-              <div class="alumni-type text-muted">Internship</div>
               <div class="affil text-muted">Catholic University</div>
               <div class="period text-muted">Jul – Aug 2019</div>
           </div>
-          <div class="alumni-card bg-background-light border border-border shadow-sm">
+          <div class="alumni-card bg-background-light border border-border shadow-sm p-6">
               <div class="name text-ink">Ji Hwan Park</div>
-              <div class="alumni-type text-muted">Internship</div>
               <div class="affil text-muted">DGIST</div>
               <div class="period text-muted">Mar 2017 – Aug 2018</div>
           </div>
-          <div class="alumni-card bg-background-light border border-border shadow-sm">
+          <div class="alumni-card bg-background-light border border-border shadow-sm p-6">
               <div class="name text-ink">Eunje Yang</div>
-              <div class="alumni-type text-muted">Internship</div>
               <div class="affil text-muted">DGIST</div>
               <div class="period text-muted">Jul – Aug 2016</div>
           </div>
@@ -554,23 +572,14 @@
 
     <div id="Publications" class="tabcontent">
       <main class="max-w-[960px] mx-auto px-6 py-12">
-<!-- Page Heading -->
 <div class="mb-10">
 <h1 class="h1 mb-10">Publications &amp; Research Output</h1>
+<p class="text-base text-muted leading-relaxed">*, represents co-first authors; #, co-corresponding authors. <br />
+     The highlighted papers indicate the ones listed as first or corresponding author.</p>
 </div>
-<!-- 2026 Section -->
 <section class="mb-12">
 <h2 class="h2 text-primary flex items-center gap-2 mb-6">
                 2026
-                <span class="h-px bg-primary/20 flex-grow"></span>
-</h2>
-<div class="space-y-4">
-</div>
-</section>
-<!-- 2025 Section -->
-<section class="mb-12">
-<h2 class="h2 text-primary flex items-center gap-2 mb-6">
-                2025
                 <span class="h-px bg-primary/20 flex-grow"></span>
 </h2>
 <div class="space-y-4">
@@ -578,23 +587,507 @@
 <div class="flex justify-between items-start gap-6">
 <div class="flex-grow">
 <h3 class="text-lg font-bold leading-tight mb-2 group-hover:text-primary transition-colors text-ink">
-                            Zinc Transporter ZIP13 G289R Variant from Spondylocheirodysplastic Ehlers-Danlos Syndrome Is Associated with Abnormal Hair Quality.
+                            Exploring the impact of RNU4-2 defects on neurodevelopmental disorders in a Korean population.
+                        </h3>
+<p class="text-sm italic text-muted dark:text-muted">
+                            Clin Genet.
+                        </p>
+</div>
+</div>
+</div>
+</div></section>
+<section class="mb-12">
+<h2 class="h2 text-primary flex items-center gap-2 mb-6">
+                2025
+                <span class="h-px bg-primary/20 flex-grow"></span>
+</h2>
+<div class="space-y-4">
+<div class="pub-entry group bg-primary/5 dark:bg-muted/30 p-6 rounded-xl transition-all hover:bg-background-light dark:hover:bg-muted border border-transparent hover:border-border dark:hover:border-border mb-4">
+<div class="flex justify-between items-start gap-6">
+<div class="flex-grow">
+<h3 class="text-lg font-bold leading-tight mb-2 group-hover:text-primary transition-colors text-ink">
+                            Highly accurate Korean draft genomes reveal structural variation highlighting human telomere evolution.
                         </h3>
 <p class="text-sm text-ink dark:text-muted mb-2 leading-relaxed">
-                            Brito S*, <b>Park G*</b>, Lee GH, Capra V, Viglizzo G, Zara F, Kim JY, Park JH, Cho SK, Steinmann B, Weon BM, Kim J, Scala M#, Bin BH#.
+                            Kim J*, Park JL*, Yang JO*, Kim S*, Joe S*, Park G, Hwang T, Cho MJ, Lee S, Lee JE, Park JH#, Yeo MK#, Kim SY#.
                         </p>
 <p class="text-sm italic text-muted dark:text-muted">
-                            J Invest Dermatol. 2025 Feb 26.
+                            Nucleic Acids Res. 53(1):gkae1294. doi: 10.1093/nar/gkae1294
                         </p>
 </div>
-<div class="hover-actions opacity-0 flex items-center gap-2 shrink-0 transition-opacity">
+</div>
+</div>
+<div class="pub-entry group bg-background-light dark:bg-background-dark/50 p-6 rounded-xl transition-all hover:bg-background-light dark:hover:bg-muted border border-transparent hover:border-border dark:hover:border-border mb-4">
+<div class="flex justify-between items-start gap-6">
+<div class="flex-grow">
+<h3 class="text-lg font-bold leading-tight mb-2 group-hover:text-primary transition-colors text-ink">
+                            Zinc transporter ZIP13 G289R variant from Spondylocheirodysplastic Ehlers-Danlos syndrome (SCD-EDS) is associated with abnormal hair quality.
+                        </h3>
+<p class="text-sm text-ink dark:text-muted mb-2 leading-relaxed">
+                            Brito S*, Park G*, Lee GH, Capra V, Viglizzo G, Zara F, Kim JY, Park JH, Cho SK, Steinmann B, Weon BM, Kim J, Scala M#, Bin BH#.
+                        </p>
+<p class="text-sm italic text-muted dark:text-muted">
+                            J Invest Dermatol. 145(9):2327-2330.e6. doi: 10.1016/j.jid.2025.02.133
+                        </p>
 </div>
 </div>
 </div>
+</div></section>
+<section class="mb-12">
+<h2 class="h2 text-primary flex items-center gap-2 mb-6">
+                2024
+                <span class="h-px bg-primary/20 flex-grow"></span>
+</h2>
+<div class="space-y-4">
+<div class="pub-entry group bg-primary/5 dark:bg-muted/30 p-6 rounded-xl transition-all hover:bg-background-light dark:hover:bg-muted border border-transparent hover:border-border dark:hover:border-border mb-4">
+<div class="flex justify-between items-start gap-6">
+<div class="flex-grow">
+<h3 class="text-lg font-bold leading-tight mb-2 group-hover:text-primary transition-colors text-ink">
+                            KoNA: Korean Nucleotide Archive as A New Data Repository for Nucleotide Sequence Data.
+                        </h3>
+<p class="text-sm text-ink dark:text-muted mb-2 leading-relaxed">
+                            Ko G*, Lee JH*, Sim YM*, Song W, Yoon BH, Byeon I, Lee BH, Kim SO, Choi J, Jang I, Kim H, Yang JO, Jang K, Kim S, Kim JH, Jeon J, Jung J, Hwang S#, Park JH#, Kim PG#, Kim SY#, Lee B#.
+                        </p>
+<p class="text-sm italic text-muted dark:text-muted">
+                            Genomics Proteomics Bioinformatics. 22(1):qzae017. doi: 10.1093/gpbjnl/qzae017
+                        </p>
 </div>
-</section>
-</main>
-    </div>
+</div>
+</div>
+<div class="pub-entry group bg-primary/5 dark:bg-muted/30 p-6 rounded-xl transition-all hover:bg-background-light dark:hover:bg-muted border border-transparent hover:border-border dark:hover:border-border mb-4">
+<div class="flex justify-between items-start gap-6">
+<div class="flex-grow">
+<h3 class="text-lg font-bold leading-tight mb-2 group-hover:text-primary transition-colors text-ink">
+                            Exploring the DNA methylome of Korean patients with colorectal cancer consolidates the clinical implications of cancer-associated methylation markers.
+                        </h3>
+<p class="text-sm text-ink dark:text-muted mb-2 leading-relaxed">
+                            Lee S*, Lee KY*, Park JH*, Kim DW, Oh HK, Oh ST, Jeon J, Lee D, Joe S, Chu HBK, Kang J, Lee JY, Cho S, Shim H, Kim SC, Lee HS, Kim YJ, Yang JO#, Lee J#, Kang SB#.
+                        </p>
+<p class="text-sm italic text-muted dark:text-muted">
+                            BMB Rep. 57(3):161-166. doi: 10.5483/BMBRep.2023-0103
+                        </p>
+</div>
+</div>
+</div>
+<div class="pub-entry group bg-background-light dark:bg-background-dark/50 p-6 rounded-xl transition-all hover:bg-background-light dark:hover:bg-muted border border-transparent hover:border-border dark:hover:border-border mb-4">
+<div class="flex justify-between items-start gap-6">
+<div class="flex-grow">
+<h3 class="text-lg font-bold leading-tight mb-2 group-hover:text-primary transition-colors text-ink">
+                            Korea4K: whole genome sequences of 4,157 Koreans with 107 phenotypes derived from extensive health check-ups.
+                        </h3>
+<p class="text-sm text-ink dark:text-muted mb-2 leading-relaxed">
+                            Jeon S*, Choi H*, Jeon Y, Choi WH, Choi H, An K, Ryu H, Bhak J, Lee H, Kwon Y, Ha S, Kim YJ, Blazyte A, Kim C, Kim Y, Kang Y, Woo YJ, Lee C, Seo J, Yoon C, Bolser D, Biro O, Shin ES, Kim BC, Kim SY, Park JH, Jeon J, Jung D, Lee S, Bhak J.
+                        </p>
+<p class="text-sm italic text-muted dark:text-muted">
+                            Gigascience. 13:giae014. doi: 10.1093/gigascience/giae014
+                        </p>
+</div>
+</div>
+</div>
+<div class="pub-entry group bg-background-light dark:bg-background-dark/50 p-6 rounded-xl transition-all hover:bg-background-light dark:hover:bg-muted border border-transparent hover:border-border dark:hover:border-border mb-4">
+<div class="flex justify-between items-start gap-6">
+<div class="flex-grow">
+<h3 class="text-lg font-bold leading-tight mb-2 group-hover:text-primary transition-colors text-ink">
+                            Multi-omics analysis sandbox toolkit for swift derivations of clinically relevant genesets and biomarkers.
+                        </h3>
+<p class="text-sm text-ink dark:text-muted mb-2 leading-relaxed">
+                            Lee JY*, Park W*, Kim H, Lee HS, Kang TW, Shin DH, Kim KS, Lee YK, Kim SY, Park JH, Kim YJ.
+                        </p>
+<p class="text-sm italic text-muted dark:text-muted">
+                            BMB Rep. 57(12):521-526. doi: 10.5483/BMBRep.2023-0155
+                        </p>
+</div>
+</div>
+</div>
+<div class="pub-entry group bg-background-light dark:bg-background-dark/50 p-6 rounded-xl transition-all hover:bg-background-light dark:hover:bg-muted border border-transparent hover:border-border dark:hover:border-border mb-4">
+<div class="flex justify-between items-start gap-6">
+<div class="flex-grow">
+<h3 class="text-lg font-bold leading-tight mb-2 group-hover:text-primary transition-colors text-ink">
+                            Comparison of structural variant callers for massive whole-genome sequence data.
+                        </h3>
+<p class="text-sm text-ink dark:text-muted mb-2 leading-relaxed">
+                            Joe S, Park JL, Kim J, Kim S, Park JH, Yeo MK, Lee D, Yang JO#, Kim SY#.
+                        </p>
+<p class="text-sm italic text-muted dark:text-muted">
+                            BMC Genomics. 25(1):318. doi: 10.1186/s12864-024-10239-9
+                        </p>
+</div>
+</div>
+</div>
+<div class="pub-entry group bg-background-light dark:bg-background-dark/50 p-6 rounded-xl transition-all hover:bg-background-light dark:hover:bg-muted border border-transparent hover:border-border dark:hover:border-border mb-4">
+<div class="flex justify-between items-start gap-6">
+<div class="flex-grow">
+<h3 class="text-lg font-bold leading-tight mb-2 group-hover:text-primary transition-colors text-ink">
+                            The Slc45a4 gene regulates pigmentation in a manner distinct from that of the OCA4 gene Slc45a2.
+                        </h3>
+<p class="text-sm text-ink dark:text-muted mb-2 leading-relaxed">
+                            Brito S*, Heo H*, Cha B, Lee SH, Park G, Kwak BM, Seong JK, Lee H, Park JH, Weon BM, Bin BH.
+                        </p>
+<p class="text-sm italic text-muted dark:text-muted">
+                            J Invest Dermatol. 144(3):720-722.e5. doi: 10.1016/j.jid.2023.08.027
+                        </p>
+</div>
+</div>
+</div>
+<div class="pub-entry group bg-background-light dark:bg-background-dark/50 p-6 rounded-xl transition-all hover:bg-background-light dark:hover:bg-muted border border-transparent hover:border-border dark:hover:border-border mb-4">
+<div class="flex justify-between items-start gap-6">
+<div class="flex-grow">
+<h3 class="text-lg font-bold leading-tight mb-2 group-hover:text-primary transition-colors text-ink">
+                            Comprehensive RNA-sequencing analysis of colorectal cancer in a Korean cohort.
+                        </h3>
+<p class="text-sm text-ink dark:text-muted mb-2 leading-relaxed">
+                            Lee J*, Kim JH*, Chu HBK*, Oh ST, Kang SB, Lee S, Kim DW, Oh HK, Park JH, Kim J, Kang J, Lee JY, Cho S, Shim H, Lee HS, Kim SY, Kim YJ#, Yang JO#, Lee KY#.
+                        </p>
+<p class="text-sm italic text-muted dark:text-muted">
+                            Mol Cells. 47(3):100033. doi: 10.1016/j.mocell.2024.100033
+                        </p>
+</div>
+</div>
+</div>
+</div></section>
+<section class="mb-12">
+<h2 class="h2 text-primary flex items-center gap-2 mb-6">
+                2023
+                <span class="h-px bg-primary/20 flex-grow"></span>
+</h2>
+<div class="space-y-4">
+<div class="pub-entry group bg-primary/5 dark:bg-muted/30 p-6 rounded-xl transition-all hover:bg-background-light dark:hover:bg-muted border border-transparent hover:border-border dark:hover:border-border mb-4">
+<div class="flex justify-between items-start gap-6">
+<div class="flex-grow">
+<h3 class="text-lg font-bold leading-tight mb-2 group-hover:text-primary transition-colors text-ink">
+                            Integrative single‐cell transcriptome analysis provides new insights into post‐COVID‐19 pulmonary fibrosis and potential therapeutic targets.
+                        </h3>
+<p class="text-sm text-ink dark:text-muted mb-2 leading-relaxed">
+                            Kim Y, Lim H, Kim DK, Park JH#, Oh CM#.
+                        </p>
+<p class="text-sm italic text-muted dark:text-muted">
+                            J Med Virol. 95(11):e29201. doi: 10.1002/jmv.29201
+                        </p>
+</div>
+</div>
+</div>
+<div class="pub-entry group bg-primary/5 dark:bg-muted/30 p-6 rounded-xl transition-all hover:bg-background-light dark:hover:bg-muted border border-transparent hover:border-border dark:hover:border-border mb-4">
+<div class="flex justify-between items-start gap-6">
+<div class="flex-grow">
+<h3 class="text-lg font-bold leading-tight mb-2 group-hover:text-primary transition-colors text-ink">
+                            A systematic exploration of ginsenoside Rg5 reveals anti-inflammatory functions in airway mucosa cells.
+                        </h3>
+<p class="text-sm text-ink dark:text-muted mb-2 leading-relaxed">
+                            Heo H*, Kim Y*, Cha B*, Brito S*, Kim H, Kim H, Fatombi BM, Jung SY, Lee SM, Lei L, Lee SH, Park GW, Kwak BM, Bin BH#, Park JH#, Lee MG#.
+                        </p>
+<p class="text-sm italic text-muted dark:text-muted">
+                            J Ginseng Res. 47(1):97-105. doi: 10.1016/j.jgr.2022.06.001
+                        </p>
+</div>
+</div>
+</div>
+</div></section>
+<section class="mb-12">
+<h2 class="h2 text-primary flex items-center gap-2 mb-6">
+                2022
+                <span class="h-px bg-primary/20 flex-grow"></span>
+</h2>
+<div class="space-y-4">
+<div class="pub-entry group bg-primary/5 dark:bg-muted/30 p-6 rounded-xl transition-all hover:bg-background-light dark:hover:bg-muted border border-transparent hover:border-border dark:hover:border-border mb-4">
+<div class="flex justify-between items-start gap-6">
+<div class="flex-grow">
+<h3 class="text-lg font-bold leading-tight mb-2 group-hover:text-primary transition-colors text-ink">
+                            Human milk oligosaccharide 2'-fucosyllactose promotes melanin degradation via the autophagic AMPK-ULK1 signaling axis.
+                        </h3>
+<p class="text-sm text-ink dark:text-muted mb-2 leading-relaxed">
+                            Heo H*, Cha B*, Jang D*, Park C, Park G, Kwak BM, Bin BH#, Park JH#, Lee MG#.
+                        </p>
+<p class="text-sm italic text-muted dark:text-muted">
+                            Sci Rep. 12(1):13983. doi: 10.1038/s41598-022-17896-4
+                        </p>
+</div>
+</div>
+</div>
+<div class="pub-entry group bg-background-light dark:bg-background-dark/50 p-6 rounded-xl transition-all hover:bg-background-light dark:hover:bg-muted border border-transparent hover:border-border dark:hover:border-border mb-4">
+<div class="flex justify-between items-start gap-6">
+<div class="flex-grow">
+<h3 class="text-lg font-bold leading-tight mb-2 group-hover:text-primary transition-colors text-ink">
+                            DNA methylome and single-cell transcriptome analyses reveal CDA as a potential druggable target for ALK inhibitor-resistant lung cancer therapy.
+                        </h3>
+<p class="text-sm text-ink dark:text-muted mb-2 leading-relaxed">
+                            Heo H*, Kim JH*, Lim HJ, Kim JH, Kim M, Koh J, Im JY, Kim BK, Won M, Park JH Shin YJ, Yun MR, Cho BC, Kim YS, Kim SY#, Kim M#.
+                        </p>
+<p class="text-sm italic text-muted dark:text-muted">
+                            Exp Mol Med. 54(8):1236-1249. doi: 10.1038/s12276-022-00836-7
+                        </p>
+</div>
+</div>
+</div>
+<div class="pub-entry group bg-background-light dark:bg-background-dark/50 p-6 rounded-xl transition-all hover:bg-background-light dark:hover:bg-muted border border-transparent hover:border-border dark:hover:border-border mb-4">
+<div class="flex justify-between items-start gap-6">
+<div class="flex-grow">
+<h3 class="text-lg font-bold leading-tight mb-2 group-hover:text-primary transition-colors text-ink">
+                            ORESARA 15, a PLATZ transcription factor, controls root meristem size through auxin and cytokinin signaling-related pathways.
+                        </h3>
+<p class="text-sm text-ink dark:text-muted mb-2 leading-relaxed">
+                            Timilsina R*, Kim Y*, Park S, Park H, Park SJ, Kim JH, Park JH, Kim D, Park YI, Hwang D, Lee JC, Woo HR.
+                        </p>
+<p class="text-sm italic text-muted dark:text-muted">
+                            J Exp Bot. 73(8):2511-2524. doi: 10.1093/jxb/erac050
+                        </p>
+</div>
+</div>
+</div>
+</div></section>
+<section class="mb-12">
+<h2 class="h2 text-primary flex items-center gap-2 mb-6">
+                2021
+                <span class="h-px bg-primary/20 flex-grow"></span>
+</h2>
+<div class="space-y-4">
+<div class="pub-entry group bg-primary/5 dark:bg-muted/30 p-6 rounded-xl transition-all hover:bg-background-light dark:hover:bg-muted border border-transparent hover:border-border dark:hover:border-border mb-4">
+<div class="flex justify-between items-start gap-6">
+<div class="flex-grow">
+<h3 class="text-lg font-bold leading-tight mb-2 group-hover:text-primary transition-colors text-ink">
+                            Disruption of nucleocytoplasmic trafficking as a cellular senescence driver.
+                        </h3>
+<p class="text-sm text-ink dark:text-muted mb-2 leading-relaxed">
+                            Park JH*, Ryu SJ*, Kim BJ*, Cho HJ, Park CH, Choi HJC, Jang EJ, Yang EJ, Hwang JA, Woo SH, Lee JH, Park JH, Choi KM, Kwon YY, Lee CK, Park JT, Cho SC, Lee YI, Lee SB, Han JA, Cho KA, Kim MS#, Hwang D#, Lee YS#, Park SC#.
+                        </p>
+<p class="text-sm italic text-muted dark:text-muted">
+                            Exp Mol Med. 53(6):1092-1108. doi: 10.1038/s12276-021-00643-6
+                        </p>
+</div>
+</div>
+</div>
+</div></section>
+<section class="mb-12">
+<h2 class="h2 text-primary flex items-center gap-2 mb-6">
+                2020
+                <span class="h-px bg-primary/20 flex-grow"></span>
+</h2>
+<div class="space-y-4">
+<div class="pub-entry group bg-primary/5 dark:bg-muted/30 p-6 rounded-xl transition-all hover:bg-background-light dark:hover:bg-muted border border-transparent hover:border-border dark:hover:border-border mb-4">
+<div class="flex justify-between items-start gap-6">
+<div class="flex-grow">
+<h3 class="text-lg font-bold leading-tight mb-2 group-hover:text-primary transition-colors text-ink">
+                            Dynamic transcriptome analysis unveils key pro-resolving factors of chronic inflammatory arthritis.
+                        </h3>
+<p class="text-sm text-ink dark:text-muted mb-2 leading-relaxed">
+                            Kong JS*, Park JH*, Yoo SA, Kim KM, Bae YJ, Park YJ, Cho CS, Hwang D#, Kim WU#.
+                        </p>
+<p class="text-sm italic text-muted dark:text-muted">
+                            J Clin Invest. 126866. doi: 10.1172/JCI126866
+                        </p>
+</div>
+</div>
+</div>
+<div class="pub-entry group bg-background-light dark:bg-background-dark/50 p-6 rounded-xl transition-all hover:bg-background-light dark:hover:bg-muted border border-transparent hover:border-border dark:hover:border-border mb-4">
+<div class="flex justify-between items-start gap-6">
+<div class="flex-grow">
+<h3 class="text-lg font-bold leading-tight mb-2 group-hover:text-primary transition-colors text-ink">
+                            Natural Variations at the Stay- Green Gene Promoter Control Lifespan and Yield in Rice Cultivars.
+                        </h3>
+<p class="text-sm text-ink dark:text-muted mb-2 leading-relaxed">
+                            Shin D*, Lee S*#, Kim TH*, Lee JH, Park J, Lee J, Lee JY, Cho LH, Choi JY, Lee W, Park JH, Lee DW, Ito H, Kim DH, Tanaka A, Cho JH, Song YC, Hwang D, Purugganan MD, Jeon JS, An G, Nam HG#.
+                        </p>
+<p class="text-sm italic text-muted dark:text-muted">
+                            Nat Commun. 11(1):2819. doi: 10.1038/s41467-020-16573-2
+                        </p>
+</div>
+</div>
+</div>
+<div class="pub-entry group bg-background-light dark:bg-background-dark/50 p-6 rounded-xl transition-all hover:bg-background-light dark:hover:bg-muted border border-transparent hover:border-border dark:hover:border-border mb-4">
+<div class="flex justify-between items-start gap-6">
+<div class="flex-grow">
+<h3 class="text-lg font-bold leading-tight mb-2 group-hover:text-primary transition-colors text-ink">
+                            Regulation of stomatal development by stomatal lineage miRNAs.
+                        </h3>
+<p class="text-sm text-ink dark:text-muted mb-2 leading-relaxed">
+                            Zhu J, Park JH, Lee S, Lee JH, Hwang D, Kwak JM#, Kim YJ#.
+                        </p>
+<p class="text-sm italic text-muted dark:text-muted">
+                            Proc Natl Acad Sci U S A. 117(11):6237-6245. doi: 10.1073/pnas.1919722117
+                        </p>
+</div>
+</div>
+</div>
+</div></section>
+<section class="mb-12">
+<h2 class="h2 text-primary flex items-center gap-2 mb-6">
+                2018
+                <span class="h-px bg-primary/20 flex-grow"></span>
+</h2>
+<div class="space-y-4">
+<div class="pub-entry group bg-primary/5 dark:bg-muted/30 p-6 rounded-xl transition-all hover:bg-background-light dark:hover:bg-muted border border-transparent hover:border-border dark:hover:border-border mb-4">
+<div class="flex justify-between items-start gap-6">
+<div class="flex-grow">
+<h3 class="text-lg font-bold leading-tight mb-2 group-hover:text-primary transition-colors text-ink">
+                            A secretome profile indicative of oleate-induced proliferation of HepG2 hepatocellular carcinoma cells.
+                        </h3>
+<p class="text-sm text-ink dark:text-muted mb-2 leading-relaxed">
+                            Park S*, Park JH*, Jung HJ*, Jang JH, Ahn S, Kim Y, Suh PG, Chae S, Yoon JH#, Ryu SH#, Hwang D#.
+                        </p>
+<p class="text-sm italic text-muted dark:text-muted">
+                            Exp Mol Med. 50(8):93. doi: 10.1038/s12276-018-0120-3
+                        </p>
+</div>
+</div>
+</div>
+<div class="pub-entry group bg-primary/5 dark:bg-muted/30 p-6 rounded-xl transition-all hover:bg-background-light dark:hover:bg-muted border border-transparent hover:border-border dark:hover:border-border mb-4">
+<div class="flex justify-between items-start gap-6">
+<div class="flex-grow">
+<h3 class="text-lg font-bold leading-tight mb-2 group-hover:text-primary transition-colors text-ink">
+                            Time-evolving genetic networks reveal a NAC troika that negatively regulates leaf senescence in Arabidopsis.
+                        </h3>
+<p class="text-sm text-ink dark:text-muted mb-2 leading-relaxed">
+                            Kim HJ*, Park JH*, Kim J, Kim JJ, Hong S, Kim J, Kim JH, Woo HR, Hyeon C, Lim PO#, Nam HG#, Hwang D#.
+                        </p>
+<p class="text-sm italic text-muted dark:text-muted">
+                            Proc Natl Acad Sci U S A. 115(21):E4930-E4939. doi: 10.1073/pnas.1721523115
+                        </p>
+</div>
+</div>
+</div>
+<div class="pub-entry group bg-background-light dark:bg-background-dark/50 p-6 rounded-xl transition-all hover:bg-background-light dark:hover:bg-muted border border-transparent hover:border-border dark:hover:border-border mb-4">
+<div class="flex justify-between items-start gap-6">
+<div class="flex-grow">
+<h3 class="text-lg font-bold leading-tight mb-2 group-hover:text-primary transition-colors text-ink">
+                            Antagonistic Roles of phyA and phyB in Far-red Light-Dependent Leaf Senescence in Arabidopsis thaliana.
+                        </h3>
+<p class="text-sm text-ink dark:text-muted mb-2 leading-relaxed">
+                            Lim J, Park JH, Jung S, Hwang D, Nam HG#, Hong S#.
+                        </p>
+<p class="text-sm italic text-muted dark:text-muted">
+                            Plant Cell Physiol. 59(9):1753-64. doi: 10.1093/pcp/pcy153
+                        </p>
+</div>
+</div>
+</div>
+</div></section>
+<section class="mb-12">
+<h2 class="h2 text-primary flex items-center gap-2 mb-6">
+                2017
+                <span class="h-px bg-primary/20 flex-grow"></span>
+</h2>
+<div class="space-y-4">
+<div class="pub-entry group bg-background-light dark:bg-background-dark/50 p-6 rounded-xl transition-all hover:bg-background-light dark:hover:bg-muted border border-transparent hover:border-border dark:hover:border-border mb-4">
+<div class="flex justify-between items-start gap-6">
+<div class="flex-grow">
+<h3 class="text-lg font-bold leading-tight mb-2 group-hover:text-primary transition-colors text-ink">
+                            Gut-specific Delivery of T-helper 17 Cells Reduces Obesity and Insulin Resistance in Mice.
+                        </h3>
+<p class="text-sm text-ink dark:text-muted mb-2 leading-relaxed">
+                            Hong CP*, Park A*, Yang BG*, Yun CH, Kwak MJ, Lee GW, Kim JH, Jang MS, Lee EJ, Jeun EJ, You G, Kim KS, Choi Y, Park JH, Hwang D, Im SH, Kim JF, Kim YK, Seoh JY, Surh CD, Kim YM#, Jang MH#.
+                        </p>
+<p class="text-sm italic text-muted dark:text-muted">
+                            Gastroenterology 152(8):1998- 2010. doi: 10.1053/j.gastro.2017.02.016
+                        </p>
+</div>
+</div>
+</div>
+</div></section>
+<section class="mb-12">
+<h2 class="h2 text-primary flex items-center gap-2 mb-6">
+                2016
+                <span class="h-px bg-primary/20 flex-grow"></span>
+</h2>
+<div class="space-y-4">
+<div class="pub-entry group bg-background-light dark:bg-background-dark/50 p-6 rounded-xl transition-all hover:bg-background-light dark:hover:bg-muted border border-transparent hover:border-border dark:hover:border-border mb-4">
+<div class="flex justify-between items-start gap-6">
+<div class="flex-grow">
+<h3 class="text-lg font-bold leading-tight mb-2 group-hover:text-primary transition-colors text-ink">
+                            Effect of bexarotene on differentiation of glioblastoma multiforme compared with ATRA.
+                        </h3>
+<p class="text-sm text-ink dark:text-muted mb-2 leading-relaxed">
+                            Heo JC*, Jung TH*, Lee S, Kim HY, Choi G, Jung M, Jung D, Lee HK, Lee JO, Park JH, Hwang D, Seol HJ, Cho H.
+                        </p>
+<p class="text-sm italic text-muted dark:text-muted">
+                            Clin Exp Metastasis 33(5):417-29. doi: 10.1007/s10585-016-9786-x
+                        </p>
+</div>
+</div>
+</div>
+</div></section>
+<section class="mb-12">
+<h2 class="h2 text-primary flex items-center gap-2 mb-6">
+                2015
+                <span class="h-px bg-primary/20 flex-grow"></span>
+</h2>
+<div class="space-y-4">
+<div class="pub-entry group bg-primary/5 dark:bg-muted/30 p-6 rounded-xl transition-all hover:bg-background-light dark:hover:bg-muted border border-transparent hover:border-border dark:hover:border-border mb-4">
+<div class="flex justify-between items-start gap-6">
+<div class="flex-grow">
+<h3 class="text-lg font-bold leading-tight mb-2 group-hover:text-primary transition-colors text-ink">
+                            Integrated analysis of global proteome, phosphoproteome, and glycoproteome enables complementary interpretation of disease-related protein networks.
+                        </h3>
+<p class="text-sm text-ink dark:text-muted mb-2 leading-relaxed">
+                            Park JM*, Park JH*, Mun DG*, Bae J*, Jung JH, Back S, Lee H, Kim H, Jung HJ, Kim HK, Lee H, Kim KP#, Hwang D#, Lee SW#.
+                        </p>
+<p class="text-sm italic text-muted dark:text-muted">
+                            Sci Rep. 11(5):18189. doi: 10.1038/srep18189
+                        </p>
+</div>
+</div>
+</div>
+<div class="pub-entry group bg-background-light dark:bg-background-dark/50 p-6 rounded-xl transition-all hover:bg-background-light dark:hover:bg-muted border border-transparent hover:border-border dark:hover:border-border mb-4">
+<div class="flex justify-between items-start gap-6">
+<div class="flex-grow">
+<h3 class="text-lg font-bold leading-tight mb-2 group-hover:text-primary transition-colors text-ink">
+                            Leukocyte-specific protein 1 regulates T-cell migration in rheumatoid arthritis.
+                        </h3>
+<p class="text-sm text-ink dark:text-muted mb-2 leading-relaxed">
+                            Hwang SH*, Jung SH*, Lee S, Choi S, Yoo SA, Park JH, Hwang D, Shim SC, Sabbagh L, Kim KJ, Park SH, Cho CS, Kim BS, Leng L, Montgomery RR, Bucala R, Chung YJ#, Kim WU#.
+                        </p>
+<p class="text-sm italic text-muted dark:text-muted">
+                            Proc Natl Acad Sci U S A. 112(47):E6535-43. doi: 10.1073/pnas.1514152112
+                        </p>
+</div>
+</div>
+</div>
+<div class="pub-entry group bg-background-light dark:bg-background-dark/50 p-6 rounded-xl transition-all hover:bg-background-light dark:hover:bg-muted border border-transparent hover:border-border dark:hover:border-border mb-4">
+<div class="flex justify-between items-start gap-6">
+<div class="flex-grow">
+<h3 class="text-lg font-bold leading-tight mb-2 group-hover:text-primary transition-colors text-ink">
+                            Placental Growth Factor-1 and -2 Induce Hyperplasia and Invasiveness of Primary Rheumatoid Synoviocytes.
+                        </h3>
+<p class="text-sm text-ink dark:text-muted mb-2 leading-relaxed">
+                            Yoo SA, Park JH, Hwang SH, Oh SM, Lee S, Cicatiello V, Rho S, Falco SD, Hwang D, Cho CS, Kim WU.
+                        </p>
+<p class="text-sm italic text-muted dark:text-muted">
+                            Journal of Immunology 194 (6):2513-2521. doi: 10.4049/jimmunol.1402900
+                        </p>
+</div>
+</div>
+</div>
+</div></section>
+<section class="mb-12">
+<h2 class="h2 text-primary flex items-center gap-2 mb-6">
+                2013
+                <span class="h-px bg-primary/20 flex-grow"></span>
+</h2>
+<div class="space-y-4">
+<div class="pub-entry group bg-background-light dark:bg-background-dark/50 p-6 rounded-xl transition-all hover:bg-background-light dark:hover:bg-muted border border-transparent hover:border-border dark:hover:border-border mb-4">
+<div class="flex justify-between items-start gap-6">
+<div class="flex-grow">
+<h3 class="text-lg font-bold leading-tight mb-2 group-hover:text-primary transition-colors text-ink">
+                            Proteomic analysis of balding and non-balding mesenchyme-derived dermal papilla cells from androgenetic alopecia patients using on-line two-dimensional reversed phase-reversed phase LC-MS/MS.
+                        </h3>
+<p class="text-sm text-ink dark:text-muted mb-2 leading-relaxed">
+                            Moon PG*, Kwack MH*, Lee JE, Cho YE, Park JH, Hwang D, Kim MK, Kim JC, Sung YK#, Baek MC#.
+                        </p>
+<p class="text-sm italic text-muted dark:text-muted">
+                            Journal of Proteomics 85:174-91. doi: 10.1016/j.jprot.2013.04.004
+                        </p>
+</div>
+</div>
+</div>
+</div></section>
+<section class="mb-12">
+<h2 class="h2 text-primary flex items-center gap-2 mb-6">
+                Patents
+                <span class="h-px bg-primary/20 flex-grow"></span>
+</h2>
+<div class="space-y-4">
+<div class="pub-entry group bg-background-light dark:bg-background-dark/50 p-6 rounded-xl transition-all hover:bg-background-light dark:hover:bg-muted border border-transparent hover:border-border dark:hover:border-border mb-4"><p class="text-sm text-ink dark:text-muted leading-relaxed">Yoon JH, Hwang D, Ryu SH, Park S, Park JH. Novel hepatocellular carcinoma diagnostic marker and use thereof. Patent in Republic of Korea, Registration Number: 1021366430000, Jul. 2020.</p></div>
+<div class="pub-entry group bg-background-light dark:bg-background-dark/50 p-6 rounded-xl transition-all hover:bg-background-light dark:hover:bg-muted border border-transparent hover:border-border dark:hover:border-border mb-4"><p class="text-sm text-ink dark:text-muted leading-relaxed">Lee JS, Kim M, Kim JS, Park JH, Eom MK, Park SH, Lee JH, Kang SW, Um ES, Go HY, Sohn HA. Novel Bifidobacterium strain and composition for preventing, improving or treating fatty liver disease comprising the same. Patent Pending in Republic of Korea, Pending Number: 1020240006925.</p></div>
+</div></section>
+</main></div>
 
     <div id="Contact" class="tabcontent">
       <section class="max-w-[1100px] mx-auto py-24 px-12">
