@@ -6,6 +6,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const navLinks = document.querySelectorAll('.nav a.item');
     const detailsElements = document.querySelectorAll('.nav details');
     const tabContents = document.querySelectorAll('.tabcontent');
+    const banner = document.querySelector('.banner');
 
     // --- STATE & HELPERS ---
     const closeSidebar = () => {
@@ -15,6 +16,9 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     const activateTab = (targetId) => {
+        // Hide the top banner on the Home tab for a cleaner look; show it on other tabs.
+        if (banner) banner.style.display = (targetId === 'Home') ? 'none' : '';
+
         // Deactivate all tabs and links
         tabContents.forEach(tab => tab.classList.remove('active'));
         navLinks.forEach(link => link.classList.remove('active'));

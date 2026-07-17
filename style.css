@@ -3,20 +3,21 @@
 
 :root {
   /* === SBAI Color Palette === */
-  --bg: #FDFEFD;
-  --ink: #0F172A;
-  --muted: #475569;
-  --border: #E2E8F0;
-  --accent: #B91C1C;
-  --accent-soft: #D1FAE5; /* Re-added as it was used in nav items hover */
-  --light: #FFFFFF;
-  --primary-color: #064E3B; /* Added to map Tailwind primary to CSS var */
-  --secondary-color: #0F766E; /* Added to map Tailwind secondary to CSS var */
-  --secondary-color-rgb: 15, 118, 110;
+  --bg: #FFFFFF;          /* page background */
+  --ink: #1A1A1A;         /* main text */
+  --muted: #5A5A5A;       /* secondary text */
+  --border: #CBCBCB;      /* borders / dividers */
+  --accent: #4D1717;      /* deep maroon — sparing point accent */
+  --accent-soft: #E6EFEA; /* light green tint — nav hover */
+  --light: #FFFFFF;       /* cards / surfaces / sidebar */
+  --primary-color: #174D38;   /* deep green — main point color */
+  --secondary-color: #2E6A50; /* lighter green */
+  --secondary-color-rgb: 46, 106, 80;
 
   --sidebar-w: 240px;
   --radius: 8px;
-  --container: min(1200px, calc(100vw - var(--sidebar-w) - 60px));
+  /* Fluid: fill the viewport (minus sidebar + wrap padding) at every window size */
+  --container: calc(100vw - var(--sidebar-w) - 64px);
   
   --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
   --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
@@ -27,8 +28,9 @@
 html {
   margin: 0; padding: 0;
   background: var(--bg); color: var(--ink);
-  font-family: 'Inter', 'Noto Sans KR', ui-sans-serif, system-ui, -apple-system, sans-serif;
+  font-family: 'Pretendard', 'Inter', 'Noto Sans KR', ui-sans-serif, system-ui, -apple-system, sans-serif;
   scroll-behavior: smooth;
+  font-size: 17px; /* slightly larger base text (all rem-based sizes scale) */
 }
 
 body {
@@ -37,8 +39,8 @@ body {
   transition: padding-left 0.3s ease-in-out;
 }
 
-a { color: var(--accent); text-decoration: none; transition: color 0.2s ease; }
-a:hover { color: var(--primary-color); } /* Changed to primary-color */
+a { color: var(--primary-color); text-decoration: none; transition: color 0.2s ease; }
+a:hover { color: var(--secondary-color); }
 
 h1, h2, h3, h4, h5, h6 { margin: 0; padding: 0; }
 
@@ -95,7 +97,7 @@ summary::-webkit-details-marker { display: none; }
 /* Removed banner h1 and h2, they will be handled by Tailwind */
 
 /* Main Content */
-.wrap { padding: 40px; display: grid; justify-items: center; }
+.wrap { padding: 32px; display: grid; justify-items: center; }
 .tabcontent {
   display: none;
   animation: fadeIn 0.5s ease;

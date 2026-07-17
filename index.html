@@ -7,7 +7,9 @@
   <meta name="description" content="SBAI — Research, Members, Publications" />
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&family=Noto+Sans+KR:wght@400;700&family=Playfair+Display:ital,wght@400..900;1,400..900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">
+  <!-- Pretendard (primary font) — webfont via jsDelivr dynamic subset (OFL), family: 'Pretendard' -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard-dynamic-subset.min.css">
   <link rel="stylesheet" href="style.css" />
   <link rel="icon" href="favicon.ico" />
   <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
@@ -18,18 +20,22 @@
             theme: {
                 extend: {
                     colors: {
-                        "primary": "#064E3B",
-                        "secondary": "#0F766E",
-                        "accent": "#B91C1C",
-                        "background-light": "#FDFEFD",
-                        "background-dark": "#111621", /* Keeping dark background as is, assuming user wants dark mode to remain dark */
-                        "ink": "#0F172A",
-                        "muted": "#475569",
-                        "border": "#E2E8F0"
+                        "primary": "#174D38",
+                        "primary-dark": "#0F3527",
+                        "primary-soft": "#E6EFEA",
+                        "secondary": "#2E6A50",
+                        "accent": "#4D1717",
+                        "accent-dark": "#331010",
+                        "page": "#FFFFFF",
+                        "background-light": "#FFFFFF",
+                        "background-dark": "#111621",
+                        "ink": "#1A1A1A",
+                        "muted": "#5A5A5A",
+                        "border": "#CBCBCB"
                     },
                     fontFamily: {
-                        "display": ["Inter", "sans-serif", "Noto Sans KR"],
-                        "serif": ["Playfair Display", "serif"]
+                        "display": ["Pretendard", "Inter", "Noto Sans KR", "sans-serif"],
+                        "serif": ["Pretendard", "Inter", "Noto Sans KR", "sans-serif"]
                     },
                     borderRadius: {
                         "DEFAULT": "0.25rem",
@@ -44,9 +50,10 @@
   
 <style type="text/tailwindcss">
         body {
-            @apply font-display bg-background-light dark:bg-background-dark text-ink dark:text-white;
+            @apply font-display bg-page text-ink;
+            letter-spacing: 0.02em;
         }
-        h1, .h1 { @apply text-4xl lg:text-5xl font-extrabold tracking-tighter; }
+        h1, .h1 { @apply text-4xl lg:text-5xl font-extrabold tracking-tight; }
         h2, .h2 { @apply text-3xl lg:text-4xl font-normal tracking-tight; }
         h3, .h3 { @apply text-2xl lg:text-3xl font-bold; }
         h4, .h4 { @apply text-xl font-bold; }
@@ -84,7 +91,7 @@
     </style>
 </head>
 
-<body class="bg-background-light dark:bg-background-dark font-display text-ink dark:text-white antialiased">
+<body class="bg-page font-display text-ink antialiased">
   <!-- Mobile header -->
   <div class="mobilebar">
     <button id="menu-toggle">☰ Menu</button>
@@ -130,55 +137,49 @@
 
     <!-- Home -->
     <div id="Home" class="tabcontent active">
-      <!-- Hero Section -->
-      <section class="max-w-[1100px] mx-auto pt-24 pb-16 px-6 md:px-12">
-      <div class=" @container">
-      <div class="flex flex-col gap-12 @[864px]:flex-row @[864px]:items-center">
-      <div class="flex flex-col gap-8 flex-1">
-      <div class="flex flex-col gap-4">
-      <span class="section-label">Pioneering Research</span>
-      <h1 class="h1 text-ink dark:text-white leading-tight">
-                                      Title
-      </h1>
-      <p class="text-lg max-w-[500px]">
-                                      (내용 예정)
-                                  </p>
-      </div>
-      <div class="flex gap-4">
-        <a href="#Research" class="bg-primary hover:bg-secondary text-white font-bold py-3 px-8 rounded-lg transition-all transform hover:scale-[1.02]">
-          Research
-        </a>
-        <a href="#Contact" class="border border-border dark:border-border text-ink dark:text-white font-bold py-3 px-8 rounded-lg hover:bg-background-light dark:hover:bg-muted transition-all">
-          Join Our Team
-        </a>
-      </div>
-      </div>
-      <div class="w-full @[864px]:w-[45%] h-[400px] bg-center bg-no-repeat bg-cover rounded-xl shadow-2xl grayscale hover:grayscale-0 transition-all duration-700" data-alt="Microscopic view of immune cells interacting with aged tissue" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDb-ECrv163GMkFuyjiWVBIIxBr6oUjNt6WCPAb-rg0E-RArAPQTc-EPf3-W6Zny4iWsy9ko9HR-AkU_KAXtgKjS4f4tG2MgqGDQVHpVEH-DhA4ZgY--PLzvyAHZfbn9zgcEC6p6Bbd1TDBXkDcO97cKXQp6t7cWKmC3v4Y7PydeJbuVUwl8NCkKP9eBdSlt0Cpilx2Ci3w-UBXRgTebksgDaLVd0v2kWjLSz-dhLf7aViOXXRCMxDIXKdz0FqelnYwGi22AD-b512O");'>
-      </div>
-      </div>
-      </div>
+      <!-- Hero + About (merged) — "Growth Hero" style (vanilla adaptation of the framer-motion component).
+           The sequential entrance is driven by Motion in the SBAI_MOTION block at the end of <body>. -->
+      <section id="home-hero" class="relative min-h-[calc(100vh_-_3.5rem)] max-w-full mx-auto px-6 md:px-12 text-center flex flex-col">
+        <div id="hero-content" class="flex-1 w-full flex flex-col items-center justify-center">
+
+          <!-- Multi-omics cascade: 4 tiles that rise in sequence -->
+          <div class="mb-2 flex w-full items-center justify-center gap-[clamp(0.75rem,4vw,5rem)]"
+               aria-label="Multi-omics cascade: genomics, transcriptomics, proteomics, metabolomics">
+            <div class="hero-rise flex-1 min-w-0 max-w-[13rem]">
+              <img src="images/Home/genomics_icon.png" alt="Genomics" class="w-full aspect-square object-contain" />
+            </div>
+            <div class="hero-rise flex-1 min-w-0 max-w-[13rem]">
+              <img src="images/Home/transcriptomics_icon.png" alt="Transcriptomics" class="w-full aspect-square object-contain" />
+            </div>
+            <div class="hero-rise flex-1 min-w-0 max-w-[13rem]">
+              <img src="images/Home/proteomics_icon.png" alt="Proteomics" class="w-full aspect-square object-contain" />
+            </div>
+            <div class="hero-rise flex-1 min-w-0 max-w-[13rem]">
+              <img src="images/Home/metabolomics_icon.png" alt="Metabolomics" class="w-full aspect-square object-contain" />
+            </div>
+          </div>
+
+          <!-- Title (editable placeholder) -->
+          <h1 class="hero-rise mt-8 max-w-3xl text-3xl md:text-5xl lg:text-6xl font-semibold tracking-tight text-ink leading-[1.15]">
+            (Lab Catchphrase)
+          </h1>
+
+          <!-- Description -->
+          <div class="hero-rise mt-6 max-w-2xl space-y-4 text-lg md:text-xl lg:text-2xl text-muted leading-relaxed">
+            <p>SBAI Lab</p>
+            <p>(설명설명설명)</p>
+          </div>
+
+          <!-- Scroll cue -->
+          <a href="#our-focus" id="scroll-cue" class="hero-rise mt-14 inline-flex flex-col items-center gap-1 text-xs font-semibold uppercase tracking-widest text-muted hover:text-primary transition-colors">
+            <span>See More</span>
+            <span class="material-symbols-outlined text-xl animate-bounce">keyboard_arrow_down</span>
+          </a>
+        </div>
       </section>
-<!-- About Section -->
-<section class="bg-background-light dark:bg-background-dark/50 py-20 px-12 border-y border-border dark:border-border">
-  <div class="max-w-[1100px] mx-auto">
-    <div class="grid grid-cols-1 md:grid-cols-12 gap-12">
-      <div class="md:col-span-4">
-        <h2 class="h2 text-ink dark:text-white">About the Lab</h2>
-        <div class="h-1 w-12 bg-primary mt-4"></div>
-      </div>
-      <div class="md:col-span-8">
-        <p class="text-xl text-ink dark:text-muted font-normal mb-6">
-          (내용 예정)
-        </p>
-        <p>
-          (내용 예정)
-        </p>
-      </div>
-    </div>
-  </div>
-</section>
+<!-- (About the Lab merged into the hero above) -->
 <!-- Research Pillars Grid -->
-<section class="max-w-[1100px] mx-auto py-24 px-12">
+<section id="our-focus" class="max-w-full mx-auto py-24 px-12">
 <div class="flex flex-col gap-12">
 <div class="flex justify-between items-end border-b border-border dark:border-border pb-8">
 <div>
@@ -196,9 +197,9 @@
 <div class="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center text-primary mb-6 group-hover:bg-primary group-hover:text-white transition-colors">
 <span class="material-symbols-outlined">analytics</span>
 </div>
-<h4 class="h4 text-ink dark:text-white mb-4">연구주제1</h4>
+<h4 class="h4 text-ink dark:text-white mb-4">(제목제목제목)</h4>
 <p class="text-sm">
-                            Prototype content goes here.
+                            (설명설명설명)
                         </p>
 </div>
 <!-- Pillar 2 -->
@@ -206,9 +207,9 @@
 <div class="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center text-primary mb-6 group-hover:bg-primary group-hover:text-white transition-colors">
 <span class="material-symbols-outlined">genetics</span>
 </div>
-<h4 class="h4 text-ink dark:text-white mb-4">연구주제2</h4>
+<h4 class="h4 text-ink dark:text-white mb-4">(제목제목제목)</h4>
 <p class="text-sm">
-                            Prototype content goes here.
+                            (설명설명설명)
                         </p>
 </div>
 <!-- Pillar 3 -->
@@ -216,9 +217,9 @@
 <div class="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center text-primary mb-6 group-hover:bg-primary group-hover:text-white transition-colors">
 <span class="material-symbols-outlined">science</span>
 </div>
-<h4 class="h4 text-ink dark:text-white mb-4">연구주제3</h4>
+<h4 class="h4 text-ink dark:text-white mb-4">(제목제목제목)</h4>
 <p class="text-sm">
-                            Prototype content goes here.
+                            (설명설명설명)
                         </p>
 </div>
 </div>
@@ -230,14 +231,14 @@
     <div id="Research" class="tabcontent">
       <main class="flex-1 flex flex-col items-center">
 <!-- Page Heading Section -->
-<section class="max-w-[960px] w-full px-6 lg:px-10 py-16">
+<section class="max-w-full w-full px-6 lg:px-10 py-16">
 <div class="flex flex-col md:flex-row md:items-end justify-between gap-8 border-l-4 border-primary pl-6">
 <div class="max-w-2xl">
 <h1 class="h1 mb-4">
-                            Title
+                            (제목제목제목)
                         </h1>
 <p class="text-lg">
-                            (내용 예정)
+                            (설명설명설명)
                         </p>
 </div>
 <div>
@@ -249,17 +250,17 @@
 </div>
 </section>
 <!-- Themes Content -->
-<section class="max-w-[960px] w-full px-6 lg:px-10 pb-24 space-y-20">
+<section class="max-w-full w-full px-6 lg:px-10 pb-24 space-y-20">
 <!-- Theme 1: Human-AI Interaction -->
 <div class="group">
 <div class="flex items-center gap-4 mb-6">
 <div class="h-8 w-1 bg-primary"></div>
-<h3 class="h3 text-primary">연구주제1</h3>
+<h3 class="h3 text-primary">(제목제목제목)</h3>
 </div>
 <div class="grid md:grid-cols-3 gap-10">
 <div class="md:col-span-2">
 <p class="mb-6">
-                                Prototype content goes here.
+                                (설명설명설명)
                             </p>
 </div>
 <div class="bg-background-light dark:bg-muted p-6 rounded-xl border border-border dark:border-border shadow-sm">
@@ -267,15 +268,15 @@
 <div class="space-y-3 custom-checkbox-tick">
 <label class="flex items-start gap-3">
 <input checked="" class="mt-1 h-5 w-5 rounded border-border border-2 bg-transparent text-primary checked:bg-primary checked:border-primary focus:ring-0" disabled="" type="checkbox"/>
-<span class="text-sm font-medium">(내용 예정)</span>
+<span class="text-sm font-medium">(항목항목항목)</span>
 </label>
 <label class="flex items-start gap-3">
 <input checked="" class="mt-1 h-5 w-5 rounded border-border border-2 bg-transparent text-primary checked:bg-primary checked:border-primary focus:ring-0" disabled="" type="checkbox"/>
-<span class="text-sm font-medium">(내용 예정)</span>
+<span class="text-sm font-medium">(항목항목항목)</span>
 </label>
 <label class="flex items-start gap-3">
 <input checked="" class="mt-1 h-5 w-5 rounded border-border border-2 bg-transparent text-primary checked:bg-primary checked:border-primary focus:ring-0" disabled="" type="checkbox"/>
-<span class="text-sm font-medium">(내용 예정)</span>
+<span class="text-sm font-medium">(항목항목항목)</span>
 </label>
 </div>
 </div>
@@ -285,12 +286,12 @@
 <div class="group">
 <div class="flex items-center gap-4 mb-6">
 <div class="h-8 w-1 bg-primary"></div>
-<h3 class="h3 text-primary">연구주제2</h3>
+<h3 class="h3 text-primary">(제목제목제목)</h3>
 </div>
 <div class="grid md:grid-cols-3 gap-10">
 <div class="md:col-span-2">
 <p class="mb-6">
-                                Prototype content goes here.
+                                (설명설명설명)
                             </p>
 </div>
 <div class="bg-background-light dark:bg-muted p-6 rounded-xl border border-border dark:border-border shadow-sm">
@@ -298,15 +299,15 @@
 <div class="space-y-3">
 <label class="flex items-start gap-3">
 <input checked="" class="mt-1 h-5 w-5 rounded border-border border-2 bg-transparent text-primary checked:bg-primary checked:border-primary focus:ring-0" disabled="" type="checkbox"/>
-<span class="text-sm font-medium">(내용 예정)</span>
+<span class="text-sm font-medium">(항목항목항목)</span>
 </label>
 <label class="flex items-start gap-3">
 <input checked="" class="mt-1 h-5 w-5 rounded border-border border-2 bg-transparent text-primary checked:bg-primary checked:border-primary focus:ring-0" disabled="" type="checkbox"/>
-<span class="text-sm font-medium">(내용 예정)</span>
+<span class="text-sm font-medium">(항목항목항목)</span>
 </label>
 <label class="flex items-start gap-3">
 <input checked="" class="mt-1 h-5 w-5 rounded border-border border-2 bg-transparent text-primary checked:bg-primary checked:border-primary focus:ring-0" disabled="" type="checkbox"/>
-<span class="text-sm font-medium">(내용 예정)</span>
+<span class="text-sm font-medium">(항목항목항목)</span>
 </label>
 </div>
 </div>
@@ -316,12 +317,12 @@
 <div class="group">
 <div class="flex items-center gap-4 mb-6">
 <div class="h-8 w-1 bg-primary"></div>
-<h3 class="h3 text-primary">연구주제3</h3>
+<h3 class="h3 text-primary">(제목제목제목)</h3>
 </div>
 <div class="grid md:grid-cols-3 gap-10">
 <div class="md:col-span-2">
 <p class="mb-6">
-                                Prototype content goes here.
+                                (설명설명설명)
                             </p>
 </div>
 <div class="bg-background-light dark:bg-muted p-6 rounded-xl border border-border dark:border-border shadow-sm">
@@ -329,15 +330,15 @@
 <div class="space-y-3">
 <label class="flex items-start gap-3">
 <input checked="" class="mt-1 h-5 w-5 rounded border-border border-2 bg-transparent text-primary checked:bg-primary checked:border-primary focus:ring-0" disabled="" type="checkbox"/>
-<span class="text-sm font-medium">(내용 예정)</span>
+<span class="text-sm font-medium">(항목항목항목)</span>
 </label>
 <label class="flex items-start gap-3">
 <input checked="" class="mt-1 h-5 w-5 rounded border-border border-2 bg-transparent text-primary checked:bg-primary checked:border-primary focus:ring-0" disabled="" type="checkbox"/>
-<span class="text-sm font-medium">(내용 예정)</span>
+<span class="text-sm font-medium">(항목항목항목)</span>
 </label>
 <label class="flex items-start gap-3">
 <input checked="" class="mt-1 h-5 w-5 rounded border-border border-2 bg-transparent text-primary checked:bg-primary checked:border-primary focus:ring-0" disabled="" type="checkbox"/>
-<span class="text-sm font-medium">(내용 예정)</span>
+<span class="text-sm font-medium">(항목항목항목)</span>
 </label>
 </div>
 </div>
@@ -350,7 +351,7 @@
 
     <!-- PI -->
     <div id="PI" class="tabcontent">
-      <div class="pi-wrap max-w-[960px] mx-auto px-6 py-12">
+      <div class="pi-wrap max-w-full mx-auto px-6 py-12">
         <h1 class="h1 text-center mb-12">Principal Investigator</h1>
         <div class="pi-hero flex flex-col md:flex-row items-center text-center md:text-left gap-8 md:gap-12">
           <img class="pi-photo w-72 h-[21rem] object-cover" src="images/Members/교수님_사진.jpg" alt="Principal Investigator photo" />
@@ -381,7 +382,7 @@
 
     <!-- Lab Members -->
     <div id="LabMembers" class="tabcontent">
-        <div class="max-w-[960px] mx-auto px-6 py-12">
+        <div class="max-w-full mx-auto px-6 py-12">
       <h1 class="h1 text-center mb-12">Lab Members</h1>
       
       <h2 class="h2 text-primary mt-12 mb-6">Postdoctoral Fellows</h2>
@@ -400,7 +401,7 @@
           <img class="photo" src="images/Members/엄은솔_사진.JPG" alt="엄은솔" />
           <div class="name-kr text-ink">엄은솔</div>
           <div class="name-en text-muted">Eunsol Um</div>
-          <div class="email"><a href="mailto:celine.um0828@gmail.com" class="text-muted hover:text-primary">celine.um0828@gmail.ac.kr</a></div>
+          <div class="email"><a href="mailto:celine.um0828@gmail.com" class="text-muted hover:text-primary">celine.um0828@gmail.com</a></div>
         </div>
         <div class="person-card">
           <img class="photo" src="images/Members/박건우_사진.jpg" alt="박건우" />
@@ -417,7 +418,7 @@
         <div class="person-card">
           <img class="photo" src="images/Members/오동석_사진.jpg" alt="오동석" />
           <div class="name-kr text-ink">오동석</div>
-          <div class="name-en text-muted">Dongeseok Oh</div>
+          <div class="name-en text-muted">Dongseok Oh</div>
           <div class="email"><a href="mailto:ods990430@ajou.ac.kr" class="text-muted hover:text-primary">ods990430@ajou.ac.kr</a></div>
         </div>
         <div class="person-card">
@@ -471,10 +472,6 @@
       <h2 class="h2 text-primary mt-12 mb-6">Interns</h2>
       <div class="people-grid placeholder">
         <div class="person-card">
-            <div class="name-kr text-ink">김재형</div>
-            <div class="name-en text-muted">Jaehyung Kim</div>
-        </div>
-        <div class="person-card">
             <div class="name-kr text-ink">서채영</div>
             <div class="name-en text-muted">Chaeyoung Seo</div>
         </div>
@@ -484,7 +481,7 @@
 
     <!-- Alumni -->
     <div id="Alumni" class="tabcontent">
-        <div class="max-w-[960px] mx-auto px-6 py-12">
+        <div class="max-w-full mx-auto px-6 py-12">
       <h1 class="h1 text-center mb-12">Alumni</h1>
       
       <h2 class="h2 text-primary mt-12 mb-6">Researchers and Administrative Staffs</h2>
@@ -516,17 +513,12 @@
           <div class="alumni-card bg-background-light border border-border shadow-sm p-6">
               <div class="name text-ink">Jaehyung Kim</div>
               <div class="affil text-muted">Ajou University</div>
-              <div class="period text-muted">Mar 2026 – </div>
+              <div class="period text-muted">Mar 2026 – Jun 2026</div>
           </div>
           <div class="alumni-card bg-background-light border border-border shadow-sm p-6">
               <div class="name text-ink">Chaeyoung Seo</div>
               <div class="affil text-muted">Ajou University</div>
               <div class="period text-muted">Jan 2026 – </div>
-          </div>
-          <div class="alumni-card bg-background-light border border-border shadow-sm p-6">
-              <div class="name text-ink">Jiyu Lee</div>
-              <div class="affil text-muted">Kyunghee University</div>
-              <div class="period text-muted">Dec 2025 – </div>
           </div>
           <div class="alumni-card bg-background-light border border-border shadow-sm p-6">
               <div class="name text-ink">Kanghun Koh</div>
@@ -573,7 +565,7 @@
     </div>
 
     <div id="Publications" class="tabcontent">
-      <main class="max-w-[960px] mx-auto px-6 py-12">
+      <main class="max-w-full mx-auto px-6 py-12">
 <div class="mb-10">
 <h1 class="h1 mb-10">Publications &amp; Research Output</h1>
 <p class="text-base text-muted leading-relaxed">*, represents co-first authors; #, co-corresponding authors. <br />
@@ -1101,7 +1093,7 @@
 </main></div>
 
     <div id="Contact" class="tabcontent">
-      <section class="max-w-[1100px] mx-auto py-24 px-12">
+      <section class="max-w-full mx-auto py-24 px-12">
 <header>
 <h1 class="h1 mb-4">Contact</h1>
 <div class="h-px w-12 bg-secondary opacity-30"></div>
@@ -1152,5 +1144,61 @@
   </footer>
 
   <script src="script.js"></script>
+
+  <!-- Motion for the Web (vanilla) — pinned CDN, no build step required.
+       Available fns: animate, inView, scroll, delay, scrollInfo.
+       (stagger/hover/press are React-only in this build; use manual delay.)
+       Add new animations inside the SBAI_MOTION block below. -->
+  <script type="module">
+    import { animate, scroll } from "https://cdn.jsdelivr.net/npm/motion@12.42.2/+esm";
+
+    // Respect users who prefer reduced motion (accessibility).
+    const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+    // === SBAI_MOTION: site animations ===
+    if (!reduceMotion) {
+      // Banner entrance: logo + title fade/slide in, staggered by index.
+      const bannerItems = document.querySelectorAll(".banner img, .banner .flex-grow");
+      bannerItems.forEach((el, i) => {
+        animate(
+          el,
+          { opacity: [0, 1], y: [14, 0] },
+          { duration: 0.6, delay: 0.12 * i, ease: [0.22, 1, 0.36, 1] }
+        );
+      });
+
+      // Home hero: sequential rise (eyebrow → omics tiles → title → text → CTA).
+      // (Vanilla build has no stagger() helper, so we stagger via a manual delay.)
+      const heroItems = document.querySelectorAll("#Home .hero-rise");
+      heroItems.forEach((el, i) => {
+        animate(
+          el,
+          { opacity: [0, 1], y: [20, 0] },
+          { duration: 0.6, delay: 0.3 + 0.12 * i, ease: [0.42, 0, 0.58, 1] }
+        );
+      });
+
+      // Home hero: fade out & drift up as the user scrolls down into "Our Focus".
+      const heroSection = document.querySelector("#home-hero");
+      const heroContent = document.querySelector("#hero-content");
+      if (heroSection && heroContent) {
+        scroll(
+          animate(heroContent, { opacity: [1, 0], y: [0, -80] }, { ease: "linear" }),
+          { target: heroSection, offset: ["start start", "end start"] }
+        );
+      }
+    }
+
+    // "See More" cue → smooth-scroll to the Our Focus section (no hash change).
+    const cue = document.querySelector("#scroll-cue");
+    const focusSection = document.querySelector("#our-focus");
+    if (cue && focusSection) {
+      cue.addEventListener("click", (e) => {
+        e.preventDefault();
+        focusSection.scrollIntoView({ behavior: "smooth", block: "start" });
+      });
+    }
+    // === /SBAI_MOTION ===
+  </script>
 </body>
 </html>
