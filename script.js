@@ -44,6 +44,23 @@ document.addEventListener('DOMContentLoaded', () => {
         }
         // Scroll to the top of the page
         window.scrollTo({ top: 0, left: 0, behavior: "auto" });
+
+        // Home immersive chrome: Home starts at the top → sidebar hidden until scroll.
+        homeActive = (targetId === 'Home');
+        updateHomeChrome();
+
+        // Nudge scroll-linked (Motion) animations to re-measure the newly shown tab,
+        // which was display:none until now (otherwise offsets can be stale).
+        requestAnimationFrame(() => window.dispatchEvent(new Event('resize')));
+    };
+
+    // --- HOME IMMERSIVE CHROME ---
+    // On Home, hide the sidebar at the very top; reveal it once the user scrolls down.
+    // (Desktop only — the CSS rule is scoped to min-width:1025px; mobile keeps its menu bar.)
+    let homeActive = false;
+    const revealThreshold = () => window.innerHeight * 0.2;
+    const updateHomeChrome = () => {
+        document.body.classList.toggle('home-top', homeActive && window.scrollY < revealThreshold());
     };
 
 
@@ -64,6 +81,10 @@ document.addEventListener('DOMContentLoaded', () => {
         overlay.addEventListener('click', closeSidebar);
     }
     
+    // Reveal the sidebar as the user scrolls down on Home (see updateHomeChrome).
+    window.addEventListener('scroll', updateHomeChrome, { passive: true });
+    window.addEventListener('resize', updateHomeChrome);
+
     // Automatic hash-based tab activation on page load
     const currentHash = window.location.hash.replace('#', '');
     if (currentHash) {

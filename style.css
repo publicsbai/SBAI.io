@@ -6,7 +6,7 @@
   --bg: #FFFFFF;          /* page background */
   --ink: #1A1A1A;         /* main text */
   --muted: #5A5A5A;       /* secondary text */
-  --border: #CBCBCB;      /* borders / dividers */
+  --border: #E5E5E5;      /* borders / dividers (softened for an airier look) */
   --accent: #4D1717;      /* deep maroon — sparing point accent */
   --accent-soft: #E6EFEA; /* light green tint — nav hover */
   --light: #FFFFFF;       /* cards / surfaces / sidebar */
@@ -15,12 +15,13 @@
   --secondary-color-rgb: 46, 106, 80;
 
   --sidebar-w: 240px;
-  --radius: 8px;
+  --radius: 12px;
   /* Fluid: fill the viewport (minus sidebar + wrap padding) at every window size */
   --container: calc(100vw - var(--sidebar-w) - 64px);
   
   --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
   --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+  --shadow-soft: 0 1px 3px rgb(0 0 0 / 0.04), 0 12px 32px -12px rgb(0 0 0 / 0.10); /* airy card shadow */
 }
 
 * { box-sizing: border-box; }
@@ -89,12 +90,12 @@ summary::-webkit-details-marker { display: none; }
 .sub .item { padding: 8px 10px; font-size: 15px; }
 
 
-/* Top banner */
+/* Top banner — light & airy (matches the Home hero mood); shown on non-Home tabs */
 .banner {
-  color: white;
-  padding: 48px 40px;
+  background: var(--light);
+  border-bottom: 1px solid var(--border);
+  padding: 24px 40px;
 }
-/* Removed banner h1 and h2, they will be handled by Tailwind */
 
 /* Main Content */
 .wrap { padding: 32px; display: grid; justify-items: center; }
@@ -103,7 +104,7 @@ summary::-webkit-details-marker { display: none; }
   animation: fadeIn 0.5s ease;
   width: 100%;
   max-width: var(--container);
-  padding: 20px 0;
+  padding: 32px 0 56px;
 }
 .tabcontent.active { display: block; }
 @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
@@ -111,6 +112,15 @@ summary::-webkit-details-marker { display: none; }
 
 /* Home Tab */
 .hero { text-align: center; margin-bottom: 40px; }
+
+/* Home immersive: at the top of Home, hide the sidebar and let the hero use the
+   full viewport width. Scrolling down removes .home-top, so the sidebar slides in
+   from the left (both transitions already defined above). Desktop only — mobile
+   keeps its sticky menu bar. */
+@media (min-width: 1025px) {
+  body.home-top { padding-left: 0; }
+  body.home-top .sidebar { transform: translateX(-100%); }
+}
 
 
 /* PI Tab */
@@ -122,7 +132,7 @@ summary::-webkit-details-marker { display: none; }
 .pi-title { color: var(--secondary-color); } /* Changed to secondary-color */
 .pi-contact a { color: var(--ink); }
 .pi-divider { height: 1px; background: var(--border); margin: 24px 0; }
-.pi-timeline { display: grid; grid-template-columns: 140px 1fr; gap: 16px; }
+.pi-timeline { display: grid; grid-template-columns: max-content minmax(0, 28rem); justify-content: center; gap: 24px 32px; align-items: start; }
 .pi-year { text-align: right; }
 .pi-desc { line-height: 1.7; }
 .pi-desc b { font-weight: 700; } /* Re-added font-weight:700 as this is a specific style. */
@@ -130,8 +140,9 @@ summary::-webkit-details-marker { display: none; }
 /* Lab Members Tab */
 .people-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-  gap: 48px 32px;
+  grid-template-columns: repeat(auto-fit, 240px);
+  justify-content: center;
+  gap: 56px 40px;
 }
 .people-grid.placeholder .person-card {
     padding-top: 24px; /* Add some space to align better with cards that have photos */
@@ -144,9 +155,10 @@ summary::-webkit-details-marker { display: none; }
   background: var(--bg);
   object-fit: cover;
   border: 1px solid var(--border);
-  transition: transform 0.2s ease;
+  box-shadow: var(--shadow-soft);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
-.person-card:hover .photo { transform: scale(1.03); }
+.person-card:hover .photo { transform: scale(1.03); box-shadow: var(--shadow-md); }
 .person-card .photo-placeholder {
   display: flex; align-items: center; justify-content: center; color: var(--muted); font-size: 14px;
   background: var(--bg); /* Using var(--bg) as it's the lightest background color */
@@ -160,8 +172,9 @@ summary::-webkit-details-marker { display: none; }
 
 
 /* Alumni Tab */
-.alumni-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 24px; }
-.alumni-card { background: var(--light); border: 1px solid var(--border); padding: 16px; border-radius: var(--radius); box-shadow: var(--shadow-sm); }
+.alumni-grid { display: grid; grid-template-columns: repeat(auto-fit, 250px); justify-content: center; gap: 24px 32px; }
+.alumni-card { background: var(--light); border: 1px solid var(--border); padding: 20px; border-radius: var(--radius); box-shadow: var(--shadow-soft); transition: box-shadow 0.2s ease, transform 0.2s ease; }
+.alumni-card:hover { box-shadow: var(--shadow-md); transform: translateY(-2px); }
 .alumni-card .name { }
 .alumni-card .affil { color: var(--muted); margin-top: 4px; }
 
@@ -194,7 +207,7 @@ footer {
   :root { --sidebar-w: 0px; }
   body { padding-left: 0; }
   .wrap { padding: 24px; }
-  .banner { padding: 32px 24px; }
+  .banner { padding: 14px 20px; }
 
   .sidebar { transform: translateX(-250px); box-shadow: var(--shadow-md); width: 250px; }
   .sidebar.open { transform: translateX(0); }

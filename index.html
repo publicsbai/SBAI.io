@@ -31,7 +31,7 @@
                         "background-dark": "#111621",
                         "ink": "#1A1A1A",
                         "muted": "#5A5A5A",
-                        "border": "#CBCBCB"
+                        "border": "#E5E5E5"
                     },
                     fontFamily: {
                         "display": ["Pretendard", "Inter", "Noto Sans KR", "sans-serif"],
@@ -62,8 +62,8 @@
         .pi-name-en { @apply text-2xl font-bold; }
         .pi-title { @apply text-xl font-semibold; }
         .pi-contact a { @apply text-base font-semibold; }
-        .pi-year { @apply text-base font-bold; }
-        .pi-desc { @apply text-base; }
+        .pi-year { @apply text-xl font-bold; }
+        .pi-desc { @apply text-lg; }
         .person-card .name-kr { @apply text-lg font-bold; }
         .person-card .name-en { @apply text-base; }
         .person-card .email { @apply text-sm; }
@@ -119,16 +119,14 @@
     </nav>
   </aside>
 
-  <!-- Top banner -->
-  <header class="banner bg-primary py-8 px-4 md:px-8 relative overflow-hidden">
-    <div class="absolute inset-0" style="background-image: radial-gradient(at top left, rgba(var(--secondary-color-rgb), 0.1) 0%, transparent 50%);"></div>
-    <div class="flex items-center space-x-4 max-w-[var(--container)] mx-auto relative z-10">
-      <img src="images/lab_logo_white_chromakey.png" alt="SBAI Lab Logo" class="h-12 md:h-16 lg:h-20 max-h-full w-auto">
-      <div class="flex-grow">
-        <h1 class="font-extrabold text-white text-[26px] md:text-[30px] leading-tight">Systems Biology of Aging & Immunity</h1>
-        <div class="h-0.5 w-[40px] bg-accent opacity-80 mt-1 rounded-sm"></div>
-        <h2 class="font-semibold text-white opacity-85 text-lg">SBAI Lab · Ajou University</h2>
-      </div>
+  <!-- Top banner — light & airy, shown on non-Home tabs (hidden on Home via script.js) -->
+  <header class="banner">
+    <div class="max-w-[var(--container)] mx-auto flex items-center justify-between gap-6">
+      <img src="images/lab_logo_chromakey.png" alt="SBAI — Systems Biology of Aging and Immunity" class="h-16 md:h-20 lg:h-24 w-auto shrink-0">
+      <!-- Right-side tagline (decorative — edit this line freely) -->
+      <p class="hidden md:block text-right text-2xl lg:text-3xl italic text-muted leading-snug max-w-sm">
+        (Lab catchphrase)
+      </p>
     </div>
   </header>
 
@@ -166,8 +164,8 @@
 
           <!-- Description -->
           <div class="hero-rise mt-6 max-w-2xl space-y-4 text-lg md:text-xl lg:text-2xl text-muted leading-relaxed">
-            <p>SBAI Lab</p>
-            <p>(설명설명설명)</p>
+            <p class="text-[1.5em]">SBAI Lab</p>
+            <p class="text-[2em]">(설명설명설명)</p>
           </div>
 
           <!-- Scroll cue -->
@@ -193,7 +191,7 @@
 </div>
 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
 <!-- Pillar 1 -->
-<div class="group p-8 border border-border dark:border-border rounded-xl hover:border-primary/30 hover:shadow-xl transition-all bg-background-light dark:bg-background-dark">
+<div class="group p-8 border border-border dark:border-border rounded-xl shadow-[0_2px_20px_-8px_rgba(0,0,0,0.08)] hover:border-primary/30 hover:shadow-xl transition-all bg-background-light dark:bg-background-dark">
 <div class="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center text-primary mb-6 group-hover:bg-primary group-hover:text-white transition-colors">
 <span class="material-symbols-outlined">analytics</span>
 </div>
@@ -203,7 +201,7 @@
                         </p>
 </div>
 <!-- Pillar 2 -->
-<div class="group p-8 border border-border dark:border-border rounded-xl hover:border-primary/30 hover:shadow-xl transition-all bg-background-light dark:bg-background-dark">
+<div class="group p-8 border border-border dark:border-border rounded-xl shadow-[0_2px_20px_-8px_rgba(0,0,0,0.08)] hover:border-primary/30 hover:shadow-xl transition-all bg-background-light dark:bg-background-dark">
 <div class="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center text-primary mb-6 group-hover:bg-primary group-hover:text-white transition-colors">
 <span class="material-symbols-outlined">genetics</span>
 </div>
@@ -213,7 +211,7 @@
                         </p>
 </div>
 <!-- Pillar 3 -->
-<div class="group p-8 border border-border dark:border-border rounded-xl hover:border-primary/30 hover:shadow-xl transition-all bg-background-light dark:bg-background-dark">
+<div class="group p-8 border border-border dark:border-border rounded-xl shadow-[0_2px_20px_-8px_rgba(0,0,0,0.08)] hover:border-primary/30 hover:shadow-xl transition-all bg-background-light dark:bg-background-dark">
 <div class="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center text-primary mb-6 group-hover:bg-primary group-hover:text-white transition-colors">
 <span class="material-symbols-outlined">science</span>
 </div>
@@ -250,100 +248,38 @@
 </div>
 </section>
 <!-- Themes Content -->
-<section class="max-w-full w-full px-6 lg:px-10 pb-24 space-y-20">
-<!-- Theme 1: Human-AI Interaction -->
-<div class="group">
-<div class="flex items-center gap-4 mb-6">
-<div class="h-8 w-1 bg-primary"></div>
-<h3 class="h3 text-primary">(제목제목제목)</h3>
-</div>
-<div class="grid md:grid-cols-3 gap-10">
-<div class="md:col-span-2">
-<p class="mb-6">
-                                (설명설명설명)
-                            </p>
-</div>
-<div class="bg-background-light dark:bg-muted p-6 rounded-xl border border-border dark:border-border shadow-sm">
-<h4 class="section-label text-muted">Focus Areas</h4>
-<div class="space-y-3 custom-checkbox-tick">
-<label class="flex items-start gap-3">
-<input checked="" class="mt-1 h-5 w-5 rounded border-border border-2 bg-transparent text-primary checked:bg-primary checked:border-primary focus:ring-0" disabled="" type="checkbox"/>
-<span class="text-sm font-medium">(항목항목항목)</span>
-</label>
-<label class="flex items-start gap-3">
-<input checked="" class="mt-1 h-5 w-5 rounded border-border border-2 bg-transparent text-primary checked:bg-primary checked:border-primary focus:ring-0" disabled="" type="checkbox"/>
-<span class="text-sm font-medium">(항목항목항목)</span>
-</label>
-<label class="flex items-start gap-3">
-<input checked="" class="mt-1 h-5 w-5 rounded border-border border-2 bg-transparent text-primary checked:bg-primary checked:border-primary focus:ring-0" disabled="" type="checkbox"/>
-<span class="text-sm font-medium">(항목항목항목)</span>
-</label>
-</div>
-</div>
-</div>
-</div>
-<!-- Theme 2: Algorithmic Fairness -->
-<div class="group">
-<div class="flex items-center gap-4 mb-6">
-<div class="h-8 w-1 bg-primary"></div>
-<h3 class="h3 text-primary">(제목제목제목)</h3>
-</div>
-<div class="grid md:grid-cols-3 gap-10">
-<div class="md:col-span-2">
-<p class="mb-6">
-                                (설명설명설명)
-                            </p>
-</div>
-<div class="bg-background-light dark:bg-muted p-6 rounded-xl border border-border dark:border-border shadow-sm">
-<h4 class="section-label text-muted">Focus Areas</h4>
-<div class="space-y-3">
-<label class="flex items-start gap-3">
-<input checked="" class="mt-1 h-5 w-5 rounded border-border border-2 bg-transparent text-primary checked:bg-primary checked:border-primary focus:ring-0" disabled="" type="checkbox"/>
-<span class="text-sm font-medium">(항목항목항목)</span>
-</label>
-<label class="flex items-start gap-3">
-<input checked="" class="mt-1 h-5 w-5 rounded border-border border-2 bg-transparent text-primary checked:bg-primary checked:border-primary focus:ring-0" disabled="" type="checkbox"/>
-<span class="text-sm font-medium">(항목항목항목)</span>
-</label>
-<label class="flex items-start gap-3">
-<input checked="" class="mt-1 h-5 w-5 rounded border-border border-2 bg-transparent text-primary checked:bg-primary checked:border-primary focus:ring-0" disabled="" type="checkbox"/>
-<span class="text-sm font-medium">(항목항목항목)</span>
-</label>
-</div>
-</div>
-</div>
-</div>
-<!-- Theme 3: Scalable Intelligence -->
-<div class="group">
-<div class="flex items-center gap-4 mb-6">
-<div class="h-8 w-1 bg-primary"></div>
-<h3 class="h3 text-primary">(제목제목제목)</h3>
-</div>
-<div class="grid md:grid-cols-3 gap-10">
-<div class="md:col-span-2">
-<p class="mb-6">
-                                (설명설명설명)
-                            </p>
-</div>
-<div class="bg-background-light dark:bg-muted p-6 rounded-xl border border-border dark:border-border shadow-sm">
-<h4 class="section-label text-muted">Focus Areas</h4>
-<div class="space-y-3">
-<label class="flex items-start gap-3">
-<input checked="" class="mt-1 h-5 w-5 rounded border-border border-2 bg-transparent text-primary checked:bg-primary checked:border-primary focus:ring-0" disabled="" type="checkbox"/>
-<span class="text-sm font-medium">(항목항목항목)</span>
-</label>
-<label class="flex items-start gap-3">
-<input checked="" class="mt-1 h-5 w-5 rounded border-border border-2 bg-transparent text-primary checked:bg-primary checked:border-primary focus:ring-0" disabled="" type="checkbox"/>
-<span class="text-sm font-medium">(항목항목항목)</span>
-</label>
-<label class="flex items-start gap-3">
-<input checked="" class="mt-1 h-5 w-5 rounded border-border border-2 bg-transparent text-primary checked:bg-primary checked:border-primary focus:ring-0" disabled="" type="checkbox"/>
-<span class="text-sm font-medium">(항목항목항목)</span>
-</label>
-</div>
-</div>
-</div>
-</div>
+<section class="max-w-full w-full px-6 lg:px-10 pb-24 space-y-20 lg:space-y-28">
+
+<!-- Theme 1 -->
+<article class="research-theme max-w-3xl">
+  <div class="flex items-center gap-4 mb-5">
+    <span class="text-6xl lg:text-7xl font-bold leading-none text-primary/25 tabular-nums">01</span>
+    <div class="h-px flex-1 bg-border"></div>
+  </div>
+  <h3 class="text-2xl lg:text-3xl font-bold text-ink mb-4">(제목제목제목)</h3>
+  <p class="text-[20px] text-muted leading-relaxed">(설명설명설명)</p>
+</article>
+
+<!-- Theme 2 -->
+<article class="research-theme max-w-3xl">
+  <div class="flex items-center gap-4 mb-5">
+    <span class="text-6xl lg:text-7xl font-bold leading-none text-primary/25 tabular-nums">02</span>
+    <div class="h-px flex-1 bg-border"></div>
+  </div>
+  <h3 class="text-2xl lg:text-3xl font-bold text-ink mb-4">(제목제목제목)</h3>
+  <p class="text-[20px] text-muted leading-relaxed">(설명설명설명)</p>
+</article>
+
+<!-- Theme 3 -->
+<article class="research-theme max-w-3xl">
+  <div class="flex items-center gap-4 mb-5">
+    <span class="text-6xl lg:text-7xl font-bold leading-none text-primary/25 tabular-nums">03</span>
+    <div class="h-px flex-1 bg-border"></div>
+  </div>
+  <h3 class="text-2xl lg:text-3xl font-bold text-ink mb-4">(제목제목제목)</h3>
+  <p class="text-[20px] text-muted leading-relaxed">(설명설명설명)</p>
+</article>
+
 </section>
 
 </main>
@@ -351,11 +287,11 @@
 
     <!-- PI -->
     <div id="PI" class="tabcontent">
-      <div class="pi-wrap max-w-full mx-auto px-6 py-12">
+      <div class="pi-wrap max-w-4xl mx-auto px-6 py-12">
         <h1 class="h1 text-center mb-12">Principal Investigator</h1>
-        <div class="pi-hero flex flex-col md:flex-row items-center text-center md:text-left gap-8 md:gap-12">
+        <div class="pi-hero flex flex-col md:flex-row items-center justify-center text-center md:text-left gap-8 md:gap-12">
           <img class="pi-photo w-72 h-[21rem] object-cover" src="images/Members/교수님_사진.jpg" alt="Principal Investigator photo" />
-          <div class="flex-1">
+          <div>
             <div class="pi-name-kr">박지환</div>
             <div class="pi-name-en mt-1">Ji Hwan Park</div>
             <div class="pi-title text-secondary mt-2">Professor</div>
@@ -367,7 +303,7 @@
 
         <div class="pi-divider my-12 h-px bg-border"></div>
 
-        <div class="pi-timeline grid md:grid-cols-[max-content_1fr] gap-x-8 gap-y-6 items-start">
+        <div class="pi-timeline">
           <div class="pi-year text-right">2024.9 ~</div>
           <div class="pi-desc"><b>Assistant Professor</b>,<br/>Department of Biological Science, Ajou University</div>
           <div class="pi-year text-right">2022.9 ~ 2024.8</div>
@@ -385,7 +321,7 @@
         <div class="max-w-full mx-auto px-6 py-12">
       <h1 class="h1 text-center mb-12">Lab Members</h1>
       
-      <h2 class="h2 text-primary mt-12 mb-6">Postdoctoral Fellows</h2>
+      <h2 class="h2 text-primary text-center mt-12 mb-6">Postdoctoral Fellows</h2>
       <div class="people-grid">
         <div class="person-card">
           <img class="photo" src="images/Members/장동민_사진.jpg" alt="장동민" />
@@ -395,7 +331,7 @@
         </div>
       </div>
 
-      <h2 class="h2 text-primary mt-12 mb-6">Graduate Students</h2>
+      <h2 class="h2 text-primary text-center mt-12 mb-6">Graduate Students</h2>
       <div class="people-grid">
         <div class="person-card">
           <img class="photo" src="images/Members/엄은솔_사진.JPG" alt="엄은솔" />
@@ -459,7 +395,7 @@
         </div>
       </div>
 
-      <h2 class="h2 text-primary mt-12 mb-6">Administrative Staff</h2>
+      <h2 class="h2 text-primary text-center mt-12 mb-6">Administrative Staff</h2>
       <div class="people-grid">
         <div class="person-card">
           <img class="photo" src="images/Members/박현정_사진.JPG" alt="박현정" />
@@ -469,7 +405,7 @@
         </div>
       </div>
       
-      <h2 class="h2 text-primary mt-12 mb-6">Interns</h2>
+      <h2 class="h2 text-primary text-center mt-12 mb-6">Interns</h2>
       <div class="people-grid placeholder">
         <div class="person-card">
             <div class="name-kr text-ink">서채영</div>
@@ -484,8 +420,8 @@
         <div class="max-w-full mx-auto px-6 py-12">
       <h1 class="h1 text-center mb-12">Alumni</h1>
       
-      <h2 class="h2 text-primary mt-12 mb-6">Researchers and Administrative Staffs</h2>
-      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+      <h2 class="h2 text-primary text-center mt-12 mb-6">Researchers and Administrative Staffs</h2>
+      <div class="alumni-grid">
           <div class="alumni-card bg-background-light border border-border shadow-sm p-6">
               <div class="name text-ink">Hyun Jung Park</div>
               <div class="affil text-muted">Administrative staff</div>
@@ -508,8 +444,8 @@
           </div>
       </div>
 
-      <h2 class="h2 text-primary mt-12 mb-6">Internship</h2>
-      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+      <h2 class="h2 text-primary text-center mt-12 mb-6">Internship</h2>
+      <div class="alumni-grid">
           <div class="alumni-card bg-background-light border border-border shadow-sm p-6">
               <div class="name text-ink">Jaehyung Kim</div>
               <div class="affil text-muted">Ajou University</div>
@@ -567,12 +503,12 @@
     <div id="Publications" class="tabcontent">
       <main class="max-w-full mx-auto px-6 py-12">
 <div class="mb-10">
-<h1 class="h1 mb-10">Publications &amp; Research Output</h1>
+<h1 class="h1 text-center mb-10">Publications &amp; Research Output</h1>
 <p class="text-base text-muted leading-relaxed">*, represents co-first authors; #, co-corresponding authors. <br />
      The highlighted papers indicate the ones listed as first or corresponding author.</p>
 </div>
 <section class="mb-12">
-<h2 class="h2 text-primary flex items-center gap-2 mb-6">
+<h2 class="h2 text-primary flex items-center gap-2 mb-6"><span class="h-px bg-primary/20 flex-grow"></span>
                 2026
                 <span class="h-px bg-primary/20 flex-grow"></span>
 </h2>
@@ -591,7 +527,7 @@
 </div>
 </div></section>
 <section class="mb-12">
-<h2 class="h2 text-primary flex items-center gap-2 mb-6">
+<h2 class="h2 text-primary flex items-center gap-2 mb-6"><span class="h-px bg-primary/20 flex-grow"></span>
                 2025
                 <span class="h-px bg-primary/20 flex-grow"></span>
 </h2>
@@ -629,7 +565,7 @@
 </div>
 </div></section>
 <section class="mb-12">
-<h2 class="h2 text-primary flex items-center gap-2 mb-6">
+<h2 class="h2 text-primary flex items-center gap-2 mb-6"><span class="h-px bg-primary/20 flex-grow"></span>
                 2024
                 <span class="h-px bg-primary/20 flex-grow"></span>
 </h2>
@@ -741,7 +677,7 @@
 </div>
 </div></section>
 <section class="mb-12">
-<h2 class="h2 text-primary flex items-center gap-2 mb-6">
+<h2 class="h2 text-primary flex items-center gap-2 mb-6"><span class="h-px bg-primary/20 flex-grow"></span>
                 2023
                 <span class="h-px bg-primary/20 flex-grow"></span>
 </h2>
@@ -778,7 +714,7 @@
 </div>
 </div></section>
 <section class="mb-12">
-<h2 class="h2 text-primary flex items-center gap-2 mb-6">
+<h2 class="h2 text-primary flex items-center gap-2 mb-6"><span class="h-px bg-primary/20 flex-grow"></span>
                 2022
                 <span class="h-px bg-primary/20 flex-grow"></span>
 </h2>
@@ -832,7 +768,7 @@
 </div>
 </div></section>
 <section class="mb-12">
-<h2 class="h2 text-primary flex items-center gap-2 mb-6">
+<h2 class="h2 text-primary flex items-center gap-2 mb-6"><span class="h-px bg-primary/20 flex-grow"></span>
                 2021
                 <span class="h-px bg-primary/20 flex-grow"></span>
 </h2>
@@ -854,7 +790,7 @@
 </div>
 </div></section>
 <section class="mb-12">
-<h2 class="h2 text-primary flex items-center gap-2 mb-6">
+<h2 class="h2 text-primary flex items-center gap-2 mb-6"><span class="h-px bg-primary/20 flex-grow"></span>
                 2020
                 <span class="h-px bg-primary/20 flex-grow"></span>
 </h2>
@@ -910,7 +846,7 @@
 
 </div></section>
 <section class="mb-12">
-<h2 class="h2 text-primary flex items-center gap-2 mb-6">
+<h2 class="h2 text-primary flex items-center gap-2 mb-6"><span class="h-px bg-primary/20 flex-grow"></span>
                 2018
                 <span class="h-px bg-primary/20 flex-grow"></span>
 </h2>
@@ -964,7 +900,7 @@
 
 </div></section>
 <section class="mb-12">
-<h2 class="h2 text-primary flex items-center gap-2 mb-6">
+<h2 class="h2 text-primary flex items-center gap-2 mb-6"><span class="h-px bg-primary/20 flex-grow"></span>
                 2017
                 <span class="h-px bg-primary/20 flex-grow"></span>
 </h2>
@@ -986,7 +922,7 @@
 </div>
 </div></section>
 <section class="mb-12">
-<h2 class="h2 text-primary flex items-center gap-2 mb-6">
+<h2 class="h2 text-primary flex items-center gap-2 mb-6"><span class="h-px bg-primary/20 flex-grow"></span>
                 2016
                 <span class="h-px bg-primary/20 flex-grow"></span>
 </h2>
@@ -1008,7 +944,7 @@
 </div>
 </div></section>
 <section class="mb-12">
-<h2 class="h2 text-primary flex items-center gap-2 mb-6">
+<h2 class="h2 text-primary flex items-center gap-2 mb-6"><span class="h-px bg-primary/20 flex-grow"></span>
                 2015
                 <span class="h-px bg-primary/20 flex-grow"></span>
 </h2>
@@ -1060,7 +996,7 @@
 </div>
 </div></section>
 <section class="mb-12">
-<h2 class="h2 text-primary flex items-center gap-2 mb-6">
+<h2 class="h2 text-primary flex items-center gap-2 mb-6"><span class="h-px bg-primary/20 flex-grow"></span>
                 2013
                 <span class="h-px bg-primary/20 flex-grow"></span>
 </h2>
@@ -1082,7 +1018,7 @@
 </div>
 </div></section>
 <section class="mb-12">
-<h2 class="h2 text-primary flex items-center gap-2 mb-6">
+<h2 class="h2 text-primary flex items-center gap-2 mb-6"><span class="h-px bg-primary/20 flex-grow"></span>
                 Patents
                 <span class="h-px bg-primary/20 flex-grow"></span>
 </h2>
@@ -1186,6 +1122,28 @@
           animate(heroContent, { opacity: [1, 0], y: [0, -80] }, { ease: "linear" }),
           { target: heroSection, offset: ["start start", "end start"] }
         );
+      }
+
+      // Research themes: scroll-linked reveal (hero-style) — each fades + rises in
+      // sync with scroll. The #Research tab is display:none on load, so measuring now
+      // would give zero-size offsets and the effect never runs. Defer setup until the
+      // tab first becomes visible (watch its class for the 'active' toggle).
+      const researchTab = document.querySelector("#Research");
+      if (researchTab) {
+        let researchReady = false;
+        const setupResearch = () => {
+          if (researchReady) return;
+          if (getComputedStyle(researchTab).display === "none") return;
+          researchReady = true;
+          researchTab.querySelectorAll(".research-theme").forEach((theme) => {
+            scroll(
+              animate(theme, { opacity: [0, 1], y: [50, 0] }, { ease: "linear" }),
+              { target: theme, offset: ["start end", "start center"] }
+            );
+          });
+        };
+        new MutationObserver(setupResearch).observe(researchTab, { attributes: true, attributeFilter: ["class"] });
+        setupResearch(); // in case Research is already the active tab on load
       }
     }
 
