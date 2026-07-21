@@ -132,4 +132,30 @@ document.addEventListener('DOMContentLoaded', () => {
     if (yearSpan) {
         yearSpan.textContent = new Date().getFullYear();
     }
+
+    // --- LAB AUTHOR EMPHASIS (publications) ---
+    // Single source of truth: to feature a member's works, add their exact
+    // citation token (surname + initials, e.g. "Park JH") below. Names are
+    // matched as whole author entries, so ambiguous initials (e.g. "Kim H")
+    // only get highlighted if you list them here. Trailing */# are preserved.
+    const LAB_AUTHORS = new Set([
+        'Park JH',        // Ji Hwan Park (PI)
+        // 'Park G',      // Gunwoo Park
+        // 'Um ES',       // Eunsol Um
+        // 'Jang DM',     // Dongmin Jang
+        // ...add lab members here (verify each token against the author list)
+    ]);
+
+    const emphasizeLabAuthors = () => {
+        document.querySelectorAll('.pub-authors').forEach((el) => {
+            let html = el.textContent;
+            LAB_AUTHORS.forEach((tok) => {
+                const esc = tok.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+                const re = new RegExp('(^|,\\s*)(' + esc + ')(?=[#*,.\\s]|$)', 'g');
+                html = html.replace(re, (_m, pre, name) => `${pre}<span class="lab-author">${name}</span>`);
+            });
+            el.innerHTML = html;
+        });
+    };
+    emphasizeLabAuthors();
 });

@@ -1,6 +1,4 @@
 /* === FONT & BASE === */
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&family=Noto+Sans+KR:wght@400;700&display=swap');
-
 :root {
   /* === SBAI Color Palette === */
   --bg: #FFFFFF;          /* page background */
@@ -12,7 +10,6 @@
   --light: #FFFFFF;       /* cards / surfaces / sidebar */
   --primary-color: #174D38;   /* deep green — main point color */
   --secondary-color: #2E6A50; /* lighter green */
-  --secondary-color-rgb: 46, 106, 80;
 
   --sidebar-w: 240px;
   --radius: 12px;
@@ -66,13 +63,10 @@ hr { border: 0; border-top: 1px solid var(--border); margin: 3rem 0; }
   padding: 10px 14px;
   border-radius: var(--radius);
   margin: 4px;
-  color: #374151; /* Changed to use var(--muted) if possible */
-  font-weight: 600;
+  color: #374151;  font-weight: 600;
   transition: background 0.2s ease, color 0.2s ease;
 }
-.nav .item:hover { background: var(--accent-soft); color: var(--primary-color); } /* Changed to primary-color */
-.nav .item.active { background: var(--primary-color); color: white; } /* Changed to primary-color */
-
+.nav .item:hover { background: var(--accent-soft); color: var(--primary-color); }.nav .item.active { background: var(--primary-color); color: white; }
 details { margin: 4px; }
 summary {
   cursor: pointer;
@@ -80,8 +74,7 @@ summary {
   padding: 10px 14px;
   border-radius: var(--radius);
   font-weight: 600;
-  color: #374151; /* Changed to use var(--muted) if possible */
-  transition: background 0.2s ease;
+  color: #374151;  transition: background 0.2s ease;
 }
 summary::-webkit-details-marker { display: none; }
 .nav summary:hover { background: var(--accent-soft); }
@@ -110,9 +103,6 @@ summary::-webkit-details-marker { display: none; }
 @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
 
-/* Home Tab */
-.hero { text-align: center; margin-bottom: 40px; }
-
 /* Home immersive: at the top of Home, hide the sidebar and let the hero use the
    full viewport width. Scrolling down removes .home-top, so the sidebar slides in
    from the left (both transitions already defined above). Desktop only — mobile
@@ -129,13 +119,16 @@ summary::-webkit-details-marker { display: none; }
 .pi-photo { width: 100%; aspect-ratio: 3 / 4; height: auto; border-radius: var(--radius); object-fit: cover; box-shadow: var(--shadow-md); }
 .pi-name-kr { margin-bottom: 4px; }
 .pi-name-en { color: var(--muted); margin-bottom: 8px; }
-.pi-title { color: var(--secondary-color); } /* Changed to secondary-color */
-.pi-contact a { color: var(--ink); }
+.pi-title { color: var(--secondary-color); }.pi-contact a { color: var(--ink); }
 .pi-divider { height: 1px; background: var(--border); margin: 24px 0; }
 .pi-timeline { display: grid; grid-template-columns: max-content minmax(0, 28rem); justify-content: center; gap: 24px 32px; align-items: start; }
 .pi-year { text-align: right; }
 .pi-desc { line-height: 1.7; }
-.pi-desc b { font-weight: 700; } /* Re-added font-weight:700 as this is a specific style. */
+.pi-desc b { font-weight: 700; }
+
+/* Professional Activities — reuses the Honors & Awards timeline grid; society names are bold group headers in the content column */
+.pi-society-row { font-weight: 700; color: var(--ink); margin-top: 22px; }
+.pi-society-row:first-child { margin-top: 0; }
 
 /* Lab Members Tab */
 .people-grid {
@@ -161,35 +154,29 @@ summary::-webkit-details-marker { display: none; }
 .person-card:hover .photo { transform: scale(1.03); box-shadow: var(--shadow-md); }
 .person-card .photo-placeholder {
   display: flex; align-items: center; justify-content: center; color: var(--muted); font-size: 14px;
-  background: var(--bg); /* Using var(--bg) as it's the lightest background color */
+  background: var(--bg);
   border: 1px solid var(--border);
 }
 .person-card .name-kr { margin: 14px 0 4px; }
 .person-card .name-en { color: var(--muted); }
 .person-card .email { margin-top: 6px; word-break: break-all; }
 .person-card .email a { color: var(--muted); }
-.person-card .email a:hover { color: var(--primary-color); } /* Changed to primary-color */
-
+.person-card .email a:hover { color: var(--primary-color); }
 
 /* Alumni Tab */
 .alumni-grid { display: grid; grid-template-columns: repeat(auto-fit, 250px); justify-content: center; gap: 24px 32px; }
 .alumni-card { background: var(--light); border: 1px solid var(--border); padding: 20px; border-radius: var(--radius); box-shadow: var(--shadow-soft); transition: box-shadow 0.2s ease, transform 0.2s ease; }
 .alumni-card:hover { box-shadow: var(--shadow-md); transform: translateY(-2px); }
-.alumni-card .name { }
 .alumni-card .affil { color: var(--muted); margin-top: 4px; }
 
 /* Publications Tab */
-.pub-section h3 { color: var(--secondary-color); margin-bottom: 12px; margin-top: 24px; } /* Changed to secondary-color */
-.pub-section ul { list-style-type: none; padding-left: 0; }
-.pub-section li { padding: 12px 0 12px 20px; border-left: 3px solid transparent; line-height: 1.7; position: relative; }
-.pub-section li::before { content: "▪"; color: var(--accent); position: absolute; left: 0; }
-.pub-section li b { font-weight: 700; }
-.pub-section li i { color: var(--muted); }
+/* Lab members' names, auto-emphasized in publication author lists (see LAB_AUTHORS in script.js) */
+.lab-author { color: var(--primary-color); font-weight: 700; }
 
-/* Contact Tab */
-.contact-wrap { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; margin-top: 24px; }
-.contact-item h3 { color: var(--secondary-color); margin-bottom: 8px; } /* Changed to secondary-color */
-.contact-item p { line-height: 1.8; margin: 0; }
+/* Publications year divider — left-aligned "year + rule" (modern, pairs with the card accent bars) */
+.pub-year { color: var(--ink); font-weight: 800; font-size: 1.6rem; letter-spacing: -0.01em; }
+.pub-year > span:first-child { display: none; }            /* hide the left line → year sits flush left */
+.pub-year > span:last-child { background: var(--border); } /* right rule = subtle neutral line */
 
 /* Footer */
 footer {
@@ -234,5 +221,4 @@ footer {
     color: var(--ink); padding: 8px 12px;
     border-radius: var(--radius);
   }
-  .mobilebar strong { }
 }
