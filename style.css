@@ -2,14 +2,14 @@
 :root {
   /* === SBAI Color Palette === */
   --bg: #FFFFFF;          /* page background */
-  --ink: #1A1A1A;         /* main text */
+  --ink: #182031;         /* main text (cool near-black) */
   --muted: #5A5A5A;       /* secondary text */
-  --border: #E5E5E5;      /* borders / dividers (softened for an airier look) */
-  --accent: #4D1717;      /* deep maroon — sparing point accent */
-  --accent-soft: #E6EFEA; /* light green tint — nav hover */
+  --border: #DADCE0;      /* borders / dividers */
+  --accent: #4D1717;      /* deep maroon — unused, kept */
+  --accent-soft: #E8F0FE; /* light blue tint — nav hover */
   --light: #FFFFFF;       /* cards / surfaces / sidebar */
-  --primary-color: #174D38;   /* deep green — main point color */
-  --secondary-color: #2E6A50; /* lighter green */
+  --primary-color: #0C4186;   /* deep navy — main point (AAA on white, matches DNA logo) */
+  --secondary-color: #1A56A0; /* mid blue — subtitles / hover */
 
   --sidebar-w: 240px;
   --radius: 12px;
