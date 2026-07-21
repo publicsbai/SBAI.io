@@ -16,7 +16,6 @@
   /* Fluid: fill the viewport (minus sidebar + wrap padding) at every window size */
   --container: calc(100vw - var(--sidebar-w) - 64px);
   
-  --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
   --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
   --shadow-soft: 0 1px 3px rgb(0 0 0 / 0.04), 0 12px 32px -12px rgb(0 0 0 / 0.10); /* airy card shadow */
 }
@@ -115,7 +114,7 @@ summary::-webkit-details-marker { display: none; }
 
 /* PI Tab */
 .pi-wrap { max-width: 1000px; }
-.pi-hero { display: grid; grid-template-columns: 240px 1fr; gap: 32px; align-items: start; margin-top: 24px; }
+.pi-hero { margin-top: 24px; }
 .pi-photo { width: 100%; aspect-ratio: 3 / 4; height: auto; border-radius: var(--radius); object-fit: cover; box-shadow: var(--shadow-md); }
 .pi-name-kr { margin-bottom: 4px; }
 .pi-name-en { color: var(--muted); margin-bottom: 8px; }
