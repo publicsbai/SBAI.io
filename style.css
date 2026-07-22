@@ -129,6 +129,13 @@ summary::-webkit-details-marker { display: none; }
 .pi-society-row { font-weight: 700; color: var(--ink); margin-top: 22px; }
 .pi-society-row:first-child { margin-top: 0; }
 
+/* Mobile: the year column (max-content) squeezes the description into one word per line — stack them */
+@media (max-width: 640px) {
+  .pi-timeline { grid-template-columns: 1fr; gap: 6px 0; }
+  .pi-year { text-align: left; }
+  .pi-timeline .pi-desc { margin-bottom: 14px; }
+}
+
 /* Lab Members Tab */
 .people-grid {
   display: grid;
@@ -169,6 +176,27 @@ summary::-webkit-details-marker { display: none; }
 .alumni-card .affil { color: var(--muted); margin-top: 4px; }
 
 /* Publications Tab */
+
+/* Entry card — replaces the ~200-char Tailwind string that was repeated on every entry */
+.pub-entry {
+  background: var(--light);
+  padding: 1.5rem;
+  margin-bottom: 1rem;
+  border: 1px solid var(--border);
+  border-left: 4px solid var(--border);
+  border-radius: 0.75rem;
+  box-shadow: 0 2px 20px -8px rgb(0 0 0 / 0.08);
+  transition: all 200ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+.pub-entry:hover {
+  transform: translateY(-0.125rem);
+  border-left-color: var(--secondary-color);
+  box-shadow: 0 10px 30px -12px rgb(0 0 0 / 0.18);
+}
+/* First/corresponding-author papers: tinted + primary left bar (stays primary on hover) */
+.pub-entry.is-highlight { background: color-mix(in srgb, var(--primary-color) 5%, transparent); border-left-color: var(--primary-color); }
+.pub-entry.is-highlight:hover { border-left-color: var(--primary-color); }
+
 /* Lab members' names, auto-emphasized in publication author lists (see LAB_AUTHORS in script.js) */
 .lab-author { color: var(--primary-color); font-weight: 700; }
 
