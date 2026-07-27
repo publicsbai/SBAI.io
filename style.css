@@ -1,15 +1,14 @@
 /* === FONT & BASE === */
 :root {
-  /* === SBAI Color Palette === */
+  /* === SBAI Color Palette — teal + cyan + coral (light) === */
   --bg: #FFFFFF;          /* page background */
-  --ink: #182031;         /* main text (cool near-black) */
-  --muted: #5A5A5A;       /* secondary text */
-  --border: #DADCE0;      /* borders / dividers */
-  --accent: #4D1717;      /* deep maroon — unused, kept */
-  --accent-soft: #E8F0FE; /* light blue tint — nav hover */
+  --ink: #1A2327;         /* main text (cool near-black) */
+  --muted: #5E6B73;       /* secondary text */
+  --border: #DDE6E8;      /* borders / dividers (cool) */
+  --accent-soft: #E3F6F8; /* light cyan tint — nav hover */
   --light: #FFFFFF;       /* cards / surfaces / sidebar */
-  --primary-color: #0C4186;   /* deep navy — main point (AAA on white, matches DNA logo) */
-  --secondary-color: #1A56A0; /* mid blue — subtitles / hover */
+  --primary-color: #0C6068;   /* deep teal — main point (readable on white) */
+  --secondary-color: #0A5560; /* darker teal — subtitles / hover */
 
   --sidebar-w: 240px;
   --radius: 12px;
@@ -110,6 +109,28 @@ summary::-webkit-details-marker { display: none; }
   body.home-top { padding-left: 0; }
   body.home-top .sidebar { transform: translateX(-100%); }
 }
+
+
+/* Hero scroll cue — a thin vertical "scan line" with a travelling read (sequencing motif) */
+.scroll-scan {
+  position: relative; width: 1px; height: 32px; overflow: hidden;
+  background: linear-gradient(to bottom, var(--border), transparent);
+}
+.scroll-scan::after {
+  content: ""; position: absolute; left: 0; top: -45%;
+  width: 1px; height: 45%; background: var(--primary-color);
+  animation: scanDown 1.9s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+}
+@keyframes scanDown { 0% { top: -45%; } 100% { top: 100%; } }
+@media (prefers-reduced-motion: reduce) { .scroll-scan::after { animation: none; top: 0; } }
+
+/* Our Focus feature cells — shared hover glow (was an identical inline div on each of the 3 cards) */
+.feature-glow {
+  position: absolute; inset: 0; opacity: 0; pointer-events: none;
+  transition: opacity 0.2s;
+  background: linear-gradient(to top, var(--accent-soft), transparent);
+}
+.group\/feature:hover .feature-glow { opacity: 1; }
 
 
 /* PI Tab */

@@ -11,7 +11,6 @@
   <!-- Pretendard (primary font) — webfont via jsDelivr dynamic subset (OFL), family: 'Pretendard' -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard-dynamic-subset.min.css">
   <link rel="stylesheet" href="style.css" />
-  <link rel="icon" href="favicon.ico" />
   <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
   <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
   <script id="tailwind-config">
@@ -19,17 +18,15 @@
             theme: {
                 extend: {
                     colors: {
-                        "primary": "#0C4186",
-                        "primary-dark": "#08315F",
-                        "primary-soft": "#E8F0FE",
-                        "secondary": "#1A56A0",
-                        "pop": "#5B9BF0",
-                        "accent": "#4D1717",
-                        "page": "#FFFFFF",
+                        "primary": "#0C6068",
+                        "primary-dark": "#084850",
+                        "primary-soft": "#E3F6F8",
+                        "secondary": "#0A5560",
+                        "pop": "#58D3DB",
                         "background-light": "#FFFFFF",
-                        "ink": "#182031",
-                        "muted": "#5A5A5A",
-                        "border": "#DADCE0"
+                        "ink": "#1A2327",
+                        "muted": "#5E6B73",
+                        "border": "#DDE6E8"
                     },
                     fontFamily: {
                         "display": ["Pretendard", "Inter", "Noto Sans KR", "sans-serif"]
@@ -47,7 +44,7 @@
   
 <style type="text/tailwindcss">
         body {
-            @apply font-display bg-page text-ink;
+            @apply font-display bg-background-light text-ink;
             letter-spacing: 0.02em;
         }
         h1, .h1 { @apply text-4xl lg:text-5xl font-extrabold tracking-tight; }
@@ -82,7 +79,7 @@
     </style>
 </head>
 
-<body class="bg-page font-display text-ink antialiased">
+<body class="bg-background-light font-display text-ink antialiased">
   <!-- Mobile header -->
   <div class="mobilebar">
     <button id="menu-toggle">☰ Menu</button>
@@ -131,38 +128,25 @@
       <section id="home-hero" class="relative min-h-[calc(100vh_-_3.5rem)] max-w-full mx-auto px-6 md:px-12 text-center flex flex-col">
         <div id="hero-content" class="flex-1 w-full flex flex-col items-center justify-center">
 
-          <!-- Multi-omics cascade: 4 tiles that rise in sequence -->
-          <div class="mb-2 flex w-full items-center justify-center gap-[clamp(0.75rem,4vw,5rem)]"
-               aria-label="Multi-omics cascade: genomics, transcriptomics, proteomics, metabolomics">
-            <div class="hero-rise flex-1 min-w-0 max-w-[13rem]">
-              <img src="images/Home/genomics_icon.png" alt="Genomics" class="w-full aspect-square object-contain" />
-            </div>
-            <div class="hero-rise flex-1 min-w-0 max-w-[13rem]">
-              <img src="images/Home/transcriptomics_icon.png" alt="Transcriptomics" class="w-full aspect-square object-contain" />
-            </div>
-            <div class="hero-rise flex-1 min-w-0 max-w-[13rem]">
-              <img src="images/Home/proteomics_icon.png" alt="Proteomics" class="w-full aspect-square object-contain" />
-            </div>
-            <div class="hero-rise flex-1 min-w-0 max-w-[13rem]">
-              <img src="images/Home/metabolomics_icon.png" alt="Metabolomics" class="w-full aspect-square object-contain" />
-            </div>
+          <!-- Reads → SBAI wordmark (Canvas 2D; reads fall and assemble on load, subtle idle life).
+               Driven by the SBAI_READS block at the end of <body>. -->
+          <div class="w-full">
+            <canvas id="hero-reads" class="block w-full pointer-events-none" width="820" height="280"
+              aria-label="Sequencing reads assembling into the letters S B A I"></canvas>
           </div>
 
-          <!-- Title (editable placeholder) -->
-          <h1 class="hero-rise mt-8 text-3xl md:text-5xl lg:text-6xl font-semibold tracking-tight text-ink leading-[1.15]">
-            "Aging and Immunity as Systems"
+          <h1 class="hero-rise mt-6 text-3xl md:text-5xl lg:text-6xl font-semibold tracking-tight text-ink leading-[1.15] text-balance">
+            Systems Biology of Aging and Immunity Lab.
           </h1>
 
-          <!-- Description -->
-          <div class="hero-rise mt-6 max-w-3xl space-y-4 text-lg md:text-xl lg:text-2xl text-muted leading-relaxed">
-            <p class="text-[1.5em] font-semibold text-ink">SBAI Lab</p>
-            <p class="text-[1.1em] text-pretty">We are the Systems Biology of Aging and Immunity Lab, studying how organisms age and how their immune systems work. Using multi-omics data, including (meta/epi)genomics, transcriptomics, and proteomics, we look for patterns that hold from yeast and <em>Arabidopsis</em> to humans.</p>
-          </div>
+          <p class="hero-rise mt-5 max-w-2xl text-lg md:text-xl text-muted leading-relaxed text-pretty">
+            We study how organisms age and how their immune systems work. Using multi-omics data, including (meta/epi)genomics, transcriptomics, and proteomics, we look for patterns that hold from yeast and <em>Arabidopsis</em> to humans.
+          </p>
 
-          <!-- Scroll cue -->
-          <a href="#our-focus" id="scroll-cue" class="hero-rise mt-14 inline-flex flex-col items-center gap-1 text-xs font-semibold uppercase tracking-widest text-muted hover:text-primary transition-colors">
+          <!-- Scroll cue: a quiet sequencing-style scan line replaces the bouncing chevron -->
+          <a href="#our-focus" id="scroll-cue" class="hero-rise mt-14 inline-flex flex-col items-center gap-2.5 text-[0.7rem] font-semibold uppercase tracking-[0.2em] text-muted hover:text-primary transition-colors">
             <span>See More</span>
-            <span class="material-symbols-outlined text-xl animate-bounce">keyboard_arrow_down</span>
+            <span class="scroll-scan" aria-hidden="true"></span>
           </a>
         </div>
       </section>
@@ -185,7 +169,7 @@
 
 <!-- Pillar 1 -->
 <div class="group/feature relative flex flex-col py-10 border-border border-b last:border-b-0 md:border-b-0 md:border-r md:last:border-r-0">
-<div class="pointer-events-none absolute inset-0 opacity-0 transition duration-200 group-hover/feature:opacity-100 bg-gradient-to-t from-primary-soft to-transparent"></div>
+<div class="feature-glow"></div>
 <div class="relative z-10 mb-4 px-8 text-muted transition-colors duration-200 group-hover/feature:text-primary">
 <span class="material-symbols-outlined text-4xl">hub</span>
 </div>
@@ -198,7 +182,7 @@
 
 <!-- Pillar 2 -->
 <div class="group/feature relative flex flex-col py-10 border-border border-b last:border-b-0 md:border-b-0 md:border-r md:last:border-r-0">
-<div class="pointer-events-none absolute inset-0 opacity-0 transition duration-200 group-hover/feature:opacity-100 bg-gradient-to-t from-primary-soft to-transparent"></div>
+<div class="feature-glow"></div>
 <div class="relative z-10 mb-4 px-8 text-muted transition-colors duration-200 group-hover/feature:text-primary">
 <span class="material-symbols-outlined text-4xl">vaccines</span>
 </div>
@@ -211,7 +195,7 @@
 
 <!-- Pillar 3 -->
 <div class="group/feature relative flex flex-col py-10 border-border border-b last:border-b-0 md:border-b-0 md:border-r md:last:border-r-0">
-<div class="pointer-events-none absolute inset-0 opacity-0 transition duration-200 group-hover/feature:opacity-100 bg-gradient-to-t from-primary-soft to-transparent"></div>
+<div class="feature-glow"></div>
 <div class="relative z-10 mb-4 px-8 text-muted transition-colors duration-200 group-hover/feature:text-primary">
 <span class="material-symbols-outlined text-4xl">hourglass_top</span>
 </div>
@@ -1066,6 +1050,205 @@
 
   <script src="script.js"></script>
 
+  <!-- === SBAI_READS: hero "sequencing reads assemble into SBAI" (Canvas 2D, no library) === -->
+  <script>
+  (() => {
+    const canvas = document.getElementById("hero-reads");
+    if (!canvas) return;
+    const ctx = canvas.getContext("2d");
+    const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const NAVY = getComputedStyle(document.documentElement).getPropertyValue("--primary-color").trim() || "#0C6068";   // deep teal (letters + lines)
+    const CYAN = "#58D3DB";                                // bright accent — a few reads
+    const CORAL = "#F2624C";                               // variant markers (warm pop)
+    const LINE = NAVY;                                     // reference lines share the letters' teal
+    const COV  = "#BCE3EB";                                // coverage track — light cyan
+    // flat mottled read palette: teal in varied values + cyan (coral reserved for variant markers only)
+    const READ_COLS = [NAVY, NAVY, NAVY, NAVY, "#12727A", "#12727A", "#1E8A92", "#1E8A92", "#39ABB2", "#39ABB2", CYAN, CYAN, "#0A505A"];
+    const READ_START = 780;                                // the reference line draws first, then reads fall
+
+    let W = 0, H = 0, dpr = 1, reads = [], ref = null, cov = null, bounceAmp = 0;
+    let start = 0, rafId = 0;
+    const easeOutExpo = t => (t >= 1 ? 1 : 1 - Math.pow(2, -10 * t));
+    const easeOutBack = (t, s) => { const c3 = s + 1; return 1 + c3 * Math.pow(t - 1, 3) + s * Math.pow(t - 1, 2); };
+    const rand = (a, b) => a + Math.random() * (b - a);
+
+    function build() {
+      const rect = canvas.getBoundingClientRect();
+      dpr = Math.min(window.devicePixelRatio || 1, 2);
+      W = Math.max(1, Math.floor(rect.width)); H = 320;   // a touch taller → room for a more exaggerated coverage track
+      canvas.width = W * dpr; canvas.height = H * dpr; canvas.style.height = H + "px";
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+
+      // wordmark layout — width tracks the window (≈ the full-name line), capped so it fits the height
+      const family = getComputedStyle(document.body).fontFamily;
+      const size = Math.min(W * 0.24, 205);               // scales with window; leaves margin so letters never clip
+      bounceAmp = Math.max(5, Math.round(size * 0.04));   // idle bounce height, scales with the letters
+      const letterY = 150;
+      const chars = ["S", "B", "A", "I"], step = size, totalW = step * (chars.length - 1);
+      const xs = chars.map((_, i) => W / 2 - totalW / 2 + i * step);
+
+      // sample the wordmark into read target points
+      const off = document.createElement("canvas");
+      off.width = W; off.height = H;
+      const o = off.getContext("2d");
+      o.fillStyle = "#000"; o.textAlign = "center"; o.textBaseline = "middle";
+      o.font = `900 ${size}px ${family}`;
+      chars.forEach((c, i) => o.fillText(c, xs[i], letterY));
+
+      const img = o.getImageData(0, 0, W, H).data;
+      const on = (x, y) => x >= 0 && x < W && y >= 0 && y < H && img[(y * W + x) * 4 + 3] > 120;
+
+      // lay reads ALONG horizontal glyph runs: a wide stroke fits long reads, a thin stem only short ones —
+      // so each read is as long as the shape allows (like a real alignment), never uniform little tiles
+      const SY = 5, MINL = 4, MAXL = 30, GAP = 3.3;             // a touch more air between lanes/reads
+      const items = [];
+      for (let y = 0; y < H; y += SY) {
+        let x = 0;
+        while (x < W) {
+          if (!on(x, y)) { x++; continue; }
+          let x2 = x; while (x2 < W && on(x2, y)) x2++;          // contiguous glyph run [x, x2)
+          let cx = x;
+          while (cx < x2 - 1) {
+            let L = Math.min(rand(MINL, MAXL), x2 - cx);          // read length capped by the remaining run
+            if (x2 - (cx + L) < MINL) L = x2 - cx;                // absorb a tiny leftover → clean right edge
+            if (L >= 2.5) items.push({ mx: cx + L / 2, ty: y, len: L });
+            cx += L + GAP;
+          }
+          x = x2;
+        }
+      }
+      const MAX = W < 520 ? 1200 : 2000;                         // longer reads → fewer needed; cap for perf
+      if (items.length > MAX) { for (let i = items.length - 1; i > 0; i--) { const j = (Math.random() * (i + 1)) | 0; [items[i], items[j]] = [items[j], items[i]]; } items.length = MAX; }
+
+      reads = items.map(({ mx, ty, len }) => {
+        let li = 0; for (let i = 1; i < xs.length; i++) if (Math.abs(mx - xs[i]) < Math.abs(mx - xs[li])) li = i;
+        return {
+          tx: mx, ty, li, sx: mx + rand(-70, 70), sy: -rand(20, H + 200),
+          sa: rand(-Math.PI, Math.PI), ta: rand(-0.06, 0.06),    // near-horizontal, like aligned reads
+          len, wgt: rand(2.4, 3.2),
+          dir: Math.random() < 0.5 ? 1 : -1,                     // strand direction → drawn as an arrow
+          col: READ_COLS[(Math.random() * READ_COLS.length) | 0],
+          delay: rand(0, 1300), dur: rand(850, 1800),
+          bk: Math.random() < 0.6 ? rand(0.6, 2.0) : 0
+        };
+      });
+      // two thin reference lines under the letters, with a fixed set of variant ticks (single accent)
+      const capBottom = letterY + size * 0.37, gap = Math.max(10, size * 0.06);
+      const lminX = Math.min(...reads.map(r => r.tx)), lmaxX = Math.max(...reads.map(r => r.tx));
+      const pad = size * 0.16, ext = W * 0.07;             // ext scales with window width → lines lengthen on wide screens
+      const x0 = Math.max(6, lminX - pad - ext), x1 = Math.min(W - 6, lmaxX + pad + ext);
+      const th = Math.max(2, Math.round(size * 0.014));
+      const y1 = Math.round(capBottom + gap), y2 = y1 + Math.max(7, Math.round(size * 0.05));
+      const VF = [0.16, 0.5, 0.84], VLEN = [30, 26, 33];   // 3, evenly spread across the reference, longer, slightly varied
+      const variants = VF.map((f, i) => ({ x: Math.round(x0 + (x1 - x0) * f), y: (i % 2 ? y2 : y1), len: VLEN[i] }));
+      ref = { x0, x1, ys: [y1, y2], th, variants };
+
+      // read-depth coverage track — builds up under the wordmark as reads land (the core NGS signal;
+      // its profile ≈ the "sequence" of the letters, so the depth skyline mirrors S B A I)
+      const BINW = 4, nb = Math.ceil(W / BINW), raw = new Float32Array(nb);
+      for (const r of reads) raw[(r.tx / BINW) | 0]++;
+      const depth = new Float32Array(nb);                  // light 3-bin smoothing → clean skyline
+      for (let i = 0; i < nb; i++) { let s = 0, c = 0; for (let k = -1; k <= 1; k++) { const j = i + k; if (j >= 0 && j < nb) { s += raw[j]; c++; } } depth[i] = s / c; }
+      let maxD = 0; for (const v of depth) if (v > maxD) maxD = v;
+      cov = { depth, maxD: maxD || 1, binw: BINW, base: ref.ys[1] + Math.max(6, Math.round(size * 0.05)), max: Math.round(size * 0.24) };
+    }
+
+    // a sequencing read: a bar with a flat 5' back and an arrow 3' end (strand direction = dir)
+    function drawRead(x, y, ang, len, wgt, col, alpha, dir) {
+      ctx.save(); ctx.translate(x, y); ctx.rotate(ang); ctx.globalAlpha = alpha;
+      const tip = (dir >= 0 ? 1 : -1) * len / 2, head = Math.min(len * 0.42, wgt * 1.9), jx = tip - (dir >= 0 ? 1 : -1) * head;
+      ctx.strokeStyle = col; ctx.lineWidth = wgt; ctx.lineCap = "butt";
+      ctx.beginPath(); ctx.moveTo(-tip, 0); ctx.lineTo(jx, 0); ctx.stroke();                                   // body
+      ctx.fillStyle = col; ctx.beginPath(); ctx.moveTo(tip, 0); ctx.lineTo(jx, -wgt); ctx.lineTo(jx, wgt); ctx.closePath(); ctx.fill();   // arrowhead
+      ctx.restore();
+    }
+
+    // read-depth coverage histogram under the wordmark; reveal 0..1 grows it as reads land
+    function drawCoverage(reveal) {
+      if (reveal <= 0) return;
+      ctx.save(); ctx.globalAlpha = 1; ctx.strokeStyle = COV; ctx.lineWidth = cov.binw - 1; ctx.lineCap = "butt";
+      for (let i = 0; i < cov.depth.length; i++) {
+        const h = (cov.depth[i] / cov.maxD) * cov.max * reveal;
+        if (h < 0.6) continue;
+        const x = i * cov.binw + cov.binw / 2;
+        ctx.beginPath(); ctx.moveTo(x, cov.base); ctx.lineTo(x, cov.base + h); ctx.stroke();
+      }
+      ctx.restore();
+    }
+
+    // two thin reference lines + coral variant ticks
+    function drawReference(vis) {
+      ctx.globalAlpha = 1; ctx.strokeStyle = LINE; ctx.lineWidth = ref.th; ctx.lineCap = "round";
+      for (const y of ref.ys) { ctx.beginPath(); ctx.moveTo(ref.x0, y); ctx.lineTo(ref.x0 + vis, y); ctx.stroke(); }
+      ctx.strokeStyle = CORAL;
+      for (const v of ref.variants) if (v.x - ref.x0 <= vis) { ctx.beginPath(); ctx.moveTo(v.x - v.len / 2, v.y); ctx.lineTo(v.x + v.len / 2, v.y); ctx.stroke(); }
+    }
+
+    function frame(now) {
+      if (!start) start = now;
+      const t = now - start;
+      ctx.clearRect(0, 0, W, H);
+
+      const bp = easeOutExpo(Math.min(1, Math.max(0, t / 620)));   // the reference wipes in first
+      if (bp > 0) drawReference((ref.x1 - ref.x0) * bp);
+
+      // coverage histogram fills in as the reads settle
+      drawCoverage(easeOutExpo(Math.min(1, Math.max(0, (t - READ_START - 300) / 2600))));
+
+      // idle: a gentle continuous float, with a staggered "wave" bounce layered on top every few seconds
+      const STAG = 0.28, BDUR = 1.1, REST = 2.4, cyc = 3 * STAG + BDUR + REST;
+      const bs = now / 1000, it = t / 1000 - 4.5, lb = [0, 0, 0, 0];   // bounce holds until ~4.5s in, then loops
+      if (it > 0) {
+        const tc = it % cyc;                                // wider stagger → the bounce travels S→B→A→I like a wave
+        for (let i = 0; i < 4; i++) { const u = (tc - i * STAG) / BDUR, s = Math.sin(Math.PI * u); if (u >= 0 && u <= 1) lb[i] = -bounceAmp * s * s; }
+      }
+      for (const r of reads) {
+        const rp = Math.min(1, Math.max(0, (t - READ_START - r.delay) / r.dur));
+        const p = r.bk ? easeOutBack(rp, r.bk) : easeOutExpo(rp);   // varied: some pop, some settle smoothly
+        let x = r.sx + (r.tx - r.sx) * p;
+        let y = r.sy + (r.ty - r.sy) * p;
+        const ang = r.sa + (r.ta - r.sa) * p;
+        const alpha = 0.15 + 0.85 * Math.min(1, rp * 1.4);
+        if (rp >= 1) {                                       // settled: gentle per-letter float + periodic wave bounce
+          const i = r.li;
+          x += Math.sin(bs * 0.9 + i * 1.7) * 0.7;
+          y += Math.sin(bs * 1.1 + i * 2.3) * 2.3 + lb[i];
+        }
+        drawRead(x, y, ang, r.len, r.wgt, r.col, alpha, r.dir);
+      }
+      rafId = requestAnimationFrame(frame);
+    }
+
+    function renderStatic() {
+      ctx.clearRect(0, 0, W, H);
+      for (const r of reads) drawRead(r.tx, r.ty, r.ta, r.len, r.wgt, r.col, 1, r.dir);
+      drawReference(ref.x1 - ref.x0);
+      drawCoverage(1);
+    }
+
+    function play() {
+      cancelAnimationFrame(rafId); build(); start = 0;
+      if (reduce) renderStatic(); else rafId = requestAnimationFrame(frame);
+    }
+
+    let debounce;
+    addEventListener("resize", () => { clearTimeout(debounce); debounce = setTimeout(play, 200); });
+
+    // pause rendering while the hero is off-screen (no wasted repaints), replay when it returns
+    let wasOut = false;
+    new IntersectionObserver((es) => {
+      for (const e of es) {
+        if (!e.isIntersecting) { wasOut = true; cancelAnimationFrame(rafId); rafId = 0; }   // stop the loop off-screen
+        else if (wasOut) { wasOut = false; if (!reduce) play(); }
+      }
+    }, { threshold: 0.5 }).observe(canvas);
+
+    // sample once the real webfont (Pretendard) is ready, not a fallback
+    (document.fonts && document.fonts.ready ? document.fonts.ready : Promise.resolve()).then(play);
+  })();
+  </script>
+  <!-- === /SBAI_READS === -->
+
   <!-- Motion for the Web (vanilla) — pinned CDN, no build step required.
        Available fns: animate, inView, scroll, delay, scrollInfo.
        (stagger/hover/press are React-only in this build; use manual delay.)
@@ -1099,15 +1282,7 @@
         );
       });
 
-      // Home hero: fade out & drift up as the user scrolls down into "Our Focus".
-      const heroSection = document.querySelector("#home-hero");
-      const heroContent = document.querySelector("#hero-content");
-      if (heroSection && heroContent) {
-        scroll(
-          animate(heroContent, { opacity: [1, 0], y: [0, -80] }, { ease: "linear" }),
-          { target: heroSection, offset: ["start start", "end start"] }
-        );
-      }
+      // (Removed the hero scroll-linked fade — it made the mark look hazy as soon as the page scrolled.)
 
       // Research themes: scroll-linked reveal (hero-style) — each fades + rises in
       // sync with scroll. The #Research tab is display:none on load, so measuring now
