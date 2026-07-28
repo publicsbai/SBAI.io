@@ -124,17 +124,21 @@ summary::-webkit-details-marker { display: none; }
 @keyframes scanDown { 0% { top: -45%; } 100% { top: 100%; } }
 @media (prefers-reduced-motion: reduce) { .scroll-scan::after { animation: none; top: 0; } }
 
-/* Our Focus feature cells — hover glow as a pseudo-element (no decorative div needed) */
-.group\/feature::before {
-  content: ""; position: absolute; inset: 0; opacity: 0; pointer-events: none;
+/* Our Focus feature cells — hover glow (own div so the cell's overflow-hidden reliably clips it) */
+.feature-glow {
+  position: absolute; inset: 0; opacity: 0; pointer-events: none;
   transition: opacity 0.2s;
   background: linear-gradient(to top, var(--accent-soft), transparent);
 }
-.group\/feature:hover::before { opacity: 1; }
+.group\/feature:hover .feature-glow { opacity: 1; }
 /* pillar hover pop — plain CSS (no Tailwind named-group; works on deploy regardless of the CDN) */
 .group\/feature:hover .feature-icon  { color: var(--primary-color); }
 .group\/feature:hover .feature-title { transform: translateX(0.5rem); }
 .group\/feature:hover .feature-bar   { height: 2rem; background: #58D3DB; }
+/* keep the title inside its cell at narrow widths: grid/flex items default to min-width:auto,
+   which refuses to shrink below the longest word → the text (and hover slide) spill into the next cell.
+   min-width:0 lets the cell shrink to its track; break-word wraps long titles instead of overflowing. */
+.feature-title { overflow-wrap: anywhere; }   /* anywhere (not break-word) also shrinks intrinsic size → real wrap */
 
 /* "What We Work On" intro paragraph width — plain CSS (same value as before) so it never depends on the CDN JIT */
 .wwwo-lede { max-width: calc(40.91% + 43rem); }
