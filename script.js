@@ -16,6 +16,11 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     const activateTab = (targetId) => {
+        // Guard: an unknown or non-tab hash (#join-us, #Members summary, a typo, a stale link) must not
+        // deactivate every tab and leave a blank screen. Fall back to Home unless targetId names a real tab.
+        const match = document.getElementById(targetId);
+        if (!match || !match.classList.contains('tabcontent')) targetId = 'Home';
+
         // Hide the top banner on the Home tab for a cleaner look; show it on other tabs.
         if (banner) banner.style.display = (targetId === 'Home') ? 'none' : '';
 

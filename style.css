@@ -113,12 +113,12 @@ summary::-webkit-details-marker { display: none; }
 
 /* Hero scroll cue — a thin vertical "scan line" with a travelling read (sequencing motif) */
 .scroll-scan {
-  position: relative; width: 1px; height: 32px; overflow: hidden;
-  background: linear-gradient(to bottom, var(--border), transparent);
+  position: relative; width: 2px; height: 46px; overflow: hidden;
+  background: linear-gradient(to bottom, var(--muted), transparent);
 }
 .scroll-scan::after {
   content: ""; position: absolute; left: 0; top: -45%;
-  width: 1px; height: 45%; background: var(--primary-color);
+  width: 2px; height: 45%; background: var(--primary-color);
   animation: scanDown 1.9s cubic-bezier(0.4, 0, 0.2, 1) infinite;
 }
 @keyframes scanDown { 0% { top: -45%; } 100% { top: 100%; } }
