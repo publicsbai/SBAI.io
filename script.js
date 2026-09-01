@@ -163,4 +163,27 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     };
     emphasizeLabAuthors();
+
+    // --- SCROLL REVEAL (pnucolab-style smooth entrance; plain IntersectionObserver, no library) ---
+    const revealEls = document.querySelectorAll('.reveal');
+    if (revealEls.length && 'IntersectionObserver' in window) {
+        revealEls.forEach((el) => el.classList.add('reveal-armed'));  // hide only now that JS is confirmed running
+        const io = new IntersectionObserver((entries) => {
+            entries.forEach((e) => {
+                if (e.isIntersecting) { e.target.classList.add('reveal-in'); io.unobserve(e.target); }
+            });
+        }, { threshold: 0.12, rootMargin: '0px 0px -8% 0px' });
+        revealEls.forEach((el) => io.observe(el));
+    }
+    // no IntersectionObserver / no JS: elements stay unarmed = visible (never hide content behind JS)
+
+    // --- HERO BLOBS: pause the slow drift when the hero is off-screen / on another tab (mirrors the canvas off-screen pause) ---
+    const heroBlobs = document.querySelector('.hero-blobs');
+    const heroEl = document.getElementById('home-hero');
+    if (heroBlobs && heroEl && 'IntersectionObserver' in window) {
+        const blobIO = new IntersectionObserver((entries) => {
+            entries.forEach((e) => heroBlobs.classList.toggle('paused', !e.isIntersecting));
+        }, { threshold: 0 });
+        blobIO.observe(heroEl);
+    }
 });

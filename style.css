@@ -11,12 +11,14 @@
   --secondary-color: #0A5560; /* darker teal — subtitles / hover */
 
   --sidebar-w: 240px;
+  --wrap-pad: 32px;     /* .wrap horizontal padding — the hero breakout mirrors this to reach the edges */
   --radius: 12px;
   /* Fluid: fill the viewport (minus sidebar + wrap padding) at every window size */
   --container: calc(100vw - var(--sidebar-w) - 64px);
   
   --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
   --shadow-soft: 0 1px 3px rgb(0 0 0 / 0.04), 0 12px 32px -12px rgb(0 0 0 / 0.10); /* airy card shadow */
+  --ease-smooth: cubic-bezier(.16, 1, .3, 1);  /* expo-out — pnucolab-style smooth deceleration (hovers, reveals) */
 }
 
 * { box-sizing: border-box; }
@@ -37,6 +39,15 @@ body {
 
 a { color: var(--primary-color); text-decoration: none; transition: color 0.2s ease; }
 a:hover { color: var(--secondary-color); }
+
+/* === Browser surfaces + focus — the "built, not assembled" details (theme them from the palette) === */
+:focus-visible { outline: 2px solid var(--primary-color); outline-offset: 2px; border-radius: 3px; }
+:focus:not(:focus-visible) { outline: none; }              /* keyboard-only ring; no ring on mouse click */
+::selection { background: color-mix(in srgb, var(--primary-color) 20%, transparent); }
+::-webkit-scrollbar { width: 12px; height: 12px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: color-mix(in srgb, var(--primary-color) 28%, var(--border)); border-radius: 8px; border: 3px solid var(--bg); }
+::-webkit-scrollbar-thumb:hover { background: color-mix(in srgb, var(--primary-color) 48%, var(--border)); }
 
 h1, h2, h3, h4, h5, h6 { margin: 0; padding: 0; }
 
@@ -98,6 +109,8 @@ summary::-webkit-details-marker { display: none; }
   padding: 32px 0 56px;
 }
 .tabcontent.active { display: block; }
+/* Hero is full-bleed: escape the .wrap horizontal padding so the section + its ambient blobs reach the screen edges */
+#home-hero { max-width: none; width: calc(100% + (var(--wrap-pad) * 2)); margin-inline: calc(var(--wrap-pad) * -1); }
 @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
 
@@ -108,6 +121,8 @@ summary::-webkit-details-marker { display: none; }
 @media (min-width: 1025px) {
   body.home-top { padding-left: 0; }
   body.home-top .sidebar { transform: translateX(-100%); }
+  /* sidebar hidden at the top of Home → don't reserve its width; let content fill (kills the big side gaps) */
+  body.home-top .tabcontent { max-width: none; }
 }
 
 
@@ -127,7 +142,7 @@ summary::-webkit-details-marker { display: none; }
 /* Our Focus feature cells — hover glow (own div so the cell's overflow-hidden reliably clips it) */
 .feature-glow {
   position: absolute; inset: 0; opacity: 0; pointer-events: none;
-  transition: opacity 0.2s;
+  transition: opacity 0.3s var(--ease-smooth);
   background: linear-gradient(to top, var(--accent-soft), transparent);
 }
 .group\/feature:hover .feature-glow { opacity: 1; }
@@ -135,6 +150,10 @@ summary::-webkit-details-marker { display: none; }
 .group\/feature:hover .feature-icon  { color: var(--primary-color); }
 .group\/feature:hover .feature-title { transform: translateX(0.5rem); }
 .group\/feature:hover .feature-bar   { height: 2rem; background: #58D3DB; }
+/* smooth expo easing on the pillar hover (override Tailwind duration-200 / default ease) */
+.group\/feature .feature-icon,
+.group\/feature .feature-bar,
+.group\/feature .feature-title { transition-timing-function: var(--ease-smooth); transition-duration: .3s; }
 /* keep the title inside its cell at narrow widths: grid/flex items default to min-width:auto,
    which refuses to shrink below the longest word → the text (and hover slide) spill into the next cell.
    min-width:0 lets the cell shrink to its track; break-word wraps long titles instead of overflowing. */
@@ -142,6 +161,65 @@ summary::-webkit-details-marker { display: none; }
 
 /* "What We Work On" intro paragraph width — plain CSS (same value as before) so it never depends on the CDN JIT */
 .wwwo-lede { max-width: calc(40.91% + 43rem); }
+
+/* === pnucolab-inspired smooth motion (plain CSS + one IntersectionObserver, no library) === */
+a.btn { transition: all 0.3s var(--ease-smooth); }
+/* harmonious hover: lift + soft teal-tinted shadow instead of a muddy darken */
+a.btn:hover { transform: translateY(-2px); box-shadow: 0 8px 22px -10px color-mix(in srgb, var(--primary-color) 45%, transparent); }
+/* primary (filled teal) button: keep white text on hover (global a:hover would darken it) + nudge the bg slightly toward cyan, not darker */
+a.btn.bg-primary:hover { background: color-mix(in srgb, var(--primary-color) 84%, #58D3DB); color: #fff; }
+
+/* scroll reveal: fade + rise as blocks enter view. script.js ARMS (.reveal-armed) only once it's
+   confirmed running, then adds .reveal-in on scroll — so if JS never runs, .reveal stays visible and
+   no content (incl. the recruiting CTA) is ever hidden behind JS. */
+.reveal { transition: opacity 0.8s var(--ease-smooth), transform 0.8s var(--ease-smooth); }
+.reveal.reveal-armed { opacity: 0; transform: translateY(18px); }
+.reveal.reveal-armed.reveal-in { opacity: 1; transform: none; }
+
+/* hero ambient blobs: slow organic drift behind the hero (teal/cyan, faint) */
+.hero-blobs { position: absolute; inset: 0; overflow: hidden; pointer-events: none; z-index: 0; }
+.hero-blob { position: absolute; border-radius: 50%; filter: blur(64px); opacity: .35; }
+.hero-blob-1 { width: 40vw; max-width: 500px; aspect-ratio: 1; left: -7%; top: 4%;
+  background: radial-gradient(circle, color-mix(in srgb, #58D3DB 50%, transparent), transparent 70%);
+  animation: blobDrift 24s ease-in-out infinite; }
+.hero-blob-2 { width: 34vw; max-width: 440px; aspect-ratio: 1; right: -6%; bottom: 2%;
+  background: radial-gradient(circle, color-mix(in srgb, var(--primary-color) 30%, transparent), transparent 70%);
+  animation: blobDrift 32s ease-in-out infinite reverse; }
+@keyframes blobDrift {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  33%      { transform: translate(2.5%, -3%) scale(1.04); }
+  66%      { transform: translate(-2.5%, 3%) scale(0.97); }
+}
+/* pause the drift when the hero is off-screen or on another tab (JS toggles .paused) — matches the canvas's off-screen pause */
+.hero-blobs.paused .hero-blob { animation-play-state: paused; }
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal, .reveal.reveal-armed { opacity: 1; transform: none; transition: none; }
+  .hero-blob { animation: none; }
+}
+
+/* === Sequencing-editorial section POV (proof: Research) === */
+/* Static "coverage" tick signature under a confident left-aligned heading — a quiet echo of the hero. */
+.sig-ticks { display: inline-flex; align-items: flex-end; gap: 4px; height: 18px; margin-top: 14px; }
+.sig-ticks i { width: 4px; border-radius: 1px; background: color-mix(in srgb, var(--primary-color) 50%, var(--border)); }
+.sig-ticks i:nth-child(1) { height: 7px; }
+.sig-ticks i:nth-child(2) { height: 12px; }
+.sig-ticks i:nth-child(3) { height: 18px; background: #F2624C; }  /* coral peak = variant/coverage echo; brings the 3rd brand color into the reading UI */
+.sig-ticks i:nth-child(4) { height: 14px; }
+.sig-ticks i:nth-child(5) { height: 9px; }
+.sig-ticks i:nth-child(6) { height: 15px; }
+.sig-ticks i:nth-child(7) { height: 6px; }
+/* Monospace ONLY for real data indices (research theme numbers) — a computational-biology signal, not a costume. */
+.mono-index { font-family: ui-monospace, SFMono-Regular, "Cascadia Mono", Consolas, monospace; font-variant-numeric: tabular-nums; letter-spacing: -0.02em; }
+/* Editorial hierarchy for research themes: a large lead statement pulls the eye, supporting body recedes — breaks the text wall with type, not widgets */
+.research-lead { font-size: clamp(1.25rem, 2.1vw, 1.6rem); line-height: 1.35; font-weight: 600; letter-spacing: -0.01em; color: var(--ink); margin: 0 0 1rem; text-wrap: balance; }
+.research-body { font-size: 1.0625rem; line-height: 1.75; color: var(--muted); max-width: 42rem; }
+/* PI Professional Activities — collapsed by default (native <details>) so the ~20-row committee list doesn't dominate the page */
+.pi-activities-summary { text-align: center; cursor: pointer; list-style: none; margin-bottom: 2rem; }
+.pi-activities-summary::-webkit-details-marker { display: none; }
+.pi-activities-summary::after { content: " ▾"; color: var(--muted); font-size: 1rem; vertical-align: middle; }
+.pi-activities[open] .pi-activities-summary::after { content: " ▴"; }
+.pi-activities-summary:hover h2 { color: var(--secondary-color); }
 
 
 /* PI Tab */
@@ -187,7 +265,7 @@ summary::-webkit-details-marker { display: none; }
   object-fit: cover;
   border: 1px solid var(--border);
   box-shadow: var(--shadow-soft);
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  transition: transform 0.35s var(--ease-smooth), box-shadow 0.35s var(--ease-smooth);
 }
 .person-card:hover .photo { transform: scale(1.03); box-shadow: var(--shadow-md); }
 .person-card .photo-placeholder {
@@ -203,7 +281,7 @@ summary::-webkit-details-marker { display: none; }
 
 /* Alumni Tab */
 .alumni-grid { display: grid; grid-template-columns: repeat(auto-fit, 250px); justify-content: center; gap: 24px 32px; }
-.alumni-card { background: var(--light); border: 1px solid var(--border); padding: 20px; border-radius: var(--radius); box-shadow: var(--shadow-soft); transition: box-shadow 0.2s ease, transform 0.2s ease; }
+.alumni-card { background: var(--light); border: 1px solid var(--border); padding: 20px; border-radius: var(--radius); box-shadow: var(--shadow-soft); transition: box-shadow 0.35s var(--ease-smooth), transform 0.35s var(--ease-smooth); }
 .alumni-card:hover { box-shadow: var(--shadow-md); transform: translateY(-2px); }
 .alumni-card .affil { color: var(--muted); margin-top: 4px; }
 
@@ -218,7 +296,7 @@ summary::-webkit-details-marker { display: none; }
   border-left: 4px solid var(--border);
   border-radius: 0.75rem;
   box-shadow: 0 2px 20px -8px rgb(0 0 0 / 0.08);
-  transition: all 200ms cubic-bezier(0.4, 0, 0.2, 1);
+  transition: all 0.35s var(--ease-smooth);
 }
 .pub-entry:hover {
   transform: translateY(-0.125rem);
@@ -233,7 +311,7 @@ summary::-webkit-details-marker { display: none; }
 .lab-author { color: var(--primary-color); font-weight: 700; }
 
 /* Publications year divider — left-aligned "year + rule" (modern, pairs with the card accent bars) */
-.pub-year { color: var(--ink); font-weight: 800; font-size: 1.6rem; letter-spacing: -0.01em; }
+.pub-year { color: var(--ink); font-weight: 800; font-size: 1.6rem; letter-spacing: -0.01em; position: sticky; top: 0; background: var(--bg); z-index: 5; padding: 10px 0; }
 .pub-year > span:first-child { display: none; }            /* hide the left line → year sits flush left */
 .pub-year > span:last-child { background: var(--border); } /* right rule = subtle neutral line */
 
@@ -250,7 +328,7 @@ footer {
 .mobilebar { display: none; }
 
 @media (max-width: 1024px) {
-  :root { --sidebar-w: 0px; }
+  :root { --sidebar-w: 0px; --wrap-pad: 24px; }
   body { padding-left: 0; }
   .wrap { padding: 24px; }
   .banner { padding: 14px 20px; }
@@ -280,4 +358,5 @@ footer {
     color: var(--ink); padding: 8px 12px;
     border-radius: var(--radius);
   }
+  .pub-year { top: 56px; }   /* clear the sticky mobile menu bar */
 }
