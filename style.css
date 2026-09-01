@@ -199,18 +199,6 @@ a.btn.bg-primary:hover { background: color-mix(in srgb, var(--primary-color) 84%
 }
 
 /* === Sequencing-editorial section POV (proof: Research) === */
-/* Static "coverage" tick signature under a confident left-aligned heading — a quiet echo of the hero. */
-.sig-ticks { display: inline-flex; align-items: flex-end; gap: 4px; height: 18px; margin-top: 14px; }
-.sig-ticks i { width: 4px; border-radius: 1px; background: color-mix(in srgb, var(--primary-color) 50%, var(--border)); }
-.sig-ticks i:nth-child(1) { height: 7px; }
-.sig-ticks i:nth-child(2) { height: 12px; }
-.sig-ticks i:nth-child(3) { height: 18px; background: #F2624C; }  /* coral peak = variant/coverage echo; brings the 3rd brand color into the reading UI */
-.sig-ticks i:nth-child(4) { height: 14px; }
-.sig-ticks i:nth-child(5) { height: 9px; }
-.sig-ticks i:nth-child(6) { height: 15px; }
-.sig-ticks i:nth-child(7) { height: 6px; }
-/* Monospace ONLY for real data indices (research theme numbers) — a computational-biology signal, not a costume. */
-.mono-index { font-family: ui-monospace, SFMono-Regular, "Cascadia Mono", Consolas, monospace; font-variant-numeric: tabular-nums; letter-spacing: -0.02em; }
 /* Editorial hierarchy for research themes: a large lead statement pulls the eye, supporting body recedes — breaks the text wall with type, not widgets */
 .research-lead { font-size: clamp(1.25rem, 2.1vw, 1.6rem); line-height: 1.35; font-weight: 600; letter-spacing: -0.01em; color: var(--ink); margin: 0 0 1rem; text-wrap: balance; }
 .research-body { font-size: 1.0625rem; line-height: 1.75; color: var(--muted); max-width: 42rem; }
