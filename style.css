@@ -10,12 +10,10 @@
   --primary-color: #0C6068;   /* deep teal — main point (readable on white) */
   --secondary-color: #0A5560; /* darker teal — subtitles / hover */
 
-  --topbar-h: 68px;
+  --topbar-h: 84px;   /* slim nav-bar (row 2) height; the logo row (row 1) stacks above it when expanded */
   --wrap-pad: clamp(24px, 4vw, 72px);  /* .wrap horizontal padding — the hero breakout mirrors this to reach the edges */
   --radius: 6px;        /* tight, not bootstrap-round */
   --radius-sm: 4px;     /* photos */
-  /* Fluid: fill the viewport (minus wrap padding) at every window size */
-  --container: 100%;
 
   /* De-chromed: surfaces are defined by hairlines, not drop shadows. Shadows appear on hover only. */
   --shadow-hover: 0 10px 30px -18px rgb(12 96 104 / 0.35);
@@ -60,27 +58,38 @@ hr { border: 0; border-top: 1px solid var(--border); margin: 3rem 0; }
 /* === TOP NAVIGATION ===
    Replaces the old fixed sidebar + separate logo banner. Plain CSS (no Tailwind
    arbitrary values / named groups) so the bar survives the CDN build on GitHub Pages. */
-.topbar {
-  position: fixed; top: 0; left: 0; right: 0; height: var(--topbar-h);
-  z-index: 1000;
-  display: flex; align-items: center; gap: 32px;
-  padding: 0 var(--wrap-pad);
-  background: var(--light);
+.masthead {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+  display: flex; flex-direction: column; align-items: center;
+  background: color-mix(in srgb, var(--light) 82%, transparent);   /* pnucolab-style frosted bar */
+  backdrop-filter: blur(12px) saturate(1.3);
+  -webkit-backdrop-filter: blur(12px) saturate(1.3);
   border-bottom: 1px solid var(--border);
   transition: background .3s var(--ease-smooth), border-color .3s var(--ease-smooth);
 }
-/* At the very top of Home the bar floats over the hero — no plate, no rule.
-   script.js toggles body.home-top on scroll (same hook as before, new job). */
-body.home-top .topbar { background: transparent; border-bottom-color: transparent; }
+/* Row 1: big centered logo — collapsed by default (condensed); expands only at the top of Home.
+   On scroll / any other tab, body.home-top is false → this collapses and only the nav bar (row 2) stays. */
+.masthead-logo {
+  display: flex; justify-content: center; overflow: hidden;
+  max-height: 0; opacity: 0; padding-top: 0;
+  transition: max-height .45s var(--ease-smooth), opacity .35s var(--ease-smooth), padding-top .45s var(--ease-smooth);
+}
+.masthead-logo img { display: block; height: 132px; width: auto; }
+/* Row 2: the nav bar — always present, slim, centered */
+.masthead-bar {
+  width: 100%; height: var(--topbar-h);
+  display: flex; align-items: center; justify-content: center;
+  padding: 0 var(--wrap-pad);
+}
+/* At the very top of Home: transparent overlay over the immersive hero + the logo row expands. */
+body.home-top .masthead { background: transparent; border-bottom-color: transparent; backdrop-filter: none; -webkit-backdrop-filter: none; }
+body.home-top .masthead-logo { max-height: 240px; opacity: 1; padding-top: 28px; }
 
-.topbar-brand { display: flex; align-items: center; margin-right: auto; }
-.topbar-brand img { display: block; height: 40px; width: auto; }
-
-.nav { display: flex; align-items: center; gap: 2px; }
+.nav { display: flex; align-items: center; justify-content: center; gap: 2px; }
 .nav .item {
   position: relative; display: block;
-  padding: 10px 14px;
-  font-size: 15px; font-weight: 600;
+  padding: 13px 18px;
+  font-size: 20px; font-weight: 600;
   color: var(--muted);
   transition: color 0.2s ease;
 }
@@ -89,7 +98,7 @@ body.home-top .topbar { background: transparent; border-bottom-color: transparen
 /* active state = a 2px rule under the label, not a filled pill */
 .nav > .item.active::after,
 .navgroup.active > .navgroup-label::after {
-  content: ""; position: absolute; left: 14px; right: 14px; bottom: 4px;
+  content: ""; position: absolute; left: 18px; right: 18px; bottom: 6px;
   height: 2px; background: var(--primary-color);
 }
 
@@ -98,8 +107,8 @@ body.home-top .topbar { background: transparent; border-bottom-color: transparen
 .navgroup-label {
   position: relative;
   appearance: none; background: none; border: 0; cursor: pointer;
-  font: inherit; font-size: 15px; font-weight: 600;
-  color: var(--muted); padding: 10px 14px;
+  font: inherit; font-size: 20px; font-weight: 600;
+  color: var(--muted); padding: 13px 18px;
   transition: color 0.2s ease;
 }
 .navgroup-label:hover, .navgroup.active > .navgroup-label { color: var(--ink); }
@@ -130,19 +139,18 @@ body.home-top .topbar { background: transparent; border-bottom-color: transparen
   display: none;
   animation: fadeIn 0.5s ease;
   width: 100%;
-  max-width: var(--container);
   padding: 32px 0 56px;
 }
 /* Home leads with the full-height hero — no top gap between the bar and the mark */
-#Home.tabcontent { padding-top: 0; }
+/* Home: pull the hero up under the masthead so the (transparent) masthead OVERLAYS the immersive hero */
+#Home.tabcontent { padding-top: 0; margin-top: calc(var(--topbar-h) * -1); }
 .tabcontent.active { display: block; }
-/* Hero is full-bleed: escape the .wrap horizontal padding so the section reaches the screen edges.
-   Height is set here (not as a Tailwind arbitrary value) so it can read --topbar-h. */
+/* Hero is full-bleed: escape the .wrap horizontal padding so the section reaches the screen edges. */
 #home-hero {
   max-width: none;
   width: calc(100% + (var(--wrap-pad) * 2));
   margin-inline: calc(var(--wrap-pad) * -1);
-  min-height: calc(100vh - var(--topbar-h));
+  min-height: 100vh;
 }
 @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
@@ -317,13 +325,14 @@ footer {
 
 /* === MOBILE & RESPONSIVE === */
 @media (max-width: 1023.98px) {
-  :root { --topbar-h: 60px; }
+  :root { --topbar-h: 72px; }
   .wrap { padding: 0 var(--wrap-pad); }
 
-  /* Hamburger */
+  /* Hamburger — pinned to the top-right of the (column) masthead */
   .nav-toggle {
     display: flex; flex-direction: column; justify-content: center; gap: 7px;
-    width: 44px; height: 44px; margin-right: -10px;
+    position: absolute; top: 8px; right: var(--wrap-pad); z-index: 2;
+    width: 44px; height: 44px;
     background: none; border: 0; cursor: pointer;
   }
   .nav-toggle-bar {
@@ -334,7 +343,7 @@ footer {
   .nav-toggle.open .nav-toggle-bar:last-child  { transform: translateY(-4.5px) rotate(-45deg); }
 
   /* The same <nav> becomes a full-screen panel — no second menu markup, no overlay element */
-  .topbar .nav {
+  .masthead .nav {
     position: fixed; inset: var(--topbar-h) 0 0;
     flex-direction: column; align-items: stretch; gap: 0;
     background: var(--bg);
@@ -343,8 +352,8 @@ footer {
     opacity: 0; visibility: hidden; transform: translateY(-8px);
     transition: opacity .25s var(--ease-smooth), transform .25s var(--ease-smooth), visibility .25s;
   }
-  .topbar .nav.open { opacity: 1; visibility: visible; transform: none; }
-  .topbar .nav > .item,
+  .masthead .nav.open { opacity: 1; visibility: visible; transform: none; }
+  .masthead .nav > .item,
   .navgroup-label { padding: 16px 0; font-size: 20px; border-bottom: 1px solid var(--border); }
   .navgroup-label { display: block; width: 100%; text-align: left; }
   .navgroup-caret { display: none; }
@@ -362,7 +371,7 @@ footer {
   .navgroup-menu .item:last-child { border-bottom: 0; }
   .navgroup-menu .item:hover { background: none; }
 
-  .topbar-brand img { height: 32px; }
+  .masthead-logo img { height: 84px; }
 }
 
 /* Very wide screens: the people/alumni grids look sparse hugging the left edge — let them breathe evenly */

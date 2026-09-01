@@ -76,30 +76,34 @@
 <body class="bg-background-light font-display text-ink antialiased">
   <!-- Top navigation — fixed slim bar. Styles live in style.css (plain CSS, no Tailwind
        arbitrary values) so the layout survives the Tailwind CDN on GitHub Pages. -->
-  <header class="topbar" id="topbar">
-    <a class="topbar-brand" href="#Home">
-      <img src="images/lab_logo_chromakey.png" alt="SBAI — Systems Biology of Aging and Immunity">
-    </a>
-
-    <!-- Desktop: inline links. Mobile (<=1024px): the same <nav> becomes the full-screen panel. -->
-    <nav class="nav" id="nav" aria-label="Main">
-      <a class="item active" href="#Home">Home</a>
-      <a class="item" href="#Research">Research</a>
-      <div class="navgroup">
-        <button class="navgroup-label" type="button" aria-expanded="false">Members<span class="navgroup-caret" aria-hidden="true">&#9662;</span></button>
-        <div class="navgroup-menu">
-          <a class="item" href="#PI">Principal Investigator</a>
-          <a class="item" href="#LabMembers">Lab Members</a>
-          <a class="item" href="#Alumni">Alumni</a>
-        </div>
-      </div>
-      <a class="item" href="#Publications">Publications</a>
-      <a class="item" href="#Contact">Contact</a>
-    </nav>
-
+  <header class="masthead" id="topbar">
     <button class="nav-toggle" id="menu-toggle" type="button" aria-label="Menu" aria-expanded="false">
       <span class="nav-toggle-bar"></span><span class="nav-toggle-bar"></span>
     </button>
+
+    <!-- Row 1: big centered lab logo — collapses on scroll / off Home -->
+    <a class="masthead-logo topbar-brand" href="#Home">
+      <img src="images/lab_logo_chromakey.png" alt="SBAI — Systems Biology of Aging and Immunity">
+    </a>
+
+    <!-- Row 2: the nav bar (stays as a slim sticky bar once the logo collapses).
+         Desktop: inline links, centered. Mobile (<=1024px): the same <nav> becomes the full-screen panel. -->
+    <div class="masthead-bar">
+      <nav class="nav" id="nav" aria-label="Main">
+        <a class="item active" href="#Home">Home</a>
+        <a class="item" href="#Research">Research</a>
+        <div class="navgroup">
+          <button class="navgroup-label" type="button" aria-expanded="false">Members<span class="navgroup-caret" aria-hidden="true">&#9662;</span></button>
+          <div class="navgroup-menu">
+            <a class="item" href="#PI">Principal Investigator</a>
+            <a class="item" href="#LabMembers">Lab Members</a>
+            <a class="item" href="#Alumni">Alumni</a>
+          </div>
+        </div>
+        <a class="item" href="#Publications">Publications</a>
+        <a class="item" href="#Contact">Contact</a>
+      </nav>
+    </div>
   </header>
 
   <!-- Main content -->
