@@ -12,7 +12,6 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard-dynamic-subset.min.css">
   <link rel="stylesheet" href="style.css" />
   <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
   <script id="tailwind-config">
         tailwind.config = {
             theme: {
@@ -45,14 +44,13 @@
 <style type="text/tailwindcss">
         body {
             @apply font-display bg-background-light text-ink;
-            letter-spacing: 0.02em;
         }
-        h1, .h1 { @apply text-4xl lg:text-5xl font-extrabold tracking-tight; }
+        h1, .h1 { @apply text-4xl lg:text-5xl font-bold tracking-tight; }
         h2, .h2 { @apply text-3xl lg:text-4xl font-normal tracking-tight; }
         h3, .h3 { @apply text-2xl lg:text-3xl font-bold; }
         h4, .h4 { @apply text-xl font-bold; }
         p { @apply text-base text-muted leading-relaxed; }
-        .pi-name-kr { @apply text-3xl font-extrabold; }
+        .pi-name-kr { @apply text-3xl font-bold; }
         .pi-name-en { @apply text-2xl font-bold; }
         .pi-title { @apply text-xl font-semibold; }
         .pi-contact a { @apply text-base font-semibold; }
@@ -66,56 +64,42 @@
         .alumni-card .affil { @apply text-sm; }
         .alumni-card .period { @apply text-sm; }
         footer p { @apply text-sm; }
-        .mobilebar button { @apply text-sm; }
         .section-label {
             @apply text-sm uppercase tracking-widest font-bold text-primary mb-4 block;
         }
         .sub-header {
             @apply text-lg font-medium text-muted mb-1;
         }
-        .material-symbols-outlined {
-            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
-        }
     </style>
 </head>
 
 <body class="bg-background-light font-display text-ink antialiased">
-  <!-- Mobile header -->
-  <div class="mobilebar">
-    <button id="menu-toggle">☰ Menu</button>
-    <strong>SBAI</strong>
-  </div>
+  <!-- Top navigation — fixed slim bar. Styles live in style.css (plain CSS, no Tailwind
+       arbitrary values) so the layout survives the Tailwind CDN on GitHub Pages. -->
+  <header class="topbar" id="topbar">
+    <a class="topbar-brand" href="#Home">
+      <img src="images/lab_logo_chromakey.png" alt="SBAI — Systems Biology of Aging and Immunity">
+    </a>
 
-  <!-- Sidebar -->
-  <div id="overlay" aria-hidden="true"></div>
-  <aside class="sidebar" id="sidebar">
-    <div class="brand">SBAI</div>
-
-    <nav class="nav" aria-label="Sidebar">
+    <!-- Desktop: inline links. Mobile (<=1024px): the same <nav> becomes the full-screen panel. -->
+    <nav class="nav" id="nav" aria-label="Main">
       <a class="item active" href="#Home">Home</a>
       <a class="item" href="#Research">Research</a>
-      <details>
-        <summary>Members</summary>
-        <div class="sub">
+      <div class="navgroup">
+        <button class="navgroup-label" type="button" aria-expanded="false">Members<span class="navgroup-caret" aria-hidden="true">&#9662;</span></button>
+        <div class="navgroup-menu">
           <a class="item" href="#PI">Principal Investigator</a>
           <a class="item" href="#LabMembers">Lab Members</a>
           <a class="item" href="#Alumni">Alumni</a>
         </div>
-      </details>
+      </div>
       <a class="item" href="#Publications">Publications</a>
       <a class="item" href="#Contact">Contact</a>
     </nav>
-  </aside>
 
-  <!-- Top banner — light & airy, shown on non-Home tabs (hidden on Home via script.js) -->
-  <header class="banner">
-    <div class="max-w-[var(--container)] mx-auto flex items-center justify-between gap-6">
-      <img src="images/lab_logo_chromakey.png" alt="SBAI — Systems Biology of Aging and Immunity" class="h-16 md:h-20 lg:h-24 w-auto shrink-0">
-      <!-- Right-side tagline (decorative — edit this line freely) -->
-      <p class="hidden md:block text-right text-2xl lg:text-3xl italic text-muted leading-snug max-w-sm">
-        "Aging and Immunity<br>as Systems"
-      </p>
-    </div>
+    <button class="nav-toggle" id="menu-toggle" type="button" aria-label="Menu" aria-expanded="false">
+      <span class="nav-toggle-bar"></span><span class="nav-toggle-bar"></span>
+    </button>
   </header>
 
   <!-- Main content -->
@@ -125,8 +109,7 @@
     <div id="Home" class="tabcontent active">
       <!-- Hero + About (merged) — "Growth Hero" style (vanilla adaptation of the framer-motion component).
            The sequential entrance is driven by Motion in the SBAI_MOTION block at the end of <body>. -->
-      <section id="home-hero" class="relative min-h-[calc(100vh_-_3.5rem)] max-w-full mx-auto px-6 md:px-12 text-center flex flex-col">
-        <div class="hero-blobs" aria-hidden="true"><div class="hero-blob hero-blob-1"></div><div class="hero-blob hero-blob-2"></div></div>
+      <section id="home-hero" class="relative max-w-full mx-auto px-6 md:px-12 text-center flex flex-col">
         <div id="hero-content" class="relative z-10 flex-1 w-full flex flex-col items-center justify-center">
 
           <!-- Reads → SBAI wordmark (Canvas 2D; reads fall and assemble on load, subtle idle life).
@@ -163,7 +146,7 @@
 </div>
 <a href="#Research" class="btn flex items-center gap-2 bg-background-light hover:bg-primary-soft text-ink hover:text-primary text-sm font-bold px-4 py-2 rounded-lg transition-all">
 <span>See all research</span>
-<span class="material-symbols-outlined text-sm">arrow_forward</span>
+<span class="btn-arrow" aria-hidden="true">&rarr;</span>
 </a>
 </div>
 <!-- Our Focus — hover-cell grid (vanilla adaptation; green accent, divider cells) -->
@@ -172,9 +155,7 @@
 <!-- Pillar 1 -->
 <div class="group/feature relative overflow-hidden flex flex-col py-10 border-border border-b last:border-b-0 md:border-b-0 md:border-r md:last:border-r-0">
 <div class="feature-glow"></div>
-<div class="feature-icon relative z-10 mb-4 px-8 text-muted transition-colors duration-200">
-<span class="material-symbols-outlined text-4xl">account_tree</span>
-</div>
+<div class="feature-index relative z-10 mb-5 px-8 text-3xl font-bold leading-none tabular-nums">01</div>
 <div class="relative z-10 mb-2 px-8">
 <div class="feature-bar absolute left-0 top-1/2 -translate-y-1/2 h-6 w-1 rounded-r-full bg-border transition-all duration-200"></div>
 <h4 class="inline-block text-2xl md:text-xl xl:text-2xl font-bold text-ink transition-transform duration-200 feature-title">Computational Methods for Multi-omics</h4>
@@ -185,9 +166,7 @@
 <!-- Pillar 2 -->
 <div class="group/feature relative overflow-hidden flex flex-col py-10 border-border border-b last:border-b-0 md:border-b-0 md:border-r md:last:border-r-0">
 <div class="feature-glow"></div>
-<div class="feature-icon relative z-10 mb-4 px-8 text-muted transition-colors duration-200">
-<span class="material-symbols-outlined text-4xl">hub</span>
-</div>
+<div class="feature-index relative z-10 mb-5 px-8 text-3xl font-bold leading-none tabular-nums">02</div>
 <div class="relative z-10 mb-2 px-8">
 <div class="feature-bar absolute left-0 top-1/2 -translate-y-1/2 h-6 w-1 rounded-r-full bg-border transition-all duration-200"></div>
 <h4 class="inline-block text-2xl md:text-xl xl:text-2xl font-bold text-ink transition-transform duration-200 feature-title">Immune &amp; Rare Disease Comorbidities</h4>
@@ -198,9 +177,7 @@
 <!-- Pillar 3 -->
 <div class="group/feature relative overflow-hidden flex flex-col py-10 border-border border-b last:border-b-0 md:border-b-0 md:border-r md:last:border-r-0">
 <div class="feature-glow"></div>
-<div class="feature-icon relative z-10 mb-4 px-8 text-muted transition-colors duration-200">
-<span class="material-symbols-outlined text-4xl">timelapse</span>
-</div>
+<div class="feature-index relative z-10 mb-5 px-8 text-3xl font-bold leading-none tabular-nums">03</div>
 <div class="relative z-10 mb-2 px-8">
 <div class="feature-bar absolute left-0 top-1/2 -translate-y-1/2 h-6 w-1 rounded-r-full bg-border transition-all duration-200"></div>
 <h4 class="inline-block text-2xl md:text-xl xl:text-2xl font-bold text-ink transition-transform duration-200 feature-title">Fundamental Principles of Eukaryotic Aging</h4>
@@ -218,7 +195,7 @@
 <p class="mt-3 max-w-xl text-xl">We recruit graduate students — Integrated MS–PhD and PhD.</p>
 <a href="#Contact" class="btn inline-flex items-center gap-2 bg-primary text-white text-base font-bold px-6 py-3 rounded-lg transition-all mt-6">
 <span>Join Us</span>
-<span class="material-symbols-outlined text-sm">arrow_forward</span>
+<span class="btn-arrow" aria-hidden="true">&rarr;</span>
 </a>
 </div>
 </section>
@@ -237,11 +214,10 @@
 <div>
 <a href="#Publications" class="btn flex items-center gap-2 bg-background-light hover:bg-primary-soft text-ink hover:text-primary text-sm font-bold px-6 py-3 rounded-lg transition-all">
 <span>View Publications</span>
-<span class="material-symbols-outlined text-sm">arrow_forward</span>
+<span class="btn-arrow" aria-hidden="true">&rarr;</span>
 </a>
 </div>
 </div>
-<span class="sig-ticks" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span>
 <p class="text-lg mt-6 wwwo-lede">
                             Our work runs along three lines: the computational methods that make multi-omics data usable, the shared mechanisms behind co-occurring immune and rare diseases, and the principles of aging conserved across eukaryotes. The common thread is reading biology at the level of whole systems, across molecules, tissues, and species.
                         </p>
@@ -252,7 +228,7 @@
 
 <!-- Theme 1 -->
 <article class="research-theme">
-  <span class="block text-4xl lg:text-5xl font-bold leading-none text-primary/30 mono-index mb-4">01</span>
+  <span class="block text-4xl lg:text-5xl font-bold leading-none text-primary/25 tabular-nums mb-4">01</span>
   <div class="grid md:grid-cols-[minmax(0,0.9fr)_minmax(0,1.3fr)] gap-8 md:gap-14 items-start">
     <h3 class="text-2xl lg:text-3xl font-bold text-ink">Development of Computational Methods for Multi-omics</h3>
     <div>
@@ -264,7 +240,7 @@
 
 <!-- Theme 2 -->
 <article class="research-theme">
-  <span class="block text-4xl lg:text-5xl font-bold leading-none text-primary/30 mono-index mb-4">02</span>
+  <span class="block text-4xl lg:text-5xl font-bold leading-none text-primary/25 tabular-nums mb-4">02</span>
   <div class="grid md:grid-cols-[minmax(0,0.9fr)_minmax(0,1.3fr)] gap-8 md:gap-14 items-start">
     <h3 class="text-2xl lg:text-3xl font-bold text-ink">Understanding Comorbidities of Immune &amp; Rare Diseases</h3>
     <div>
@@ -276,7 +252,7 @@
 
 <!-- Theme 3 -->
 <article class="research-theme">
-  <span class="block text-4xl lg:text-5xl font-bold leading-none text-primary/30 mono-index mb-4">03</span>
+  <span class="block text-4xl lg:text-5xl font-bold leading-none text-primary/25 tabular-nums mb-4">03</span>
   <div class="grid md:grid-cols-[minmax(0,0.9fr)_minmax(0,1.3fr)] gap-8 md:gap-14 items-start">
     <h3 class="text-2xl lg:text-3xl font-bold text-ink">Identifying Fundamental Principles of Eukaryotic Aging/Senescence</h3>
     <div>
@@ -294,9 +270,8 @@
     <!-- PI -->
     <div id="PI" class="tabcontent">
       <div class="pi-wrap max-w-4xl mx-auto px-6 py-12">
-        <h1 class="text-center mb-4">Principal Investigator</h1>
-<div class="text-center mb-12"><span class="sig-ticks" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span></div>
-        <div class="pi-hero flex flex-col md:flex-row items-center justify-center text-center md:text-left gap-8 md:gap-12">
+        <h1 class="mb-12">Principal Investigator</h1>
+        <div class="pi-hero flex flex-col md:flex-row items-start gap-8 md:gap-12">
           <img class="pi-photo w-72 h-[21rem] object-cover" src="images/Members/교수님_사진.jpg" alt="Principal Investigator photo" />
           <div>
             <div class="pi-name-kr">박지환</div>
@@ -328,7 +303,7 @@
 
         <div class="pi-divider my-12 h-px bg-border"></div>
 
-        <h2 class="text-primary text-center mb-8">Honors &amp; Awards</h2>
+        <h2 class="text-primary mb-8">Honors &amp; Awards</h2>
         <div class="pi-timeline">
           <div class="pi-year">2024</div>
           <div class="pi-desc">Commendation from the <b>Ministry of Science and ICT</b>, Republic of Korea</div>
@@ -397,10 +372,9 @@
     <!-- Lab Members -->
     <div id="LabMembers" class="tabcontent">
         <div class="max-w-full mx-auto px-6 py-12">
-      <h1 class="text-center mb-4">Lab Members</h1>
-<div class="text-center mb-12"><span class="sig-ticks" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span></div>
+      <h1 class="mb-12">Lab Members</h1>
       
-      <h2 class="text-primary text-center mt-12 mb-6">Postdoctoral Fellows</h2>
+      <h2 class="text-primary mt-12 mb-6">Postdoctoral Fellows</h2>
       <div class="people-grid">
         <div class="person-card">
           <img class="photo" src="images/Members/장동민_사진.jpg" alt="장동민" />
@@ -410,7 +384,7 @@
         </div>
       </div>
 
-      <h2 class="text-primary text-center mt-12 mb-6">Graduate Students</h2>
+      <h2 class="text-primary mt-12 mb-6">Graduate Students</h2>
       <div class="people-grid">
         <div class="person-card">
           <img class="photo" src="images/Members/정유진_사진.jpg" alt="정유진" />
@@ -480,7 +454,7 @@
         </div>
       </div>
 
-      <h2 class="text-primary text-center mt-12 mb-6">Administrative Staff</h2>
+      <h2 class="text-primary mt-12 mb-6">Administrative Staff</h2>
       <div class="people-grid">
         <div class="person-card">
           <img class="photo" src="images/Members/박현정_사진.JPG" alt="박현정" />
@@ -490,7 +464,7 @@
         </div>
       </div>
       
-      <h2 class="text-primary text-center mt-12 mb-6">Interns</h2>
+      <h2 class="text-primary mt-12 mb-6">Interns</h2>
       <div class="people-grid placeholder">
         <div class="person-card">
             <div class="name-kr text-ink">서채영</div>
@@ -503,10 +477,9 @@
     <!-- Alumni -->
     <div id="Alumni" class="tabcontent">
         <div class="max-w-full mx-auto px-6 py-12">
-      <h1 class="text-center mb-4">Alumni</h1>
-<div class="text-center mb-12"><span class="sig-ticks" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span></div>
+      <h1 class="mb-12">Alumni</h1>
       
-      <h2 class="text-primary text-center mt-12 mb-6">Researchers and Administrative Staffs</h2>
+      <h2 class="text-primary mt-12 mb-6">Researchers and Administrative Staffs</h2>
       <div class="alumni-grid">
           <div class="alumni-card bg-background-light border border-border shadow-sm p-6">
               <div class="name text-ink">Yumin Kim</div>
@@ -535,7 +508,7 @@
           </div>
       </div>
 
-      <h2 class="text-primary text-center mt-12 mb-6">Student Mentorship and Internship</h2>
+      <h2 class="text-primary mt-12 mb-6">Student Mentorship and Internship</h2>
       <div class="alumni-grid">
           <div class="alumni-card bg-background-light border border-border shadow-sm p-6">
               <div class="name text-ink">Jaehyung Kim</div>
@@ -594,8 +567,7 @@
     <div id="Publications" class="tabcontent">
       <main class="max-w-full mx-auto px-6 py-12">
 <div class="mb-10">
-<h1 class="text-center mb-4">Publications &amp; Patents</h1>
-<div class="text-center mb-10"><span class="sig-ticks" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span></div>
+<h1 class="mb-12">Publications &amp; Patents</h1>
 <p class="text-base text-muted leading-relaxed">*, represents co-first authors; #, co-corresponding authors. <br />
      The highlighted papers indicate the ones listed as first or corresponding author.</p>
 </div>
@@ -1010,12 +982,10 @@
       <section class="max-w-full mx-auto py-24 px-12">
 <header class="max-w-2xl">
 <h1 class="h1">Contact</h1>
-<span class="sig-ticks" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span>
 </header>
 <div class="grid grid-cols-1 md:grid-cols-2 gap-x-24 gap-y-16 mt-16">
 <div id="join-us" class="md:col-span-2 pb-12 border-b border-border/50">
 <div class="flex items-center gap-2 mb-4">
-<span class="material-symbols-outlined text-primary text-lg">school</span>
 <span class="section-label !mb-0">Join Us — Graduate Student Recruitment</span>
 </div>
 <div class="contact-detail max-w-2xl space-y-8 mt-2">
@@ -1041,7 +1011,6 @@
 <span class="section-label">Principal Investigator</span>
 <p class="sub-header !mb-0">Ji-Hwan Park (박지환)</p>
 <a class="group inline-flex w-fit items-center gap-2 text-lg text-ink hover:text-primary transition-colors" href="mailto:parkjihwan@ajou.ac.kr">
-<span class="material-symbols-outlined text-xl text-primary">mail</span>
 <span class="underline underline-offset-4 decoration-border group-hover:decoration-primary">parkjihwan@ajou.ac.kr</span>
 </a>
 </div>
@@ -1049,13 +1018,11 @@
 <span class="section-label">Administrative Support</span>
 <p class="sub-header !mb-0">Hyeon-Jung Park (박현정)</p>
 <a class="group inline-flex w-fit items-center gap-2 text-lg text-ink hover:text-primary transition-colors" href="mailto:guswjd86@ajou.ac.kr">
-<span class="material-symbols-outlined text-xl text-primary">mail</span>
 <span class="underline underline-offset-4 decoration-border group-hover:decoration-primary">guswjd86@ajou.ac.kr</span>
 </a>
 </div>
 <div class="md:col-span-2 pt-12 border-t border-border/50">
 <div class="flex items-center gap-2 mb-4">
-<span class="material-symbols-outlined text-primary text-lg">location_on</span>
 <span class="section-label !mb-0">Address</span>
 </div>
 <div class="max-w-2xl">
@@ -1286,16 +1253,6 @@
 
     // === SBAI_MOTION: site animations ===
     if (!reduceMotion) {
-      // Banner entrance: logo + title fade/slide in, staggered by index.
-      const bannerItems = document.querySelectorAll(".banner img, .banner .flex-grow");
-      bannerItems.forEach((el, i) => {
-        animate(
-          el,
-          { opacity: [0, 1], y: [14, 0] },
-          { duration: 0.6, delay: 0.12 * i, ease: [0.22, 1, 0.36, 1] }
-        );
-      });
-
       // Home hero: sequential rise (eyebrow → omics tiles → title → text → CTA).
       // (Vanilla build has no stagger() helper, so we stagger via a manual delay.)
       const heroItems = document.querySelectorAll("#Home .hero-rise");

@@ -10,14 +10,15 @@
   --primary-color: #0C6068;   /* deep teal — main point (readable on white) */
   --secondary-color: #0A5560; /* darker teal — subtitles / hover */
 
-  --sidebar-w: 240px;
-  --wrap-pad: 32px;     /* .wrap horizontal padding — the hero breakout mirrors this to reach the edges */
-  --radius: 12px;
-  /* Fluid: fill the viewport (minus sidebar + wrap padding) at every window size */
-  --container: calc(100vw - var(--sidebar-w) - 64px);
-  
-  --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
-  --shadow-soft: 0 1px 3px rgb(0 0 0 / 0.04), 0 12px 32px -12px rgb(0 0 0 / 0.10); /* airy card shadow */
+  --topbar-h: 68px;
+  --wrap-pad: clamp(24px, 4vw, 72px);  /* .wrap horizontal padding — the hero breakout mirrors this to reach the edges */
+  --radius: 6px;        /* tight, not bootstrap-round */
+  --radius-sm: 4px;     /* photos */
+  /* Fluid: fill the viewport (minus wrap padding) at every window size */
+  --container: 100%;
+
+  /* De-chromed: surfaces are defined by hairlines, not drop shadows. Shadows appear on hover only. */
+  --shadow-hover: 0 10px 30px -18px rgb(12 96 104 / 0.35);
   --ease-smooth: cubic-bezier(.16, 1, .3, 1);  /* expo-out — pnucolab-style smooth deceleration (hovers, reveals) */
 }
 
@@ -28,13 +29,13 @@ html {
   background: var(--bg); color: var(--ink);
   font-family: 'Pretendard', 'Inter', 'Noto Sans KR', ui-sans-serif, system-ui, -apple-system, sans-serif;
   scroll-behavior: smooth;
+  scroll-padding-top: var(--topbar-h);
   font-size: 17px; /* slightly larger base text (all rem-based sizes scale) */
 }
 
 body {
   margin: 0;
-  padding: 0 0 0 var(--sidebar-w);
-  transition: padding-left 0.3s ease-in-out;
+  padding: var(--topbar-h) 0 0;
 }
 
 a { color: var(--primary-color); text-decoration: none; transition: color 0.2s ease; }
@@ -56,51 +57,75 @@ hr { border: 0; border-top: 1px solid var(--border); margin: 3rem 0; }
 
 /* === LAYOUT & COMPONENTS === */
 
-/* Sidebar */
-.sidebar {
-  position: fixed; top: 0; left: 0; height: 100dvh; width: var(--sidebar-w);
-  background: var(--light);
-  border-right: 1px solid var(--border);
-  padding: 24px 14px;
-  overflow-y: auto;
+/* === TOP NAVIGATION ===
+   Replaces the old fixed sidebar + separate logo banner. Plain CSS (no Tailwind
+   arbitrary values / named groups) so the bar survives the CDN build on GitHub Pages. */
+.topbar {
+  position: fixed; top: 0; left: 0; right: 0; height: var(--topbar-h);
   z-index: 1000;
-  transition: transform 0.3s ease-in-out;
-}
-.brand { font-weight: 800; font-size: 24px; letter-spacing: .5px; margin: 0px 10px 24px; }
-.nav .item {
-  display: block;
-  padding: 10px 14px;
-  border-radius: var(--radius);
-  margin: 4px;
-  color: #374151;  font-weight: 600;
-  transition: background 0.2s ease, color 0.2s ease;
-}
-.nav .item:hover { background: var(--accent-soft); color: var(--primary-color); }.nav .item.active { background: var(--primary-color); color: white; }
-details { margin: 4px; }
-summary {
-  cursor: pointer;
-  list-style: none;
-  padding: 10px 14px;
-  border-radius: var(--radius);
-  font-weight: 600;
-  color: #374151;  transition: background 0.2s ease;
-}
-summary::-webkit-details-marker { display: none; }
-.nav summary:hover { background: var(--accent-soft); }
-.nav summary.active { background: var(--accent-soft); font-weight: 700; }
-.sub { padding-left: 14px; border-left: 2px solid var(--border); margin-left: 18px; margin-top: 8px; }
-.sub .item { padding: 8px 10px; font-size: 15px; }
-
-
-/* Top banner — light & airy (matches the Home hero mood); shown on non-Home tabs */
-.banner {
+  display: flex; align-items: center; gap: 32px;
+  padding: 0 var(--wrap-pad);
   background: var(--light);
   border-bottom: 1px solid var(--border);
-  padding: 24px 40px;
+  transition: background .3s var(--ease-smooth), border-color .3s var(--ease-smooth);
+}
+/* At the very top of Home the bar floats over the hero — no plate, no rule.
+   script.js toggles body.home-top on scroll (same hook as before, new job). */
+body.home-top .topbar { background: transparent; border-bottom-color: transparent; }
+
+.topbar-brand { display: flex; align-items: center; margin-right: auto; }
+.topbar-brand img { display: block; height: 40px; width: auto; }
+
+.nav { display: flex; align-items: center; gap: 2px; }
+.nav .item {
+  position: relative; display: block;
+  padding: 10px 14px;
+  font-size: 15px; font-weight: 600;
+  color: var(--muted);
+  transition: color 0.2s ease;
+}
+.nav .item:hover { color: var(--ink); }
+.nav .item.active { color: var(--primary-color); }
+/* active state = a 2px rule under the label, not a filled pill */
+.nav > .item.active::after,
+.navgroup.active > .navgroup-label::after {
+  content: ""; position: absolute; left: 14px; right: 14px; bottom: 4px;
+  height: 2px; background: var(--primary-color);
 }
 
+/* Members dropdown */
+.navgroup { position: relative; }
+.navgroup-label {
+  position: relative;
+  appearance: none; background: none; border: 0; cursor: pointer;
+  font: inherit; font-size: 15px; font-weight: 600;
+  color: var(--muted); padding: 10px 14px;
+  transition: color 0.2s ease;
+}
+.navgroup-label:hover, .navgroup.active > .navgroup-label { color: var(--ink); }
+.navgroup.active > .navgroup-label { color: var(--primary-color); }
+.navgroup-caret { font-size: 0.7em; margin-left: 4px; vertical-align: middle; }
+.navgroup-menu {
+  position: absolute; top: 100%; left: 0; min-width: 232px;
+  background: var(--light);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 6px;
+  box-shadow: var(--shadow-hover);
+  opacity: 0; visibility: hidden; transform: translateY(-4px);
+  transition: opacity .2s var(--ease-smooth), transform .2s var(--ease-smooth), visibility .2s;
+}
+.navgroup:hover .navgroup-menu,
+.navgroup:focus-within .navgroup-menu,
+.navgroup.open .navgroup-menu { opacity: 1; visibility: visible; transform: none; }
+.navgroup-menu .item { padding: 12px; border-radius: var(--radius-sm); white-space: nowrap; }
+.navgroup-menu .item:hover { background: var(--accent-soft); color: var(--primary-color); }
+
+/* Hamburger — desktop hidden; the mobile rules live in the responsive block at the end */
+.nav-toggle { display: none; }
+
 /* Main Content */
-.wrap { padding: 32px; display: grid; justify-items: center; }
+.wrap { padding: 0 var(--wrap-pad); display: grid; justify-items: center; }
 .tabcontent {
   display: none;
   animation: fadeIn 0.5s ease;
@@ -108,22 +133,18 @@ summary::-webkit-details-marker { display: none; }
   max-width: var(--container);
   padding: 32px 0 56px;
 }
+/* Home leads with the full-height hero — no top gap between the bar and the mark */
+#Home.tabcontent { padding-top: 0; }
 .tabcontent.active { display: block; }
-/* Hero is full-bleed: escape the .wrap horizontal padding so the section + its ambient blobs reach the screen edges */
-#home-hero { max-width: none; width: calc(100% + (var(--wrap-pad) * 2)); margin-inline: calc(var(--wrap-pad) * -1); }
-@keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-
-
-/* Home immersive: at the top of Home, hide the sidebar and let the hero use the
-   full viewport width. Scrolling down removes .home-top, so the sidebar slides in
-   from the left (both transitions already defined above). Desktop only — mobile
-   keeps its sticky menu bar. */
-@media (min-width: 1025px) {
-  body.home-top { padding-left: 0; }
-  body.home-top .sidebar { transform: translateX(-100%); }
-  /* sidebar hidden at the top of Home → don't reserve its width; let content fill (kills the big side gaps) */
-  body.home-top .tabcontent { max-width: none; }
+/* Hero is full-bleed: escape the .wrap horizontal padding so the section reaches the screen edges.
+   Height is set here (not as a Tailwind arbitrary value) so it can read --topbar-h. */
+#home-hero {
+  max-width: none;
+  width: calc(100% + (var(--wrap-pad) * 2));
+  margin-inline: calc(var(--wrap-pad) * -1);
+  min-height: calc(100vh - var(--topbar-h));
 }
+@keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
 
 /* Hero scroll cue — a thin vertical "scan line" with a travelling read (sequencing motif) */
@@ -147,11 +168,11 @@ summary::-webkit-details-marker { display: none; }
 }
 .group\/feature:hover .feature-glow { opacity: 1; }
 /* pillar hover pop — plain CSS (no Tailwind named-group; works on deploy regardless of the CDN) */
-.group\/feature:hover .feature-icon  { color: var(--primary-color); }
+.feature-index { color: color-mix(in srgb, var(--primary-color) 30%, transparent); transition: color .3s var(--ease-smooth); }
+.group\/feature:hover .feature-index { color: var(--primary-color); }
 .group\/feature:hover .feature-title { transform: translateX(0.5rem); }
 .group\/feature:hover .feature-bar   { height: 2rem; background: #58D3DB; }
 /* smooth expo easing on the pillar hover (override Tailwind duration-200 / default ease) */
-.group\/feature .feature-icon,
 .group\/feature .feature-bar,
 .group\/feature .feature-title { transition-timing-function: var(--ease-smooth); transition-duration: .3s; }
 /* keep the title inside its cell at narrow widths: grid/flex items default to min-width:auto,
@@ -168,6 +189,9 @@ a.btn { transition: all 0.3s var(--ease-smooth); }
 a.btn:hover { transform: translateY(-2px); box-shadow: 0 8px 22px -10px color-mix(in srgb, var(--primary-color) 45%, transparent); }
 /* primary (filled teal) button: keep white text on hover (global a:hover would darken it) + nudge the bg slightly toward cyan, not darker */
 a.btn.bg-primary:hover { background: color-mix(in srgb, var(--primary-color) 84%, #58D3DB); color: #fff; }
+/* text arrow replaces the old icon-font glyph; it slides on hover */
+.btn-arrow { display: inline-block; transition: transform .3s var(--ease-smooth); }
+a.btn:hover .btn-arrow { transform: translateX(3px); }
 
 /* scroll reveal: fade + rise as blocks enter view. script.js ARMS (.reveal-armed) only once it's
    confirmed running, then adds .reveal-in on scroll — so if JS never runs, .reveal stays visible and
@@ -176,26 +200,8 @@ a.btn.bg-primary:hover { background: color-mix(in srgb, var(--primary-color) 84%
 .reveal.reveal-armed { opacity: 0; transform: translateY(18px); }
 .reveal.reveal-armed.reveal-in { opacity: 1; transform: none; }
 
-/* hero ambient blobs: slow organic drift behind the hero (teal/cyan, faint) */
-.hero-blobs { position: absolute; inset: 0; overflow: hidden; pointer-events: none; z-index: 0; }
-.hero-blob { position: absolute; border-radius: 50%; filter: blur(64px); opacity: .35; }
-.hero-blob-1 { width: 40vw; max-width: 500px; aspect-ratio: 1; left: -7%; top: 4%;
-  background: radial-gradient(circle, color-mix(in srgb, #58D3DB 50%, transparent), transparent 70%);
-  animation: blobDrift 24s ease-in-out infinite; }
-.hero-blob-2 { width: 34vw; max-width: 440px; aspect-ratio: 1; right: -6%; bottom: 2%;
-  background: radial-gradient(circle, color-mix(in srgb, var(--primary-color) 30%, transparent), transparent 70%);
-  animation: blobDrift 32s ease-in-out infinite reverse; }
-@keyframes blobDrift {
-  0%, 100% { transform: translate(0, 0) scale(1); }
-  33%      { transform: translate(2.5%, -3%) scale(1.04); }
-  66%      { transform: translate(-2.5%, 3%) scale(0.97); }
-}
-/* pause the drift when the hero is off-screen or on another tab (JS toggles .paused) — matches the canvas's off-screen pause */
-.hero-blobs.paused .hero-blob { animation-play-state: paused; }
-
 @media (prefers-reduced-motion: reduce) {
   .reveal, .reveal.reveal-armed { opacity: 1; transform: none; transition: none; }
-  .hero-blob { animation: none; }
 }
 
 /* === Sequencing-editorial section POV (proof: Research) === */
@@ -203,7 +209,7 @@ a.btn.bg-primary:hover { background: color-mix(in srgb, var(--primary-color) 84%
 .research-lead { font-size: clamp(1.25rem, 2.1vw, 1.6rem); line-height: 1.35; font-weight: 600; letter-spacing: -0.01em; color: var(--ink); margin: 0 0 1rem; text-wrap: balance; }
 .research-body { font-size: 1.0625rem; line-height: 1.75; color: var(--muted); max-width: 42rem; }
 /* PI Professional Activities — collapsed by default (native <details>) so the ~20-row committee list doesn't dominate the page */
-.pi-activities-summary { text-align: center; cursor: pointer; list-style: none; margin-bottom: 2rem; }
+.pi-activities-summary { cursor: pointer; list-style: none; margin-bottom: 2rem; }
 .pi-activities-summary::-webkit-details-marker { display: none; }
 .pi-activities-summary::after { content: " ▾"; color: var(--muted); font-size: 1rem; vertical-align: middle; }
 .pi-activities[open] .pi-activities-summary::after { content: " ▴"; }
@@ -213,12 +219,12 @@ a.btn.bg-primary:hover { background: color-mix(in srgb, var(--primary-color) 84%
 /* PI Tab */
 .pi-wrap { max-width: 1000px; }
 .pi-hero { margin-top: 24px; }
-.pi-photo { width: 100%; aspect-ratio: 3 / 4; height: auto; border-radius: var(--radius); object-fit: cover; box-shadow: var(--shadow-md); }
+.pi-photo { width: 100%; aspect-ratio: 3 / 4; height: auto; border-radius: var(--radius-sm); object-fit: cover; border: 1px solid var(--border); }
 .pi-name-kr { margin-bottom: 4px; }
 .pi-name-en { color: var(--muted); margin-bottom: 8px; }
 .pi-title { color: var(--secondary-color); }.pi-contact a { color: var(--ink); }
 .pi-divider { height: 1px; background: var(--border); margin: 24px 0; }
-.pi-timeline { display: grid; grid-template-columns: max-content minmax(0, 28rem); justify-content: center; gap: 24px 32px; align-items: start; }
+.pi-timeline { display: grid; grid-template-columns: max-content minmax(0, 28rem); justify-content: start; gap: 24px 32px; align-items: start; }
 .pi-year { text-align: right; }
 .pi-desc { line-height: 1.7; }
 .pi-desc b { font-weight: 700; }
@@ -238,24 +244,23 @@ a.btn.bg-primary:hover { background: color-mix(in srgb, var(--primary-color) 84%
 .people-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, 240px);
-  justify-content: center;
+  justify-content: start;
   gap: 56px 40px;
 }
 .people-grid.placeholder .person-card {
     padding-top: 24px; /* Add some space to align better with cards that have photos */
 }
-.person-card { text-align: center; }
+.person-card { text-align: left; }
 .person-card .photo, .person-card .photo-placeholder {
   display: block; margin: 0 auto;
   width: 100%; aspect-ratio: 3 / 4;
-  border-radius: var(--radius);
+  border-radius: var(--radius-sm);
   background: var(--bg);
   object-fit: cover;
   border: 1px solid var(--border);
-  box-shadow: var(--shadow-soft);
-  transition: transform 0.35s var(--ease-smooth), box-shadow 0.35s var(--ease-smooth);
+  transition: border-color 0.35s var(--ease-smooth), box-shadow 0.35s var(--ease-smooth);
 }
-.person-card:hover .photo { transform: scale(1.03); box-shadow: var(--shadow-md); }
+.person-card:hover .photo { border-color: var(--primary-color); box-shadow: var(--shadow-hover); }
 .person-card .photo-placeholder {
   display: flex; align-items: center; justify-content: center; color: var(--muted); font-size: 14px;
   background: var(--bg);
@@ -268,9 +273,9 @@ a.btn.bg-primary:hover { background: color-mix(in srgb, var(--primary-color) 84%
 .person-card .email a:hover { color: var(--primary-color); }
 
 /* Alumni Tab */
-.alumni-grid { display: grid; grid-template-columns: repeat(auto-fit, 250px); justify-content: center; gap: 24px 32px; }
-.alumni-card { background: var(--light); border: 1px solid var(--border); padding: 20px; border-radius: var(--radius); box-shadow: var(--shadow-soft); transition: box-shadow 0.35s var(--ease-smooth), transform 0.35s var(--ease-smooth); }
-.alumni-card:hover { box-shadow: var(--shadow-md); transform: translateY(-2px); }
+.alumni-grid { display: grid; grid-template-columns: repeat(auto-fit, 250px); justify-content: start; gap: 24px 32px; }
+.alumni-card { background: var(--light); border: 1px solid var(--border); padding: 20px; border-radius: var(--radius); transition: box-shadow 0.35s var(--ease-smooth), border-color 0.35s var(--ease-smooth), transform 0.35s var(--ease-smooth); }
+.alumni-card:hover { border-color: var(--primary-color); box-shadow: var(--shadow-hover); transform: translateY(-2px); }
 .alumni-card .affil { color: var(--muted); margin-top: 4px; }
 
 /* Publications Tab */
@@ -282,14 +287,13 @@ a.btn.bg-primary:hover { background: color-mix(in srgb, var(--primary-color) 84%
   margin-bottom: 1rem;
   border: 1px solid var(--border);
   border-left: 4px solid var(--border);
-  border-radius: 0.75rem;
-  box-shadow: 0 2px 20px -8px rgb(0 0 0 / 0.08);
+  border-radius: var(--radius);
   transition: all 0.35s var(--ease-smooth);
 }
 .pub-entry:hover {
   transform: translateY(-0.125rem);
   border-left-color: var(--secondary-color);
-  box-shadow: 0 10px 30px -12px rgb(0 0 0 / 0.18);
+  box-shadow: var(--shadow-hover);
 }
 /* First/corresponding-author papers: tinted + primary left bar (stays primary on hover) */
 .pub-entry.is-highlight { background: color-mix(in srgb, var(--primary-color) 5%, transparent); border-left-color: var(--primary-color); }
@@ -299,52 +303,69 @@ a.btn.bg-primary:hover { background: color-mix(in srgb, var(--primary-color) 84%
 .lab-author { color: var(--primary-color); font-weight: 700; }
 
 /* Publications year divider — left-aligned "year + rule" (modern, pairs with the card accent bars) */
-.pub-year { color: var(--ink); font-weight: 800; font-size: 1.6rem; letter-spacing: -0.01em; position: sticky; top: 0; background: var(--bg); z-index: 5; padding: 10px 0; }
+.pub-year { color: var(--ink); font-weight: 700; font-size: 1.6rem; letter-spacing: -0.01em; position: sticky; top: var(--topbar-h); background: var(--bg); z-index: 5; padding: 10px 0; }
 .pub-year > span:first-child { display: none; }            /* hide the left line → year sits flush left */
 .pub-year > span:last-child { background: var(--border); } /* right rule = subtle neutral line */
 
 /* Footer */
 footer {
-  padding: 32px 40px;
+  padding: 32px var(--wrap-pad);
   color: var(--muted);
   border-top: 1px solid var(--border);
   background: var(--bg);
-  text-align: center;
 }
 
 /* === MOBILE & RESPONSIVE === */
-.mobilebar { display: none; }
+@media (max-width: 1023.98px) {
+  :root { --topbar-h: 60px; }
+  .wrap { padding: 0 var(--wrap-pad); }
 
-@media (max-width: 1024px) {
-  :root { --sidebar-w: 0px; --wrap-pad: 24px; }
-  body { padding-left: 0; }
-  .wrap { padding: 24px; }
-  .banner { padding: 14px 20px; }
+  /* Hamburger */
+  .nav-toggle {
+    display: flex; flex-direction: column; justify-content: center; gap: 7px;
+    width: 44px; height: 44px; margin-right: -10px;
+    background: none; border: 0; cursor: pointer;
+  }
+  .nav-toggle-bar {
+    display: block; width: 24px; height: 2px; background: var(--ink);
+    transition: transform .25s var(--ease-smooth);
+  }
+  .nav-toggle.open .nav-toggle-bar:first-child { transform: translateY(4.5px) rotate(45deg); }
+  .nav-toggle.open .nav-toggle-bar:last-child  { transform: translateY(-4.5px) rotate(-45deg); }
 
-  .sidebar { transform: translateX(-250px); box-shadow: var(--shadow-md); width: 250px; }
-  .sidebar.open { transform: translateX(0); }
+  /* The same <nav> becomes a full-screen panel — no second menu markup, no overlay element */
+  .topbar .nav {
+    position: fixed; inset: var(--topbar-h) 0 0;
+    flex-direction: column; align-items: stretch; gap: 0;
+    background: var(--bg);
+    padding: 8px var(--wrap-pad) 40px;
+    overflow-y: auto;
+    opacity: 0; visibility: hidden; transform: translateY(-8px);
+    transition: opacity .25s var(--ease-smooth), transform .25s var(--ease-smooth), visibility .25s;
+  }
+  .topbar .nav.open { opacity: 1; visibility: visible; transform: none; }
+  .topbar .nav > .item,
+  .navgroup-label { padding: 16px 0; font-size: 20px; border-bottom: 1px solid var(--border); }
+  .navgroup-label { display: block; width: 100%; text-align: left; }
+  .navgroup-caret { display: none; }
+  .nav > .item.active::after, .navgroup.active > .navgroup-label::after { display: none; }
 
-  #overlay {
-    position: fixed; inset: 0; background: rgba(0, 0, 0, 0.4);
-    opacity: 0; pointer-events: none;
-    transition: opacity .25s ease;
-    z-index: 900;
+  /* submenu is always expanded inside the panel */
+  .navgroup { position: static; }
+  .navgroup-menu {
+    position: static; min-width: 0;
+    opacity: 1; visibility: visible; transform: none;
+    background: none; border: 0; box-shadow: none;
+    padding: 0 0 0 16px;
   }
-  #overlay.show { opacity: 1; pointer-events: auto; }
-  
-  .mobilebar {
-    display: flex; align-items: center;
-    gap: 12px;
-    position: sticky; top: 0; z-index: 950;
-    background: var(--light);
-    color: var(--ink);
-    padding: 12px 16px;
-    border-bottom: 1px solid var(--border);
-  }
-  .mobilebar button {
-    background: transparent; border: 1px solid var(--border);
-    color: var(--ink); padding: 8px 12px;
-    border-radius: var(--radius);
-  }
-  .pub-year { top: 56px; }   /* clear the sticky mobile menu bar */
+  .navgroup-menu .item { padding: 13px 0; font-size: 17px; border-bottom: 1px solid var(--border); }
+  .navgroup-menu .item:last-child { border-bottom: 0; }
+  .navgroup-menu .item:hover { background: none; }
+
+  .topbar-brand img { height: 32px; }
+}
+
+/* Very wide screens: the people/alumni grids look sparse hugging the left edge — let them breathe evenly */
+@media (min-width: 1600px) {
+  .people-grid, .alumni-grid { gap: 56px 48px; }
 }

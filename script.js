@@ -1,17 +1,17 @@
 document.addEventListener('DOMContentLoaded', () => {
     // --- ELEMENTS ---
     const menuToggle = document.getElementById('menu-toggle');
-    const sidebar = document.getElementById('sidebar');
-    const overlay = document.getElementById('overlay');
+    const nav = document.getElementById('nav');
     const navLinks = document.querySelectorAll('.nav a.item');
-    const detailsElements = document.querySelectorAll('.nav details');
+    const navGroups = document.querySelectorAll('.nav .navgroup');
     const tabContents = document.querySelectorAll('.tabcontent');
-    const banner = document.querySelector('.banner');
 
     // --- STATE & HELPERS ---
-    const closeSidebar = () => {
-        sidebar.classList.remove('open');
-        overlay.classList.remove('show');
+    // Mobile: the <nav> itself is the full-screen panel (see the responsive block in style.css).
+    const closeMenu = () => {
+        nav.classList.remove('open');
+        menuToggle.classList.remove('open');
+        menuToggle.setAttribute('aria-expanded', 'false');
         document.body.style.overflow = '';
     };
 
@@ -21,13 +21,10 @@ document.addEventListener('DOMContentLoaded', () => {
         const match = document.getElementById(targetId);
         if (!match || !match.classList.contains('tabcontent')) targetId = 'Home';
 
-        // Hide the top banner on the Home tab for a cleaner look; show it on other tabs.
-        if (banner) banner.style.display = (targetId === 'Home') ? 'none' : '';
-
         // Deactivate all tabs and links
         tabContents.forEach(tab => tab.classList.remove('active'));
         navLinks.forEach(link => link.classList.remove('active'));
-        detailsElements.forEach(detail => detail.querySelector('summary')?.classList.remove('active'));
+        navGroups.forEach(group => { group.classList.remove('active'); group.classList.remove('open'); });
 
         // Activate the target tab
         const targetTab = document.getElementById(targetId);
@@ -40,17 +37,13 @@ document.addEventListener('DOMContentLoaded', () => {
         if (activeLink) {
             activeLink.classList.add('active');
 
-            // If inside 'details', open it and highlight the summary
-            const parentDetails = activeLink.closest('details');
-            if (parentDetails) {
-                parentDetails.open = true;
-                parentDetails.querySelector('summary')?.classList.add('active');
-            }
+            // If the link lives in the Members dropdown, mark that group active
+            activeLink.closest('.navgroup')?.classList.add('active');
         }
         // Scroll to the top of the page
         window.scrollTo({ top: 0, left: 0, behavior: "auto" });
 
-        // Home immersive chrome: Home starts at the top → sidebar hidden until scroll.
+        // Home chrome: at the very top of Home the bar floats over the hero (no plate).
         homeActive = (targetId === 'Home');
         updateHomeChrome();
 
@@ -59,9 +52,9 @@ document.addEventListener('DOMContentLoaded', () => {
         requestAnimationFrame(() => window.dispatchEvent(new Event('resize')));
     };
 
-    // --- HOME IMMERSIVE CHROME ---
-    // On Home, hide the sidebar at the very top; reveal it once the user scrolls down.
-    // (Desktop only — the CSS rule is scoped to min-width:1025px; mobile keeps its menu bar.)
+    // --- HOME TOP CHROME ---
+    // On Home, the fixed top bar is transparent at the very top of the hero and
+    // gains its white plate + hairline rule once the user scrolls (see body.home-top in style.css).
     let homeActive = false;
     const revealThreshold = () => window.innerHeight * 0.2;
     const updateHomeChrome = () => {
@@ -71,22 +64,37 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // --- EVENT LISTENERS ---
 
-    // Mobile sidebar toggle
+    // Mobile menu toggle
     if (menuToggle) {
         menuToggle.addEventListener('click', () => {
-            const willOpen = !sidebar.classList.contains('open');
-            sidebar.classList.toggle('open', willOpen);
-            overlay.classList.toggle('show', willOpen);
+            const willOpen = !nav.classList.contains('open');
+            nav.classList.toggle('open', willOpen);
+            menuToggle.classList.toggle('open', willOpen);
+            menuToggle.setAttribute('aria-expanded', String(willOpen));
             document.body.style.overflow = willOpen ? 'hidden' : '';
         });
     }
 
-    // Close sidebar when overlay is clicked
-    if (overlay) {
-        overlay.addEventListener('click', closeSidebar);
-    }
-    
-    // Reveal the sidebar as the user scrolls down on Home (see updateHomeChrome).
+    // Members dropdown: hover/focus open it via CSS; this handles click + touch on desktop.
+    navGroups.forEach((group) => {
+        const label = group.querySelector('.navgroup-label');
+        label?.addEventListener('click', () => {
+            const willOpen = !group.classList.contains('open');
+            navGroups.forEach(g => g.classList.remove('open'));
+            group.classList.toggle('open', willOpen);
+            label.setAttribute('aria-expanded', String(willOpen));
+        });
+    });
+    document.addEventListener('click', (e) => {
+        if (!e.target.closest('.navgroup')) navGroups.forEach(g => g.classList.remove('open'));
+    });
+    document.addEventListener('keydown', (e) => {
+        if (e.key !== 'Escape') return;
+        navGroups.forEach(g => g.classList.remove('open'));
+        closeMenu();
+    });
+
+    // Swap the bar's plate in/out as the user scrolls on Home (see updateHomeChrome).
     window.addEventListener('scroll', updateHomeChrome, { passive: true });
     window.addEventListener('resize', updateHomeChrome);
 
@@ -98,10 +106,10 @@ document.addEventListener('DOMContentLoaded', () => {
         activateTab('Home'); // Default tab
     }
 
-    // Handle all navigation clicks
-    document.querySelector('.nav').addEventListener('click', (e) => {
+    // Handle all navigation clicks (nav links + the logo, which routes Home)
+    document.getElementById('topbar').addEventListener('click', (e) => {
         const target = e.target.closest('a');
-        if (!target || !target.classList.contains('item')) return;
+        if (!target || !(target.classList.contains('item') || target.classList.contains('topbar-brand'))) return;
 
         e.preventDefault();
         const targetId = target.getAttribute('href').replace('#', '');
@@ -110,7 +118,7 @@ document.addEventListener('DOMContentLoaded', () => {
         history.pushState(null, null, `#${targetId}`);
         
         activateTab(targetId);
-        closeSidebar();
+        closeMenu();
     });
 
     // Handle home page button clicks to navigate to other tabs
@@ -177,13 +185,4 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     // no IntersectionObserver / no JS: elements stay unarmed = visible (never hide content behind JS)
 
-    // --- HERO BLOBS: pause the slow drift when the hero is off-screen / on another tab (mirrors the canvas off-screen pause) ---
-    const heroBlobs = document.querySelector('.hero-blobs');
-    const heroEl = document.getElementById('home-hero');
-    if (heroBlobs && heroEl && 'IntersectionObserver' in window) {
-        const blobIO = new IntersectionObserver((entries) => {
-            entries.forEach((e) => heroBlobs.classList.toggle('paused', !e.isIntersecting));
-        }, { threshold: 0 });
-        blobIO.observe(heroEl);
-    }
 });
