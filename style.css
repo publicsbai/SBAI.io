@@ -11,6 +11,7 @@
   --secondary-color: #0A5560; /* darker teal — subtitles / hover */
 
   --topbar-h: 84px;   /* slim nav-bar (row 2) height; the logo row (row 1) stacks above it when expanded */
+  --masthead-open: 256px;   /* full masthead height when expanded (logo row + nav) — the hero clears this on short screens */
   --wrap-pad: clamp(24px, 4vw, 72px);  /* .wrap horizontal padding — the hero breakout mirrors this to reach the edges */
   --radius: 6px;        /* tight, not bootstrap-round */
   --radius-sm: 4px;     /* photos */
@@ -153,6 +154,13 @@ body.home-top .masthead-logo { max-height: 240px; opacity: 1; padding-top: 28px;
   min-height: 100vh;
 }
 @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+/* Short viewports (small laptops): the expanded masthead overlays the immersive hero. Drop the
+   vertical centering and reserve the masthead's height so the SBAI mark never sits under the nav. */
+@media (max-height: 860px) {
+  #home-hero { padding-top: var(--masthead-open); }
+  #hero-content { justify-content: flex-start; }
+}
 
 
 /* Hero scroll cue — a thin vertical "scan line" with a travelling read (sequencing motif) */
@@ -325,7 +333,7 @@ footer {
 
 /* === MOBILE & RESPONSIVE === */
 @media (max-width: 1023.98px) {
-  :root { --topbar-h: 72px; }
+  :root { --topbar-h: 72px; --masthead-open: 190px; }
   .wrap { padding: 0 var(--wrap-pad); }
 
   /* Hamburger — pinned to the top-right of the (column) masthead */
