@@ -331,13 +331,26 @@ footer {
 
 /* === MOBILE & RESPONSIVE === */
 @media (max-width: 1023.98px) {
-  :root { --masthead-open: 190px; }   /* pre-JS fallback; --topbar-h stays fluid via clamp */
+  :root { --masthead-open: 72px; }   /* pre-JS fallback for the compact mobile row; JS re-measures live */
   .wrap { padding: 0 var(--wrap-pad); }
 
-  /* Hamburger — pinned to the top-right of the (column) masthead */
+  /* One compact row: [logo] ··· [☰]. The desktop 2-row masthead doesn't translate here — the tabs
+     live in the panel, so its tab bar would sit empty and the brand would vanish once condensed. */
+  .masthead {
+    flex-direction: row; align-items: center; height: var(--topbar-h); padding: 0 var(--wrap-pad);
+    background: var(--light);
+    /* ponytail: no backdrop-filter on mobile — it makes .masthead the containing block of the
+       position:fixed nav panel, collapsing the menu to a sliver on every page but Home-top. */
+    backdrop-filter: none; -webkit-backdrop-filter: none;
+  }
+  .masthead-logo, body.home-top .masthead-logo { max-height: none; opacity: 1; padding-top: 0; }
+  .masthead-logo img { height: calc(var(--topbar-h) - 16px); }
+  .masthead-bar { display: contents; }   /* only holds the fixed panel → takes no room in the row */
+
+  /* Hamburger — right end of the row (kept first in the DOM so Tab goes toggle → logo → menu items) */
   .nav-toggle {
     display: flex; flex-direction: column; justify-content: center; gap: 7px;
-    position: absolute; top: 8px; right: var(--wrap-pad); z-index: 2;
+    order: 2; margin-left: auto; margin-right: -10px;
     width: 44px; height: 44px;
     background: none; border: 0; cursor: pointer;
   }
@@ -351,7 +364,7 @@ footer {
   /* The same <nav> becomes a full-screen panel — no second menu markup, no overlay element */
   .masthead .nav {
     position: fixed; inset: var(--topbar-h) 0 0;
-    flex-direction: column; align-items: stretch; gap: 0;
+    flex-direction: column; align-items: stretch; justify-content: flex-start; gap: 0;   /* desktop .nav centers; a centered overflowing column clips its top items out of scroll reach */
     background: var(--bg);
     padding: 8px var(--wrap-pad) 40px;
     overflow-y: auto;
