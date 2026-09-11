@@ -10,8 +10,8 @@
   --primary-color: #0C6068;   /* deep teal — main point (readable on white) */
   --secondary-color: #0A5560; /* darker teal — subtitles / hover */
 
-  --topbar-h: 84px;   /* slim nav-bar (row 2) height; the logo row (row 1) stacks above it when expanded */
-  --masthead-open: 256px;   /* full masthead height when expanded (logo row + nav) — the hero clears this on short screens */
+  --topbar-h: clamp(56px, 5.5vw, 84px);   /* fluid slim nav-bar (row 2) height — scales with viewport */
+  --masthead-open: 256px;   /* full expanded masthead height — JS re-measures this live from the actual logo+nav (this is just a pre-JS fallback) */
   --wrap-pad: clamp(24px, 4vw, 72px);  /* .wrap horizontal padding — the hero breakout mirrors this to reach the edges */
   --radius: 6px;        /* tight, not bootstrap-round */
   --radius-sm: 4px;     /* photos */
@@ -75,7 +75,7 @@ hr { border: 0; border-top: 1px solid var(--border); margin: 3rem 0; }
   max-height: 0; opacity: 0; padding-top: 0;
   transition: max-height .45s var(--ease-smooth), opacity .35s var(--ease-smooth), padding-top .45s var(--ease-smooth);
 }
-.masthead-logo img { display: block; height: 132px; width: auto; }
+.masthead-logo img { display: block; height: clamp(64px, 8vw, 132px); width: auto; }   /* fluid logo — scales with viewport */
 /* Row 2: the nav bar — always present, slim, centered */
 .masthead-bar {
   width: 100%; height: var(--topbar-h);
@@ -90,7 +90,7 @@ body.home-top .masthead-logo { max-height: 240px; opacity: 1; padding-top: 28px;
 .nav .item {
   position: relative; display: block;
   padding: 13px 18px;
-  font-size: 20px; font-weight: 600;
+  font-size: clamp(15px, 1.35vw, 20px); font-weight: 600;
   color: var(--muted);
   transition: color 0.2s ease;
 }
@@ -108,7 +108,7 @@ body.home-top .masthead-logo { max-height: 240px; opacity: 1; padding-top: 28px;
 .navgroup-label {
   position: relative;
   appearance: none; background: none; border: 0; cursor: pointer;
-  font: inherit; font-size: 20px; font-weight: 600;
+  font: inherit; font-size: clamp(15px, 1.35vw, 20px); font-weight: 600;
   color: var(--muted); padding: 13px 18px;
   transition: color 0.2s ease;
 }
@@ -155,12 +155,10 @@ body.home-top .masthead-logo { max-height: 240px; opacity: 1; padding-top: 28px;
 }
 @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
-/* Short viewports (small laptops): the expanded masthead overlays the immersive hero. Drop the
-   vertical centering and reserve the masthead's height so the SBAI mark never sits under the nav. */
-@media (max-height: 860px) {
-  #home-hero { padding-top: var(--masthead-open); }
-  #hero-content { justify-content: flex-start; }
-}
+/* The expanded masthead (logo + nav) OVERLAYS the immersive hero. Center the hero content in the
+   viewport region BELOW the masthead — at ANY screen height — so the SBAI mark never sits under the
+   nav. On tall screens it reads as centered; on short screens the content overflows downward (scroll). */
+#hero-content { margin-top: var(--masthead-open); min-height: calc(100vh - var(--masthead-open)); }
 
 
 /* Hero scroll cue — a thin vertical "scan line" with a travelling read (sequencing motif) */
@@ -333,7 +331,7 @@ footer {
 
 /* === MOBILE & RESPONSIVE === */
 @media (max-width: 1023.98px) {
-  :root { --topbar-h: 72px; --masthead-open: 190px; }
+  :root { --masthead-open: 190px; }   /* pre-JS fallback; --topbar-h stays fluid via clamp */
   .wrap { padding: 0 var(--wrap-pad); }
 
   /* Hamburger — pinned to the top-right of the (column) masthead */
@@ -379,7 +377,6 @@ footer {
   .navgroup-menu .item:last-child { border-bottom: 0; }
   .navgroup-menu .item:hover { background: none; }
 
-  .masthead-logo img { height: 84px; }
 }
 
 /* Very wide screens: the people/alumni grids look sparse hugging the left edge — let them breathe evenly */

@@ -61,6 +61,19 @@ document.addEventListener('DOMContentLoaded', () => {
         document.body.classList.toggle('home-top', homeActive && window.scrollY < revealThreshold());
     };
 
+    // Dynamic: the hero's top clearance = the ACTUAL expanded masthead height (logo + nav), measured live.
+    // No hardcoded px — fluid masthead sizes flow straight into where the hero sits, at any viewport.
+    const logoImgEl = document.querySelector('.masthead-logo img');
+    const navBarEl = document.querySelector('.masthead-bar');
+    const syncMastheadHeight = () => {
+        if (!logoImgEl || !navBarEl) return;
+        const open = logoImgEl.offsetHeight + navBarEl.offsetHeight + 30;   // + expand-padding/border buffer
+        document.documentElement.style.setProperty('--masthead-open', open + 'px');
+    };
+    syncMastheadHeight();
+    window.addEventListener('resize', syncMastheadHeight);
+    if (logoImgEl && !logoImgEl.complete) logoImgEl.addEventListener('load', syncMastheadHeight);
+
 
     // --- EVENT LISTENERS ---
 
