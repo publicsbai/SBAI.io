@@ -224,6 +224,61 @@ a.btn:hover .btn-arrow { transform: translateX(3px); }
 /* Editorial hierarchy for research themes: a large lead statement pulls the eye, supporting body recedes — breaks the text wall with type, not widgets */
 .research-lead { font-size: clamp(1.25rem, 2.1vw, 1.6rem); line-height: 1.35; font-weight: 600; letter-spacing: -0.01em; color: var(--ink); margin: 0 0 1rem; text-wrap: balance; }
 .research-body { font-size: 1.0625rem; line-height: 1.75; color: var(--muted); max-width: 42rem; }
+
+/* === Research: three questions converge into the research-areas map ===
+   All three questions are asked of every subject in the map, so on wide screens they stand side by side,
+   each kept whole (title + lead + body), and their column lines meet one rule that leads into the map below.
+   Visibility first: the map always gets the full content width (in-image labels stay legible);
+   motion is transform-only, so nothing starts hidden. */
+.rq-cols { display: grid; grid-template-columns: minmax(0, 1fr); }
+.rq-col + .rq-col { border-top: 1px solid var(--border); margin-top: 2.5rem; padding-top: 2.5rem; }   /* narrow: stacked, hairline between questions */
+.rq-title {
+  font-size: clamp(1.35rem, 1.9vw, 1.9rem); line-height: 1.25; font-weight: 700; letter-spacing: -0.01em;
+  color: var(--ink); margin-bottom: 1rem; text-wrap: balance;
+  transition: color .3s var(--ease-smooth);
+}
+.rq-col .research-lead { font-size: clamp(1.05rem, 1.3vw, 1.25rem); font-weight: 500; margin-bottom: .9rem; }
+
+/* The figure is exactly as wide as the map, so the caption lines up with the map's left edge.
+   Width = full content width, capped so the whole map still fits one screen on very wide monitors
+   (1.6756 = the image's 3750:2238 aspect ratio). */
+.research-map {
+  margin: 3rem auto 0;
+  width: min(100%, calc((100vh - var(--topbar-h) - 3rem) * 1.6756));
+  width: min(100%, calc((100svh - var(--topbar-h) - 3rem) * 1.6756));
+}
+.research-map img { display: block; width: 100%; height: auto; }   /* width/height attributes reserve the space (no layout shift); static figure, no click / hover */
+.research-map figcaption { margin-bottom: 1.5rem; }   /* caption sits above the map */
+/* caption title scales with the map: ~37px laptop, ~44px wide monitor; floor keeps it on one line on phones */
+.research-map-title { display: block; font-size: clamp(1.9rem, 2.6vw, 2.6rem); line-height: 1.2; font-weight: 600; letter-spacing: -0.01em; color: var(--ink); }
+.research-map-note { margin-top: .5rem; font-size: clamp(1.05rem, 1.3vw, 1.25rem); color: var(--muted); }
+
+@media (min-width: 1024px) {
+  .rq-cols { --rq-pad: clamp(1.25rem, 2.5vw, 2.75rem); grid-template-columns: repeat(3, minmax(0, 1fr)); border-bottom: 1px solid var(--border); }
+  .rq-col { padding: 0 var(--rq-pad) 2.5rem; box-shadow: inset 0 -2px 0 var(--rq-line, transparent); transition: box-shadow .3s var(--ease-smooth); }
+  .rq-col + .rq-col { border-top: 0; margin-top: 0; padding-top: 0; border-left: 1px solid var(--border); }   /* column lines meet the bottom rule (┴) */
+  .rq-col:first-child { padding-left: 0; }
+  .rq-col:last-child { padding-right: 0; }
+  /* align across columns: each column's title / lead / body share the parent's three rows (subgrid),
+     so leads and bodies start on the same line even when one title wraps to an extra line.
+     Browsers without subgrid simply keep each column's natural stacking. */
+  .rq-cols { grid-template-rows: repeat(3, auto); }
+  .rq-col { grid-row: span 3; display: grid; grid-template-rows: subgrid; }
+  /* hover a question: its title and its segment of the rule above the map turn teal */
+  .rq-col:hover { --rq-line: var(--primary-color); }
+  .rq-col:hover .rq-title { color: var(--primary-color); }
+  .research-map { margin-top: 2.5rem; }
+}
+
+/* tab entry: the three questions rise in sequence (visible from the first frame — transform only, no fade) */
+.rq-col { animation: rqRise .9s var(--ease-smooth) backwards; }
+.rq-col:nth-child(2) { animation-delay: .08s; }
+.rq-col:nth-child(3) { animation-delay: .16s; }
+@keyframes rqRise { from { transform: translateY(14px); } }
+@media (prefers-reduced-motion: reduce) {
+  .rq-col { animation: none; }
+  .rq-col, .rq-title { transition: none; }
+}
 /* PI Professional Activities — collapsed by default (native <details>) so the ~20-row committee list doesn't dominate the page */
 .pi-activities-summary { cursor: pointer; list-style: none; margin-bottom: 2rem; }
 .pi-activities-summary::-webkit-details-marker { display: none; }

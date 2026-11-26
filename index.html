@@ -224,41 +224,40 @@
                         </p>
 </div>
 </section>
-<!-- Themes Content -->
-<section class="max-w-full w-full px-6 lg:px-10 pb-24 space-y-20 lg:space-y-28">
+<!-- Themes Content: three questions side by side; their column lines converge into one rule that leads into the research-areas map (layout in style.css .rq-*) -->
+<section class="max-w-full w-full px-6 lg:px-10 pb-24">
+<div class="rq-cols">
 
 <!-- Theme 1 -->
-<article class="research-theme">
-  <div class="grid md:grid-cols-[minmax(0,0.9fr)_minmax(0,1.3fr)] gap-8 md:gap-14 items-start">
-    <h3 class="text-2xl lg:text-3xl font-bold text-ink">Development of Computational Methods for Multi-omics</h3>
-    <div>
-      <p class="research-lead">Raw omics data isn't insight until it's interpretable.</p>
-      <p class="research-body">Pipelines for proteomics, transcriptomics, long-read sequencing, spatial, single-cell, and microbiome data, drawing on repositories like the Korea Nucleotide Archive (KoNA/KNA) under the Korea BioData Station (K-BDS). Network analysis and explainable machine learning bring these layers together while keeping the results interpretable.</p>
-    </div>
-  </div>
+<article class="rq-col">
+  <h3 class="rq-title">Development of Computational Methods for Multi-omics</h3>
+  <p class="research-lead">Raw omics data isn't insight until it's interpretable.</p>
+  <p class="research-body">Pipelines for proteomics, transcriptomics, long-read sequencing, spatial, single-cell, and microbiome data, drawing on repositories like the Korea Nucleotide Archive (KoNA/KNA) under the Korea BioData Station (K-BDS). Network analysis and explainable machine learning bring these layers together while keeping the results interpretable.</p>
 </article>
 
 <!-- Theme 2 -->
-<article class="research-theme">
-  <div class="grid md:grid-cols-[minmax(0,0.9fr)_minmax(0,1.3fr)] gap-8 md:gap-14 items-start">
-    <h3 class="text-2xl lg:text-3xl font-bold text-ink">Understanding Comorbidities of Immune &amp; Rare Diseases</h3>
-    <div>
-      <p class="research-lead">Why one diagnosis so often brings others.</p>
-      <p class="research-body">Working across rheumatic, degenerative, and rare diseases, as well as cancer, we read omics signatures across tissues to trace the mechanisms they share — pointing toward diagnostic markers and treatment targets grounded in a patient's own molecular profile.</p>
-    </div>
-  </div>
+<article class="rq-col">
+  <h3 class="rq-title">Understanding Comorbidities of Immune &amp; Rare Diseases</h3>
+  <p class="research-lead">Why one diagnosis so often brings others.</p>
+  <p class="research-body">Working across rheumatic, degenerative, and rare diseases, as well as cancer, we read omics signatures across tissues to trace the mechanisms they share — pointing toward diagnostic markers and treatment targets grounded in a patient's own molecular profile.</p>
 </article>
 
 <!-- Theme 3 -->
-<article class="research-theme">
-  <div class="grid md:grid-cols-[minmax(0,0.9fr)_minmax(0,1.3fr)] gap-8 md:gap-14 items-start">
-    <h3 class="text-2xl lg:text-3xl font-bold text-ink">Identifying Fundamental Principles of Eukaryotic Aging/Senescence</h3>
-    <div>
-      <p class="research-lead">What survives from yeast to humans is likely what matters.</p>
-      <p class="research-body">Aging touches nearly every eukaryote, from single cells to humans. We compare it across yeast, <em>Arabidopsis</em>, rice, <em>C. elegans</em>, fly, mouse, and human to pin down the parts that stayed the same through evolution — a good place to look for what actually drives aging.</p>
-    </div>
-  </div>
+<article class="rq-col">
+  <h3 class="rq-title">Identifying Fundamental Principles of Eukaryotic Aging/Senescence</h3>
+  <p class="research-lead">What survives from yeast to humans is likely what matters.</p>
+  <p class="research-body">Aging touches nearly every eukaryote, from single cells to humans. We compare it across yeast, <em>Arabidopsis</em>, rice, <em>C. elegans</em>, fly, mouse, and human to pin down the parts that stayed the same through evolution — a good place to look for what actually drives aging.</p>
 </article>
+
+</div>
+<!-- Research-areas map: the subjects all three questions are asked of (caption sits above the map) -->
+<figure class="research-map">
+<figcaption>
+<span class="research-map-title">Ongoing Research</span>
+<p class="research-map-note">Research areas can always be added based on students' interests.</p>
+</figcaption>
+<img src="images/research/research-areas.webp" width="3750" height="2238" loading="lazy" decoding="async" alt="Map of our research areas. Human diseases: neuroblastoma, atherosclerosis, idiopathic scoliosis, liver and kidney fibrosis, connective tissue disease-associated interstitial lung disease (CTD-ILD), idiopathic pulmonary fibrosis (IPF), autoimmune diseases, osteoarthritis (OA), rheumatoid arthritis (RA), drug addiction and relapse, autism spectrum disorder, Parkinson's disease, Alzheimer's disease, circadian rhythms, proteostasis, and rare genetic disorders. Host-microbe interactions in mouse models. Plants: calcium signaling, phytohormone response, and target metabolite production.">
+</figure>
 
 </section>
 
@@ -1245,7 +1244,7 @@
        (stagger/hover/press are React-only in this build; use manual delay.)
        Add new animations inside the SBAI_MOTION block below. -->
   <script type="module">
-    import { animate, scroll } from "https://cdn.jsdelivr.net/npm/motion@12.42.2/+esm";
+    import { animate } from "https://cdn.jsdelivr.net/npm/motion@12.42.2/+esm";
 
     // Respect users who prefer reduced motion (accessibility).
     const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -1265,27 +1264,8 @@
 
       // (Removed the hero scroll-linked fade — it made the mark look hazy as soon as the page scrolled.)
 
-      // Research themes: scroll-linked reveal (hero-style) — each fades + rises in
-      // sync with scroll. The #Research tab is display:none on load, so measuring now
-      // would give zero-size offsets and the effect never runs. Defer setup until the
-      // tab first becomes visible (watch its class for the 'active' toggle).
-      const researchTab = document.querySelector("#Research");
-      if (researchTab) {
-        let researchReady = false;
-        const setupResearch = () => {
-          if (researchReady) return;
-          if (getComputedStyle(researchTab).display === "none") return;
-          researchReady = true;
-          researchTab.querySelectorAll(".research-theme").forEach((theme) => {
-            scroll(
-              animate(theme, { opacity: [0, 1], y: [50, 0] }, { ease: "linear" }),
-              { target: theme, offset: ["start end", "start center"] }
-            );
-          });
-        };
-        new MutationObserver(setupResearch).observe(researchTab, { attributes: true, attributeFilter: ["class"] });
-        setupResearch(); // in case Research is already the active tab on load
-      }
+      // (Research: the old scroll-scrubbed theme fade was removed 2026-11-16 — it kept text half-transparent
+      //  while being read. The three question columns + map now settle via CSS on tab entry; see style.css .rq-*.)
     }
 
     // "See More" cue → smooth-scroll to the Our Focus section (no hash change).
