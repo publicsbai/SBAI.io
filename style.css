@@ -348,6 +348,11 @@ a.btn:hover .btn-arrow { transform: translateX(3px); }
 .person-card .email { margin-top: 6px; word-break: break-all; }
 .person-card .email a { color: var(--muted); }
 .person-card .email a:hover { color: var(--primary-color); }
+/* ORCID / Google Scholar row — same teal semibold links as the PI page, sized for the card */
+.person-card .links { margin-top: 6px; font-size: .875rem; font-weight: 600; }
+.person-card .links a { color: var(--primary-color); }
+.person-card .links a:hover { text-decoration: underline; }
+.person-card .links .sep { color: var(--border); margin: 0 .45em; }
 
 /* Alumni Tab */
 .alumni-grid { display: grid; grid-template-columns: repeat(auto-fit, 250px); justify-content: center; gap: 24px 32px; }
